@@ -1,0 +1,44 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+
+    .split-view {
+        display: flex;
+        flex-direction: row;
+        flex-grow: 1;
+
+
+        >div {
+            flex-grow: 1;
+
+
+        }
+
+        .editor-wrap {
+            position: relative;
+        }
+    }
+
+    .error {
+        color: red;
+        max-height: 50px;
+        text-overflow: ellipsis;
+    }
+
+    .editor-wrap {
+        border: 1px solid #ccc;
+    }
+
+
+
+
+    ngx-monaco-editor {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        height: 100%;
+    }
+}

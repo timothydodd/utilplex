@@ -1,0 +1,10 @@
+<div *ngFor="let c of categories">
+    <h4>{{c.name}}</h4>
+    <ul>
+        <li class="nav-item" *ngFor="let r of c.routes">
+            <a [routerLink]="[r.url]" routerLinkActive="router-link-active">{{
+                r.name
+                }}</a>
+        </li>
+    </ul>
+</div>
