@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Importing Bootstrap SCSS file. */
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+/* Importing Datepicker SCSS file. */
+@import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+@function hexToRGBString($hexColor) {
+    @return "#{red($hexColor)},#{green($hexColor)},#{blue($hexColor)}";
+}
+
+$purple : #b07df7;
+$blue: #6cd9f1;
+$yellow: #e4b676;
+
+:root {
+    --border-color: rgba(255, 255, 255, 0.1);
+    --background: #282a36;
+    --background-dark: #{darken(#282a36, 5%)};
+    --headers: white;
+    --primary: #{$blue};
+    --primary-rgb: #{hexToRGBString($blue)};
+    --secondary: #{$yellow};
+    --secondary-rgb: #{hexToRGBString($yellow)};
+    --blue:#{$blue};
+}
+
+@import 'styles/buttons';
+
+body {
+    background-color: var(--background-dark);
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--headers);
+}

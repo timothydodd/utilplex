@@ -1,0 +1,17 @@
+:host {
+    display: flex;
+    flex-direction: row;
+
+    height: 100vh;
+
+    app-side-bar {
+        flex-shrink: 1;
+    }
+
+    .route-container {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 24px;
+    }
+}
