@@ -16,16 +16,14 @@ export class SideBarComponent {
       {
         name: 'Formatters',
         routes: [
-          { name: 'SQL', url: '/format/sql' }
+          { name: 'SQL', url: '/format/sql' },
+          { name: 'JSON', url: '/format/json' }
         ]
       }
     ]
   }
   isRouteActive(url: string) {
-
     return this.router.isActive(url, { paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored' } as IsActiveMatchOptions);
-
-
   }
 }
 

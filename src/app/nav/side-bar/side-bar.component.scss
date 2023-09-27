@@ -1,56 +1,71 @@
-  ul {
+ :host {
+     padding: 24px;
+     display: flex;
+     flex-direction: column;
+     gap: 24px;
+     background-color: var(--background-dark);
+ }
 
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-      padding-left: 10px;
+ .logo {
+     font-family: 'Pacifico', cursive;
+     font-size: 24px;
+     text-shadow: 0px 2px 5px rgba(0, 0, 0, 1);
+     color: var(--primary);
+ }
 
-      li {
-          margin: auto 0px auto 24px;
-          text-align: center;
-          cursor: pointer;
-          list-style: none;
+ ul {
 
-          a {
-              color: var(--font-color);
-              font-size: 16px;
-              text-decoration: none;
+     display: flex;
+     flex-direction: column;
+     gap: 5px;
+     padding-left: 10px;
 
-              &.admin-menu {
-                  color: rgba(255, 0, 0, 0.5);
-              }
+     li {
+         margin: auto 0px auto 24px;
+         text-align: center;
+         cursor: pointer;
+         list-style: none;
 
-              &.admin-menu:after {
-                  color: rgba(255, 0, 0, 0.5);
-              }
+         a {
+             color: var(--font-color);
+             font-size: 16px;
+             text-decoration: none;
 
-              &:hover {
-                  &:after {
-                      color: var(--primary);
-                  }
-              }
-          }
+             &.admin-menu {
+                 color: rgba(255, 0, 0, 0.5);
+             }
 
-          a:hover {
-              color: var(--primary);
-          }
+             &.admin-menu:after {
+                 color: rgba(255, 0, 0, 0.5);
+             }
 
-          a:after {
-              color: var(--font-color);
-          }
+             &:hover {
+                 &:after {
+                     color: var(--primary);
+                 }
+             }
+         }
 
-          a.router-link-active {
-              opacity: 1;
-              font-weight: 600;
-          }
+         a:hover {
+             color: var(--primary);
+         }
 
-          a:link {
-              text-decoration: none;
-          }
-      }
-  }
+         a:after {
+             color: var(--font-color);
+         }
 
-  a.router-link-active {
-      opacity: 1;
-      font-weight: 600;
-  }
+         a.router-link-active {
+             opacity: 1;
+             font-weight: 600;
+         }
+
+         a:link {
+             text-decoration: none;
+         }
+     }
+ }
+
+ a.router-link-active {
+     opacity: 1;
+     font-weight: 600;
+ }

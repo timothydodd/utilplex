@@ -5,3 +5,39 @@
 
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
+
+@import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+@function hexToRGBString($hexColor) {
+    @return "#{red($hexColor)},#{green($hexColor)},#{blue($hexColor)}";
+}
+
+:root {
+    --border-color: rgba(255, 255, 255, 0.1);
+    --background: #282a36;
+    --background-dark: #{darken(#282a36, 5%)};
+    --headers: white;
+    --primary: #6cd9f1;
+    --primary-rgb: #{hexToRGBString(#6cd9f1)};
+    --secondary: #e4b676;
+    --secondary-rgb: #{hexToRGBString(#e4b676)};
+}
+
+@import 'styles/buttons';
+
+body {
+    background-color: var(--background);
+
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: var(--headers);
+}

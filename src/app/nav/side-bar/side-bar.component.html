@@ -1,5 +1,6 @@
+<div class="logo">Util</div>
 <div *ngFor="let c of categories">
-    <h4>{{c.name}}</h4>
+    <strong>{{c.name}}</strong>
     <ul>
         <li class="nav-item" *ngFor="let r of c.routes">
             <a [routerLink]="[r.url]" routerLinkActive="router-link-active">{{
