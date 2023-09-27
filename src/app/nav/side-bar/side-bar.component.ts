@@ -19,6 +19,12 @@ export class SideBarComponent {
           { name: 'SQL', url: '/format/sql' },
           { name: 'JSON', url: '/format/json' }
         ]
+      },
+      {
+        name: 'Converters',
+        routes: [
+          { name: 'Json To Yaml', url: '/convert/json-yaml' },
+        ]
       }
     ]
   }

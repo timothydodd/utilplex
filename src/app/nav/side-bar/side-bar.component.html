@@ -1,11 +1,9 @@
 <div class="logo">Util</div>
-<div *ngFor="let c of categories">
-    <strong>{{c.name}}</strong>
-    <ul>
-        <li class="nav-item" *ngFor="let r of c.routes">
-            <a [routerLink]="[r.url]" routerLinkActive="router-link-active">{{
-                r.name
-                }}</a>
-        </li>
-    </ul>
+<div *ngFor="let c of categories" class="cats">
+    <h5>{{c.name}}</h5>
+    <div class="cat-items">
+        <a *ngFor="let r of c.routes" [routerLink]="[r.url]" routerLinkActive="router-link-active">{{
+            r.name
+            }}</a>
+    </div>
 </div>

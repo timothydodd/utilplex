@@ -1,7 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { from } from 'rxjs';
+import { MonacoConfig } from '../../monaco/ng-monaco-config';
 import { FormatViewService } from '../_services/sql-format.service';
-declare let monaco: any;
+
 @Component({
   selector: 'app-format-view',
   templateUrl: './format-view.component.html',
@@ -56,13 +57,6 @@ export class FormatViewComponent {
     from(navigator.clipboard.readText()).subscribe(txt => this.inputChanged(txt));
     
   }
-}
-
-export interface MonacoConfig
-{
-  theme: string;
-  language: string;
-  readOnly:boolean | undefined;
 }
 
 
