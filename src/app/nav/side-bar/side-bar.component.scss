@@ -11,7 +11,7 @@
      font-family: 'Pacifico', cursive;
      font-size: 24px;
      text-shadow: 0px 2px 5px rgba(0, 0, 0, 1);
-     color: var(--primary);
+     color: var(--blue);
  }
 
  .cats {
@@ -49,6 +49,7 @@
 
          a.router-link-active {
              opacity: 1;
+             color: var(--primary);
              font-weight: 600;
          }
 

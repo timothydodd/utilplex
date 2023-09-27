@@ -13,15 +13,20 @@
     @return "#{red($hexColor)},#{green($hexColor)},#{blue($hexColor)}";
 }
 
+$purple : #b07df7;
+$blue: #6cd9f1;
+$yellow: #e4b676;
+
 :root {
     --border-color: rgba(255, 255, 255, 0.1);
     --background: #282a36;
     --background-dark: #{darken(#282a36, 5%)};
     --headers: white;
-    --primary: #6cd9f1;
-    --primary-rgb: #{hexToRGBString(#6cd9f1)};
-    --secondary: #e4b676;
-    --secondary-rgb: #{hexToRGBString(#e4b676)};
+    --primary: #{$blue};
+    --primary-rgb: #{hexToRGBString($blue)};
+    --secondary: #{$yellow};
+    --secondary-rgb: #{hexToRGBString($yellow)};
+    --blue:#{$blue};
 }
 
 @import 'styles/buttons';
