@@ -20,7 +20,8 @@ $yellow: #e4b676;
 :root {
     --border-color: rgba(255, 255, 255, 0.1);
     --background: #282a36;
-    --background-dark: #{darken(#282a36, 5%)};
+    --background-dark: #{darken(#282a36, 2%)};
+    --background-dark2: #{darken(#282a36, 1%)};
     --headers: white;
     --primary: #{$blue};
     --primary-rgb: #{hexToRGBString($blue)};
@@ -32,9 +33,13 @@ $yellow: #e4b676;
 @import 'styles/buttons';
 
 body {
-    background-color: var(--background-dark);
+    background-color: var(--background-dark2);
     font-family: 'Montserrat', sans-serif;
     color: rgba(255, 255, 255, 0.8);
+    scroll-behavior: smooth;
+    height: 100%;
+    overscroll-behavior-y: none;
+
 }
 
 h1,
