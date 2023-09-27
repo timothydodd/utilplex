@@ -54,13 +54,11 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: deploy_dist
-      - name: "Say Hello"
-        run: echo "Hello storage ${{vars.STORAGE_ACCOUNT_NAME}}!"
       - name: Delete blob storage
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob delete-batch --source '$web' --account-name ${{vars.STORAGE_ACCOUNT_NAME}} --auth-mode
+            az storage blob delete-batch --source '$web' --account-name ${{vars.STORAGE_ACCOUNT_NAME}} --auth-mode key
       - name: Upload to blob storage
         uses: azure/CLI@v1
         with:
@@ -70,7 +68,7 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob update --account-name ${{vars.STORAGE_ACCOUNT_NAME}} --auth-mode --container-name '$web' --name 'index.html' --content-cache-control 'no-cache'
+            az storage blob update --account-name ${{vars.STORAGE_ACCOUNT_NAME}} --auth-mode key --container-name '$web' --name 'index.html' --content-cache-control 'no-cache'
       - name: logout
         run: |
           az logout
