@@ -55,6 +55,8 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: deploy_dist
+      - name: "Say Hello"
+        run: echo "Hello storage $STORAGE_ACCOUNT_NAME!"     
       - name: Delete blob storage
         uses: azure/CLI@v1
         with:
