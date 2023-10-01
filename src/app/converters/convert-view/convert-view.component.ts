@@ -1,12 +1,19 @@
+import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
+import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { ConverterServiceBase } from '../_services/converter.service';
 
 @Component({
   selector: 'app-convert-view',
   templateUrl: './convert-view.component.html',
-  styleUrls: ['./convert-view.component.scss']
+  styleUrls: ['./convert-view.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, MonacoEditorModule],
+  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }]
 })
 export class ConvertViewComponent {
 

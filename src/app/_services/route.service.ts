@@ -1,9 +1,6 @@
 import { Type } from "@angular/core";
 import { DefaultExport, Routes } from "@angular/router";
 import { Observable } from "rxjs";
-import { CJsonYamlComponent } from "../converters/c-json-yaml/c-json-yaml.component";
-import { FJsonComponent } from "../formatters/f-json/f-json.component";
-import { FSqlComponent } from "../formatters/f-sql/f-sql.component";
 
 
 export class RouteService{
@@ -30,14 +27,14 @@ export class RouteService{
         {
             name: 'Formatters',
             routes: [
-                { name: 'SQL', url: '/format/sql', component: FSqlComponent },
-                { name: 'JSON', url: '/format/json', component: FJsonComponent }
+                { name: 'SQL', url: '/format/sql', loadComponent: () => import('../formatters/f-sql/f-sql.component').then(mod => mod.FSqlComponent) },
+                { name: 'JSON', url: '/format/json', loadComponent: () => import('../formatters/f-json/f-json.component').then(mod => mod.FJsonComponent)  }
             ]
         },
         {
             name: 'Converters',
             routes: [
-                { name: 'Json To Yaml', url: '/convert/json-yaml', component: CJsonYamlComponent},
+                { name: 'Json To Yaml', url: '/convert/json-yaml', loadComponent: () => import('../converters/c-json-yaml/c-json-yaml.component').then(mod => mod.CJsonYamlComponent) },
             ]
         },
         {

@@ -1,12 +1,18 @@
+import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
+import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from '../../monaco/ng-monaco-config';
 import { FormatViewService } from '../_services/sql-format.service';
-
 @Component({
   selector: 'app-format-view',
   templateUrl: './format-view.component.html',
-  styleUrls: ['./format-view.component.scss']
+  styleUrls: ['./format-view.component.scss'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, MonacoEditorModule],
+  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }]
 })
 export class FormatViewComponent {
   inputOptions: MonacoConfig;
