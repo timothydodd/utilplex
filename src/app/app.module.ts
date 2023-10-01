@@ -15,7 +15,6 @@ import { FYamlComponent } from './formatters/f-yaml/f-yaml.component';
 import { FormatViewComponent } from './formatters/format-view/format-view.component';
 import { MonacoEditorConfig } from './monaco/monaco-global-config';
 import { SideBarComponent } from './nav/side-bar/side-bar.component';
-import { TimeZonesComponent } from './time/time-zones/time-zones.component';
 
 @NgModule({
   declarations: [
@@ -33,8 +32,7 @@ import { TimeZonesComponent } from './time/time-zones/time-zones.component';
     AppRoutingModule,
     FormsModule,
     MonacoEditorModule.forRoot(new MonacoEditorConfig()),
-    BrowserAnimationsModule,
-    TimeZonesComponent
+    BrowserAnimationsModule
   ],
   bootstrap: [AppComponent]
 })
