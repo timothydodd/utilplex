@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { IsActiveMatchOptions, Router } from '@angular/router';
+import { RouteService } from 'src/app/_services/route.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -12,21 +13,7 @@ export class SideBarComponent {
   router = inject(Router);
   constructor() {
 
-    this.categories = [
-      {
-        name: 'Formatters',
-        routes: [
-          { name: 'SQL', url: '/format/sql' },
-          { name: 'JSON', url: '/format/json' }
-        ]
-      },
-      {
-        name: 'Converters',
-        routes: [
-          { name: 'Json To Yaml', url: '/convert/json-yaml' },
-        ]
-      }
-    ]
+    this.categories = RouteService.routeCategories;
   }
   isRouteActive(url: string) {
     return this.router.isActive(url, { paths: 'exact', queryParams: 'exact', fragment: 'ignored', matrixParams: 'ignored' } as IsActiveMatchOptions);

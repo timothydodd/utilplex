@@ -1,0 +1,22 @@
+<h1>Time Zone Conversions</h1>
+<timepicker [(ngModel)]="selectedTime"></timepicker>
+<div class="flex-row">
+    <button class="btn btn-secondary" (click)="btnSwitch()">Switch</button>
+    <div class="flex-column grow gap-24">
+        <div class="flex-column">
+            <label for="tzFrom">Time Zone From</label>
+
+            <ng-select id="tzFrom" [items]="this.zones" bindLabel="text" [(ngModel)]="currentZone"
+                       (change)="timeZoneChanged()"></ng-select>
+        </div>
+        <div class="flex-column">
+            <label for="tzFrom">Time Zone To</label>
+            <ng-select [items]="this.zones" bindLabel="text" [(ngModel)]="covertToZone"
+                       (change)="timeZoneChanged()"></ng-select>
+        </div>
+    </div>
+
+</div>
+<div *ngIf="error()" class="error">{{error()}}</div>
+
+{{currentTime()}}

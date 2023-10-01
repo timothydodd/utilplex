@@ -6,6 +6,8 @@
 /* Importing Datepicker SCSS file. */
 @import "node_modules/ngx-bootstrap/datepicker/bs-datepicker";
 
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 @import url('https://fonts.googleapis.com/css?family=Pacifico&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
@@ -28,6 +30,25 @@ $yellow: #e4b676;
     --secondary: #{$yellow};
     --secondary-rgb: #{hexToRGBString($yellow)};
     --blue:#{$blue};
+    --bs-link-color:#{$blue};
+    --bs-link-hover-color: #{$purple};
+    --bs-btn-color:#{$yellow};
+    --bs-body-color: #{$yellow};
+    --bs-body-bg:#{darken(#282a36, 1%)};
+    --bs-btn-font-weight: 400;
+    --bs-btn-color: var(--bs-link-color);
+    --bs-btn-bg: transparent;
+    --bs-btn-border-color: transparent;
+    --bs-btn-hover-color: var(--bs-link-hover-color);
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-active-color: var(--bs-link-hover-color);
+    --bs-btn-active-border-color: transparent;
+    --bs-btn-disabled-color: #6c757d;
+    --bs-btn-disabled-border-color: transparent;
+    --bs-btn-box-shadow: 0 0 0 #000;
+    --bs-btn-focus-shadow-rgb: 49,
+        132,
+        253;
 }
 
 @import 'styles/buttons';
@@ -49,4 +70,11 @@ h4,
 h5,
 h6 {
     color: var(--headers);
+}
+
+
+.form-control:focus {
+    border-color: $purple;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba($purple, 0.25);
 }

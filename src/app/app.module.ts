@@ -1,8 +1,10 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-
 import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +16,7 @@ import { FYamlComponent } from './formatters/f-yaml/f-yaml.component';
 import { FormatViewComponent } from './formatters/format-view/format-view.component';
 import { MonacoEditorConfig } from './monaco/monaco-global-config';
 import { SideBarComponent } from './nav/side-bar/side-bar.component';
+import { TimeZonesComponent } from './time/time-zones/time-zones.component';
 
 @NgModule({
   declarations: [
@@ -24,12 +27,17 @@ import { SideBarComponent } from './nav/side-bar/side-bar.component';
     FJsonComponent,
     FYamlComponent,
     CJsonYamlComponent,
-    ConvertViewComponent
+    ConvertViewComponent,
+    TimeZonesComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
+    TimepickerModule.forRoot(),
     FormsModule,
+    NgSelectModule,
     MonacoEditorModule.forRoot(new MonacoEditorConfig()),
     BrowserAnimationsModule
   ],
