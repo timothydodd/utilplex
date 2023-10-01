@@ -1,5 +1,5 @@
 <h1>Time Zone Conversions</h1>
-<timepicker [(ngModel)]="selectedTime"></timepicker>
+<timepicker [(ngModel)]="selectedTime" (ngModelChange)="timeZoneChanged()"></timepicker>
 <div class="flex-row">
     <button class="btn btn-secondary" (click)="btnSwitch()">Switch</button>
     <div class="flex-column grow gap-24">

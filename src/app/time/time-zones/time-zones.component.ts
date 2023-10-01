@@ -1,10 +1,20 @@
-import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Component, inject, signal } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 @Component({
   selector: 'app-time-zones',
   templateUrl: './time-zones.component.html',
-  styleUrls: ['./time-zones.component.scss']
+  styleUrls: ['./time-zones.component.scss'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    NgSelectModule,
+    FormsModule,
+    HttpClientModule,
+    TimepickerModule]
 })
 export class TimeZonesComponent {
   error = signal<string>('');
@@ -54,13 +64,13 @@ export class TimeZonesComponent {
   
     const ndate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hour, time.getMinutes(), time.getSeconds());
 
-
+    ndate.setHours(ndate.getHours() + this.covertToZone.offset);
     const lDate = time.toLocaleString("en-US", { timeZone: this.currentZone.utc[0], weekday: "long", year: "numeric", month: "2-digit", day: "numeric" });
     const lTime = time.toLocaleTimeString("en-US", { timeZone: this.currentZone.utc[0], hour12: false, hour: 'numeric', minute: '2-digit' });
 
 
-    const tDate = ndate.toLocaleString("en-US", { timeZone: this.currentZone.utc[0], weekday: "long", year: "numeric", month: "2-digit", day: "numeric" });
-    const tTime = ndate.toLocaleTimeString("en-US", { timeZone: this.currentZone.utc[0], hour12: false, hour: 'numeric', minute: '2-digit' });
+    const tDate = ndate.toLocaleString("en-US", { timeZone: this.covertToZone.utc[0], weekday: "long", year: "numeric", month: "2-digit", day: "numeric" });
+    const tTime = ndate.toLocaleTimeString("en-US", { timeZone: this.covertToZone.utc[0], hour12: false, hour: 'numeric', minute: '2-digit' });
 
 
 
