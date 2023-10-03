@@ -22,7 +22,7 @@ UtilPlex provides the following features:
 - **JSON to YAML Conversion:** Easily convert JSON data to YAML format.
 - **SQL Formatter:** Format SQL queries for better readability.
 - **JSON Formatter:** Format JSON data with proper indentation and line breaks.
-
+- **Time Zone Conversion:** Convert time from one time zone to another.
 ## Getting Started
 
 ### Prerequisites
