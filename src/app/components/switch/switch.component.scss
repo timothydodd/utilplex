@@ -1,0 +1,99 @@
+$control-background: #fbf8ff;
+$green: rgba($color: mix(green, $control-background, 40%),
+        $alpha: 0.8,
+    );
+
+$red: rgba($color: mix(black, $control-background, 15%),
+        $alpha: 0.8,
+    );
+$small-size: 16px;
+
+:host {
+    label {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
+
+        &.s-small {
+            width: 38px;
+            height: 22px;
+        }
+
+        &.s-disable {
+            opacity: 0.5;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: $red;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: 0.4s;
+            transition: 0.4s;
+        }
+
+        .slider.s-small:before {
+            height: $small-size;
+            width: $small-size;
+            left: 3px;
+            bottom: 3px;
+        }
+
+
+
+        /* Rounded sliders */
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+
+            .slider {
+                cursor: default !important;
+            }
+
+            &:checked+.slider {
+                background-color: $green;
+            }
+
+            &:focus+.slider {
+                box-shadow: 0 0 1px $green;
+            }
+
+            &:checked+.slider:before {
+                -webkit-transform: translateX(26px);
+                -ms-transform: translateX(26px);
+                transform: translateX(26px);
+            }
+
+            &:checked+.slider.s-small:before {
+                -webkit-transform: translateX($small-size);
+                -ms-transform: translateX($small-size);
+                transform: translateX($small-size);
+            }
+        }
+    }
+}

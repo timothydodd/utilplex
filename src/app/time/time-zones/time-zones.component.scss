@@ -25,6 +25,14 @@
     }
 
 
+    label {
+        font-weight: bold;
+    }
+
+    .time {
+        font-size: 26px;
+        color: var(--secondary);
+    }
 
     .error {
         color: red;
@@ -32,7 +40,14 @@
         text-overflow: ellipsis;
     }
 
+    .f-center {
+        justify-content: center;
+        // align-items: center;
+    }
 
+    timepicker {
+        width: 200px;
+    }
 
     ngx-monaco-editor {
         position: absolute;

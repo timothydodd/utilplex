@@ -4,6 +4,7 @@ import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
+import { SwitchComponent } from 'src/app/components/switch/switch.component';
 @Component({
   selector: 'app-time-zones',
   templateUrl: './time-zones.component.html',
@@ -14,7 +15,9 @@ import { TimepickerModule } from 'ngx-bootstrap/timepicker';
     NgSelectModule,
     FormsModule,
     HttpClientModule,
-    TimepickerModule]
+    TimepickerModule,
+    SwitchComponent
+  ]
 })
 export class TimeZonesComponent {
   error = signal<string>('');
@@ -22,10 +25,11 @@ export class TimeZonesComponent {
   covertToZone :TimeZone | any;
   zones: TimeZone[] = [];
   selectedTime = new Date();
-  currentTime = signal<string>('');
+  currentTimeFrom = signal<string>('');
+  currentTimeTo = signal<string>('');
   httpClient = inject(HttpClient);
-  
   ZoneConversions: ZoneConversion[] = [];
+  amPM = false;
   constructor() { 
     this.loadData();
   }
@@ -59,22 +63,28 @@ export class TimeZonesComponent {
     return;
     const time = this.selectedTime;
 
-    const hour =  time.getHours() - this.currentZone.offset;
-    const today = new Date();
   
-    const ndate = new Date(today.getFullYear(), today.getMonth(), today.getDate(), hour, time.getMinutes(), time.getSeconds());
+    const today = new Date();
 
-    ndate.setHours(ndate.getHours() + this.covertToZone.offset);
-    const lDate = time.toLocaleString("en-US", { timeZone: this.currentZone.utc[0], weekday: "long", year: "numeric", month: "2-digit", day: "numeric" });
-    const lTime = time.toLocaleTimeString("en-US", { timeZone: this.currentZone.utc[0], hour12: false, hour: 'numeric', minute: '2-digit' });
+
+    const timeFrom = new Date(Date.UTC(today.getFullYear(), today.getMonth(), today.getDate(), time.getHours(), time.getMinutes(), time.getSeconds()));
+
+    
+
+    const ndate = new Date(timeFrom.getTime() - (this.currentZone.offset * 60 * 60 * 1000));
+
+
+    const fDate = timeFrom.toLocaleString("en-US", { timeZone: 'UTC', weekday: "long", year: "numeric", month: "2-digit", day: "numeric" });
+    const fTime = timeFrom.toLocaleTimeString("en-US", { timeZone: 'UTC', hour12: this.amPM, hour: 'numeric', minute: '2-digit' });
 
 
     const tDate = ndate.toLocaleString("en-US", { timeZone: this.covertToZone.utc[0], weekday: "long", year: "numeric", month: "2-digit", day: "numeric" });
-    const tTime = ndate.toLocaleTimeString("en-US", { timeZone: this.covertToZone.utc[0], hour12: false, hour: 'numeric', minute: '2-digit' });
+    const tTime = ndate.toLocaleTimeString("en-US", { timeZone: this.covertToZone.utc[0], hour12: this.amPM, hour: 'numeric', minute: '2-digit' });
 
 
 
-    this.currentTime.set('From :' + lDate + " "+ lTime + " To: " + tDate + " " + tTime);
+    this.currentTimeFrom.set(fDate + " "+ fTime);
+    this.currentTimeTo.set( tDate + " " + tTime);
 
 
 

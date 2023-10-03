@@ -11,7 +11,7 @@ import { SideBarComponent } from './nav/side-bar/side-bar.component';
 @NgModule({
   declarations: [
     AppComponent,
-    SideBarComponent,
+    SideBarComponent
   ],
   imports: [
     BrowserModule,

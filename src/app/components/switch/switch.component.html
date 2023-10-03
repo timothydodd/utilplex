@@ -1,0 +1,4 @@
+<label class="switch" [ngClass]="{'s-disable': disabled,'s-small':small}">
+    <input type="checkbox" [disabled]="disabled" [(ngModel)]="checked" (change)="change($event)">
+    <span class="slider round" [ngClass]="{'s-small':small}"></span>
+</label>

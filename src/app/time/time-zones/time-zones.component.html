@@ -1,7 +1,23 @@
 <h1>Time Zone Conversions</h1>
-<timepicker [(ngModel)]="selectedTime" (ngModelChange)="timeZoneChanged()"></timepicker>
 <div class="flex-row">
-    <button class="btn btn-secondary" (click)="btnSwitch()">Switch</button>
+    <div class="flex-column f-center">
+        <label for="timePicker">Time</label>
+        <timepicker id="timePicker" [(ngModel)]="selectedTime" (ngModelChange)="timeZoneChanged()"
+                    [showMeridian]="this.amPM">
+        </timepicker>
+    </div>
+    <div class="flex-column f-center grow">
+        <label for="amPMSwitch">AM / PM</label>
+        <div class="flex-column f-center grow">
+            <app-switch id="amPMSwitch" [(ngModel)]="amPM"></app-switch>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="flex-row">
+
     <div class="flex-column grow gap-24">
         <div class="flex-column">
             <label for="tzFrom">Time Zone From</label>
@@ -15,8 +31,15 @@
                        (change)="timeZoneChanged()"></ng-select>
         </div>
     </div>
-
+    <button class="btn btn-secondary" (click)="btnSwitch()">Switch</button>
 </div>
 <div *ngIf="error()" class="error">{{error()}}</div>
 
-{{currentTime()}}
+<div class="flex-column">
+    <label for="tzFrom">Time From</label>
+    <div class="time">{{currentTimeFrom()}}</div>
+</div>
+<div class="flex-column">
+    <label for="tzFrom">Time To</label>
+    <div class="time">{{currentTimeTo()}}</div>
+</div>
