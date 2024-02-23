@@ -70,10 +70,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "utilplex:build:production"
+              "buildTarget": "utilplex:build:production"
             },
             "development": {
-              "browserTarget": "utilplex:build:development"
+              "buildTarget": "utilplex:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +81,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "utilplex:build"
+            "buildTarget": "utilplex:build"
           }
         },
         "test": {

@@ -28,7 +28,8 @@ export class RouteService{
             name: 'Formatters',
             routes: [
                 { name: 'SQL', url: '/format/sql', loadComponent: () => import('../formatters/f-sql/f-sql.component').then(mod => mod.FSqlComponent) },
-                { name: 'JSON', url: '/format/json', loadComponent: () => import('../formatters/f-json/f-json.component').then(mod => mod.FJsonComponent)  }
+                { name: 'JSON', url: '/format/json', loadComponent: () => import('../formatters/f-json/f-json.component').then(mod => mod.FJsonComponent)  },
+                { name: 'CSS', url: '/format/css', loadComponent: () => import('../formatters/f-css/f-css.component').then(mod => mod.FCssComponent) }
             ]
         },
         {
