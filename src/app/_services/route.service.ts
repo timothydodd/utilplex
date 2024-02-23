@@ -8,16 +8,19 @@ export class RouteService{
 
     public static getRoutes()
     {
-        const routes: Routes = [];
+        const routes: Routes = [
+            { path: '', pathMatch: 'full', loadComponent: () => import('../pages/welcome/welcome.component').then(mod => mod.WelcomeComponent), data: { title: 'Welcome to Util Plex' } }
+        ];
+
         for (const c of RouteService.routeCategories)
         {   
             for (const route of c.routes)
             {
                 if (route.loadComponent)
                 {
-                    routes.push({ path: route.url.substring(1), pathMatch: 'full', loadComponent: route.loadComponent });
+                    routes.push({ path: route.url.substring(1), pathMatch: 'full', loadComponent: route.loadComponent, data: { title: route.title } });
                 }else{
-             routes.push({ path: route.url.substring(1), pathMatch: 'full', component: route.component });
+             routes.push({ path: route.url.substring(1), pathMatch: 'full', component: route.component,data:{title:route.title} });
                 }
             }
         }
@@ -27,21 +30,21 @@ export class RouteService{
         {
             name: 'Formatters',
             routes: [
-                { name: 'SQL', url: '/format/sql', loadComponent: () => import('../formatters/f-sql/f-sql.component').then(mod => mod.FSqlComponent) },
-                { name: 'JSON', url: '/format/json', loadComponent: () => import('../formatters/f-json/f-json.component').then(mod => mod.FJsonComponent)  },
-                { name: 'CSS', url: '/format/css', loadComponent: () => import('../formatters/f-css/f-css.component').then(mod => mod.FCssComponent) }
+                { name: 'SQL', title:'SQL Formatter',  url: '/format/sql', loadComponent: () => import('../formatters/f-sql/f-sql.component').then(mod => mod.FSqlComponent) },
+                { name: 'JSON', title: 'JSON Formatter', url: '/format/json', loadComponent: () => import('../formatters/f-json/f-json.component').then(mod => mod.FJsonComponent)  },
+                { name: 'CSS', title: 'CSS Formatter', url: '/format/css', loadComponent: () => import('../formatters/f-css/f-css.component').then(mod => mod.FCssComponent) }
             ]
         },
         {
             name: 'Converters',
             routes: [
-                { name: 'Json To Yaml', url: '/convert/json-yaml', loadComponent: () => import('../converters/c-json-yaml/c-json-yaml.component').then(mod => mod.CJsonYamlComponent) },
+                { name: 'Json To Yaml', title: 'Json To Yaml', url: '/convert/json-yaml', loadComponent: () => import('../converters/c-json-yaml/c-json-yaml.component').then(mod => mod.CJsonYamlComponent) },
             ]
         },
         {
             name: 'Time',
             routes: [
-                { name: 'Time Zones', url: '/time/zones', loadComponent: () => import('../time/time-zones/time-zones.component').then(mod => mod.TimeZonesComponent)},
+                { name: 'Time Zones', title:'Time Zone Conversions' , url: '/time/zones', loadComponent: () => import('../time/time-zones/time-zones.component').then(mod => mod.TimeZonesComponent)},
             ]
         }
     ]
@@ -53,6 +56,7 @@ export interface RouteCategory{
 export interface UpRoute{
     name: string | any;
     url: string | any;
+    title:string ;
     component?: Type<any>;
     loadComponent?: () => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>;
 }

@@ -8,4 +8,6 @@ const routes: Routes = [...RouteService.getRoutes()];
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {
+
+ }

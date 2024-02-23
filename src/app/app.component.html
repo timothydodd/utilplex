@@ -4,8 +4,13 @@
 <div class="middle-section">
     <app-side-bar></app-side-bar>
     <div class="route-container">
-        <div class="top-bar"><a href="https://github.com/timothydodd/utilplex"><img alt="GitHub"
-                     src="assets/github-mark.svg" /></a></div>
+        <div class="top-bar">
+            @if(title()){
+            <h1>{{title()}}</h1>
+            }
+            <a href="https://github.com/timothydodd/utilplex"><img alt="GitHub" src="assets/github-mark.svg" />
+            </a>
+        </div>
         <router-outlet></router-outlet>
     </div>
 </div>

@@ -70,8 +70,20 @@ h4,
 h5,
 h6 {
     color: var(--headers);
+    font-weight: bold;
 }
 
+h2 {
+    font-size: 18px;
+}
+
+h3 {
+    font-size: 16px;
+}
+
+h2 {
+    color: rgba($purple, 0.75);
+}
 
 .form-control:focus {
     border-color: $purple;
