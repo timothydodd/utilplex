@@ -1,4 +1,4 @@
-import { Type } from "@angular/core";
+import { Component, Type } from "@angular/core";
 import { DefaultExport, Routes } from "@angular/router";
 import { Observable } from "rxjs";
 
@@ -32,7 +32,8 @@ export class RouteService{
             routes: [
                 { name: 'SQL', title:'SQL Formatter',  url: '/format/sql', loadComponent: () => import('../formatters/f-sql/f-sql.component').then(mod => mod.FSqlComponent) },
                 { name: 'JSON', title: 'JSON Formatter', url: '/format/json', loadComponent: () => import('../formatters/f-json/f-json.component').then(mod => mod.FJsonComponent)  },
-                { name: 'CSS', title: 'CSS Formatter', url: '/format/css', loadComponent: () => import('../formatters/f-css/f-css.component').then(mod => mod.FCssComponent) }
+                { name: 'CSS', title: 'CSS Formatter', url: '/format/css', loadComponent: () => import('../formatters/f-css/f-css.component').then(mod => mod.FCssComponent) },
+                { name: 'JavaScript', title: 'JavaScript Formatter', url: '/format/javascript', loadComponent: () => import('../formatters/f-javascript/f-javascript.component').then(mod => mod.FJavascriptComponent) }
             ]
         },
         {
@@ -50,13 +51,13 @@ export class RouteService{
     ]
 }
 export interface RouteCategory{
-    name:string | any;
+    name:string ;
     routes: UpRoute[];
 }
 export interface UpRoute{
-    name: string | any;
-    url: string | any;
+    name: string ;
+    url: string;
     title:string ;
-    component?: Type<any>;
+    component?: Type<Component>;
     loadComponent?: () => Type<unknown> | Observable<Type<unknown> | DefaultExport<Type<unknown>>> | Promise<Type<unknown> | DefaultExport<Type<unknown>>>;
 }

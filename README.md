@@ -8,6 +8,7 @@ UtilPlex is a collection of utility tools for developers, designed to simplify c
 ## Table of Contents
 
 - [UtilPlex - Developer Utilities](#utilplex---developer-utilities)
+- [Live Version](#live-version)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Getting Started](#getting-started)
@@ -22,7 +23,9 @@ UtilPlex provides the following features:
 - **JSON to YAML Conversion:** Easily convert JSON data to YAML format.
 - **SQL Formatter:** Format SQL queries for better readability.
 - **JSON Formatter:** Format JSON data with proper indentation and line breaks.
+- **Javascript Formatter:** Format Javascript for better readability.
 - **Time Zone Conversion:** Convert time from one time zone to another.
+
 ## Getting Started
 
 ### Prerequisites
