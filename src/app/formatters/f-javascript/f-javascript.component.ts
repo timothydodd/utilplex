@@ -6,12 +6,11 @@ import { FormatViewService } from "../_services/sql-format.service";
 import { FormatViewComponent } from "../format-view/format-view.component";
 
 @Component({
-  selector: 'app-f-javascript',
-  providers: [{ provide: FormatViewService, useClass: JavascriptFormatProvider }],
-  standalone: true,
-  imports: [CommonModule, FormsModule, FormatViewComponent],
-  template: `<app-format-view></app-format-view>`,
-  styleUrl: './f-javascript.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-f-javascript',
+    providers: [{ provide: FormatViewService, useClass: JavascriptFormatProvider }],
+    imports: [CommonModule, FormsModule, FormatViewComponent],
+    template: `<app-format-view></app-format-view>`,
+    styleUrl: './f-javascript.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FJavascriptComponent { }

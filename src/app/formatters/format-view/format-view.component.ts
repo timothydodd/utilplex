@@ -7,12 +7,11 @@ import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from '../../monaco/ng-monaco-config';
 import { FormatViewService } from '../_services/sql-format.service';
 @Component({
-  selector: 'app-format-view',
-  templateUrl: './format-view.component.html',
-  styleUrls: ['./format-view.component.scss'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, MonacoEditorModule],
-  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }]
+    selector: 'app-format-view',
+    templateUrl: './format-view.component.html',
+    styleUrls: ['./format-view.component.scss'],
+    imports: [CommonModule, FormsModule, MonacoEditorModule],
+    providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }]
 })
 export class FormatViewComponent {
   inputOptions: MonacoConfig;

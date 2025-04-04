@@ -6,18 +6,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 import { SwitchComponent } from 'src/app/components/switch/switch.component';
 @Component({
-  selector: 'app-time-zones',
-  templateUrl: './time-zones.component.html',
-  styleUrls: ['./time-zones.component.scss'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    NgSelectModule,
-    FormsModule,
-    HttpClientModule,
-    TimepickerModule,
-    SwitchComponent
-  ]
+    selector: 'app-time-zones',
+    templateUrl: './time-zones.component.html',
+    styleUrls: ['./time-zones.component.scss'],
+    imports: [
+        CommonModule,
+        NgSelectModule,
+        FormsModule,
+        HttpClientModule,
+        TimepickerModule,
+        SwitchComponent
+    ]
 })
 export class TimeZonesComponent {
   error = signal<string>('');

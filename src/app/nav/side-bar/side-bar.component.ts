@@ -3,10 +3,11 @@ import { IsActiveMatchOptions, Router } from '@angular/router';
 import { RouteService } from 'src/app/_services/route.service';
 
 @Component({
-  selector: 'app-side-bar',
-  templateUrl: './side-bar.component.html',
-  styleUrls: ['./side-bar.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+    selector: 'app-side-bar',
+    templateUrl: './side-bar.component.html',
+    styleUrls: ['./side-bar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class SideBarComponent {
   categories: RouterCategory[] = [];

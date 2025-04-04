@@ -2,12 +2,11 @@ import { CommonModule } from "@angular/common";
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
-  selector: 'app-welcome',
-  standalone: true,
-  imports: [
-    CommonModule,
-  ],
-  template: `
+    selector: 'app-welcome',
+    imports: [
+        CommonModule,
+    ],
+    template: `
   
       <main>
        <section>
@@ -57,7 +56,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 
   
   `,
-  styleUrl: './welcome.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrl: './welcome.component.css',
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class WelcomeComponent { }

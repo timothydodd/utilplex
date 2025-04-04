@@ -8,12 +8,11 @@ import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { ConverterServiceBase } from '../_services/converter.service';
 
 @Component({
-  selector: 'app-convert-view',
-  templateUrl: './convert-view.component.html',
-  styleUrls: ['./convert-view.component.scss'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, MonacoEditorModule],
-  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }]
+    selector: 'app-convert-view',
+    templateUrl: './convert-view.component.html',
+    styleUrls: ['./convert-view.component.scss'],
+    imports: [CommonModule, FormsModule, MonacoEditorModule],
+    providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }]
 })
 export class ConvertViewComponent {
 

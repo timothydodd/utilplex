@@ -9,16 +9,15 @@ const CUSTOM_VALUE_ACCESSOR: any = {
 
 
 @Component({
-  selector: 'app-switch',
-  templateUrl: './switch.component.html',
-  styleUrls: ['./switch.component.scss'],
-  providers: [CUSTOM_VALUE_ACCESSOR],
-  imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule
-  ],
-  standalone: true
+    selector: 'app-switch',
+    templateUrl: './switch.component.html',
+    styleUrls: ['./switch.component.scss'],
+    providers: [CUSTOM_VALUE_ACCESSOR],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule
+    ]
 })
 export class SwitchComponent implements ControlValueAccessor {
 
