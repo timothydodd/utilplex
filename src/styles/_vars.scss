@@ -64,7 +64,7 @@ $danger-dark: $red-dark;
 
 // Shiki
 // Only applied if using a defined Shiki theme
-
+$darkBack: #191A21;
 $ng-select-input-text: #f8f8f2;
 $ng-select-highlight: #bd93f9;
 $ng-select-primary-text: #f8f8f2;
@@ -85,7 +85,69 @@ $ng-select-selected: #343746;
     @return "#{red($hexColor)},#{green($hexColor)},#{blue($hexColor)}";
 }
 $darkBack: #191A21;
-
+$purple : #b07df7;
+$blue: #6cd9f1;
+$yellow: #e4b676;
+:root {
+        --border-color: rgba(255, 255, 255, 0.1);
+        --background: #282a36;
+        --background-dark: #{darken(#282a36, 2%)};
+        --background-dark2: #{darken(#282a36, 1%)};
+        --headers:white;
+        --primary: #{$blue};
+        --primary-rgb: #{hexToRGBString($blue)};
+        --secondary: #{$yellow};
+        --secondary-rgb: #{hexToRGBString($yellow)};
+        --blue:#{$blue};
+        --bs-link-color:#{$blue};
+        --bs-link-hover-color: #{$purple};
+        --bs-btn-color:#{$yellow};
+        --bs-body-color: #{$yellow};
+        --bs-body-bg:#{darken(#282a36, 1%)};
+        --bs-btn-font-weight: 400;
+        --bs-btn-color: var(--bs-link-color);
+        --bs-btn-bg: transparent;
+        --bs-btn-border-color: transparent;
+        --bs-btn-hover-color: var(--bs-link-hover-color);
+        --bs-btn-hover-border-color: transparent;
+        --bs-btn-active-color: var(--bs-link-hover-color);
+        --bs-btn-active-border-color: transparent;
+        --bs-btn-disabled-color: #6c757d;
+        --bs-btn-disabled-border-color: transparent;
+        --bs-btn-box-shadow: 0 0 0 #000;
+        --bs-btn-focus-shadow-rgb: 49,
+        132,
+        253;
+        --header-bg:hsla(0, 0%, 100%, 0.05);
+        --border-color:rgba(0, 0, 0, 0.125);
+        --current-line: #44475a;
+        --foreground: #f8f8f2;
+        --comment: #6272a4;
+        --cyan: #8be9fd;
+        --green: #50fa7b;
+        --darkGreen: #{darken(#50fa7b, 30%)};
+        --darkGreen-rgb: rgb(var(--darkGreen));
+        --orange: #ffb86c;
+        --pink: #ff79c6;
+        --purple: #bd93f9;
+        --purple-rgb: #{hexToRGBString($purple-dark)};
+        --red: #ff5555;
+        --red-rgb: #{hexToRGBString(#ff5555)};
+        --yellow: #f1fa8c;
+        --bGLighter: #424450;
+        --bGLight: #343746;
+        --bGDark: #21222C;
+        --bGDarker: #191A21;
+        --bGDarker-rgb: #{hexToRGBString($darkBack)};
+        --scrollbar-thumb: red;
+        --scrollbar-track: rgb(var(--bGDark));
+        --controlBG: #191A21;
+        --darkOrange: #{darken(#8be9fd, 40%)};
+        --gray:#{$gray-400};
+        --darkBlue: #{darken(#8be9fd, 25%)};
+        --header-bg: hsla(0, 0%, 100%, 0.05);
+        --border-color: rgba(0, 0, 0, 0.125);
+}
 
 
 $ng-select-dropdown-optgroup-marked: $ng-select-input-text;

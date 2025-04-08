@@ -24,7 +24,7 @@
 .ng-select.ng-select-single .ng-select-container {
     background-color: var(--header-bg);
     border-color: rgba(0, 0, 0, 0.3);
-    color: rgba(255, 255, 255, 0.9);
+    color: var(--secondary);
     min-height: 31px;
     height: 31px;
 }
@@ -39,7 +39,7 @@
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(0, 0, 0, 0.9);
 }
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
@@ -48,4 +48,13 @@
 
 .ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
     background-color: hsla(0, 0%, 100%, 0.15);
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option{
+        background-color: #343a40;
+}
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected.ng-option-marked {
+    color: #333;
+    background-color: var(--orange);
 }
