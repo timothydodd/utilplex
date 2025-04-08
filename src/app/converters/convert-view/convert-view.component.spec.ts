@@ -8,8 +8,8 @@ describe('ConvertViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ConvertViewComponent]
-    });
+    imports: [ConvertViewComponent]
+});
     fixture = TestBed.createComponent(ConvertViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

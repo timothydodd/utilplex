@@ -8,8 +8,8 @@ describe('FSqlComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FSqlComponent]
-    });
+    imports: [FSqlComponent]
+});
     fixture = TestBed.createComponent(FSqlComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -8,8 +8,8 @@ describe('CJsonYamlComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CJsonYamlComponent]
-    });
+    imports: [CJsonYamlComponent]
+});
     fixture = TestBed.createComponent(CJsonYamlComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -8,8 +8,8 @@ describe('FormatViewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FormatViewComponent]
-    });
+    imports: [FormatViewComponent]
+});
     fixture = TestBed.createComponent(FormatViewComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

@@ -8,8 +8,8 @@ describe('FJsonComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FJsonComponent]
-    });
+    imports: [FJsonComponent]
+});
     fixture = TestBed.createComponent(FJsonComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

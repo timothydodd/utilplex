@@ -5,14 +5,10 @@ import { FormatViewService, SqlFormatProvider } from '../_services/sql-format.se
 import { FormatViewComponent } from '../format-view/format-view.component';
 
 @Component({
-    selector: 'app-f-sql',
-    templateUrl: './f-sql.component.html',
-    styleUrls: ['./f-sql.component.scss'],
-    providers: [{ provide: FormatViewService, useClass: SqlFormatProvider }],
-    imports: [CommonModule, FormsModule, FormatViewComponent]
+  selector: 'app-f-sql',
+  templateUrl: './f-sql.component.html',
+  styleUrls: ['./f-sql.component.scss'],
+  providers: [{ provide: FormatViewService, useClass: SqlFormatProvider }],
+  imports: [CommonModule, FormsModule, FormatViewComponent],
 })
-export class FSqlComponent {
-  
-
-
-}
+export class FSqlComponent {}

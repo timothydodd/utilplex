@@ -8,8 +8,8 @@ describe('FYamlComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [FYamlComponent]
-    });
+    imports: [FYamlComponent]
+});
     fixture = TestBed.createComponent(FYamlComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

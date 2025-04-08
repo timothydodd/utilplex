@@ -31,9 +31,9 @@
         flex-direction: column;
         flex-grow: 1;
         padding: 24px;
-        padding-left: 78px;
+        padding-left: 34px;
         gap: 15px;
-
+        //backdrop-filter: blur(5px);
         .top-bar {
             display: flex;
             flex-direction: row;
@@ -50,4 +50,35 @@
             }
         }
     }
+           .back {
+            //   background-color: var(--background);
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            // background: linear-gradient(135deg, #0f0c29, #302b63);
+    
+            //  background-size: cover;
+            position: relative;
+    
+            background-repeat: no-repeat;
+            /* Prevent repeating */
+         background-attachment: fixed;
+            /* Keeps it fixed even on scroll */
+    
+            /* Stretches the gradient to cover the entire body */
+    //    background-image:
+    //             linear-gradient(135deg, #0e161abb, #4a5d67e7);
+
+            background-position: center;
+            background-size: cover;
+            overflow: auto;
+            transition-property: all;
+            transition-timing-function: cubic-bezier(.4, 0, .2, 1);
+            transition-duration: .15s;
+    
+            // scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+        
+        }
 }
