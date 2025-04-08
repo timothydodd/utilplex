@@ -25,6 +25,7 @@ export class FormatViewComponent {
 
   constructor(private formatService: FormatViewService) {
     this.title = formatService.title;
+
     this.inputOptions = {
       theme: 'dracula',
       language: formatService.language,
