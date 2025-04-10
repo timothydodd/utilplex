@@ -2,10 +2,10 @@
 @use "styles/vars" as *;
 @use "styles/mixins" as *;
 /* Importing Bootstrap SCSS file. */
-@import "./../node_modules/bootstrap/scss/bootstrap";
+//@import "./../node_modules/bootstrap/scss/bootstrap";
 
 /* Importing Datepicker SCSS file. */
-@import "./../node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss";
+//@import "./../node_modules/ngx-bootstrap/datepicker/bs-datepicker.scss";
 
 @import "@ng-select/ng-select/themes/default.theme.css";
 
