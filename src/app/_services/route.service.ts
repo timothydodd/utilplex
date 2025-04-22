@@ -10,7 +10,7 @@ export class RouteService {
         pathMatch: 'full',
         loadComponent: () => import('../pages/welcome/welcome.component').then((mod) => mod.WelcomeComponent),
         data: {
-          title: 'Welcome to Util Plex',
+          title: 'UtilPlex | Free Online JSON Formatter, SQL Beautifier, YAML Converter',
           description: 'Welcome to Util Plex, your go-to online developer tools for various utilities.',
         },
       },
