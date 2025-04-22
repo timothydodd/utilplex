@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>https://utilplex.com/</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/convert/json-yaml</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/encoding/base64</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/format/css</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/format/javascript</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/format/json</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/format/sql</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/time/zones</loc>
+        <lastmod>2025-04-22</lastmod>
+    </url>
+</urlset>
