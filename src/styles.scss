@@ -26,7 +26,7 @@
 body {
     background-color: var(--background-dark2);
     font-family: 'Montserrat', sans-serif;
-    color: rgba(255, 255, 255, 0.8);
+    color: var(--font-color);
     scroll-behavior: smooth;
     height: 100%;
     overscroll-behavior-y: none;
@@ -78,6 +78,6 @@ h2 {
 }
 
 .section {
-    padding: 1.25rem;
+
     background-color: hsla(0, 0%, 100%, 0.03);
 }

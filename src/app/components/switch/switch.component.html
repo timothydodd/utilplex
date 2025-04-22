@@ -1,4 +1,5 @@
-<label class="switch" [ngClass]="{'s-disable': disabled,'s-small':small}">
-    <input type="checkbox" [disabled]="disabled" [(ngModel)]="checked" (change)="change($event)">
-    <span class="slider round" [ngClass]="{'s-small':small}"></span>
+<label class="switch" [ngClass]="{ 's-small': small() }">
+  <input [id]="uniqueId" type="checkbox" [disabled]="disabled" [(ngModel)]="checked" (change)="change()" />
+  <span class="slider round" [ngClass]="{ 's-small': small() }"></span>
 </label>
+<label [for]="uniqueId" class="s-label" *ngIf="label">{{ label() }}</label>

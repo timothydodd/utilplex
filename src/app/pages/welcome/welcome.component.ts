@@ -23,7 +23,7 @@ import { RouteService } from 'src/app/_services/route.service';
             </div>
             <div class="section-content">
               @for (r of c.routes; track r.name) {
-                <button (click)="router.navigate([r.url])">{{ r.title }}</button>
+                <button (click)="router.navigate([r.url])">{{ r.name }}</button>
               }
             </div>
           </div>

@@ -1,8 +1,20 @@
+import { isPlatformBrowser } from '@angular/common';
+import { inject, PLATFORM_ID } from '@angular/core';
 import { NgxMonacoEditorConfig } from 'ngx-monaco-editor-v2';
 
 declare const monaco: any;
+
 export class MonacoEditorConfig implements NgxMonacoEditorConfig {
-  baseUrl?: string | undefined = window.location.origin + '/assets/monaco/min/vs';
+  platformId = inject(PLATFORM_ID);
+  get nativeWindow(): Window | null {
+    return isPlatformBrowser(this.platformId) ? window : null;
+  }
+  get origin(): string | null {
+    return this.nativeWindow?.location.origin ?? null;
+  }
+
+  baseUrl?: string | undefined = this.origin + '/assets/monaco/min/vs';
+
   onMonacoLoad(editor: any) {
     // Define the custom theme
 

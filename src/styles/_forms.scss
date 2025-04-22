@@ -8,7 +8,25 @@
     padding-bottom: 0px;
   }
 }
+.tool-bar{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
+}
+.options{
+      background-color: hsla(198, 89%, 65%, 0.071);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    margin-bottom: 5px;
+    padding: 10px 15px;
+    .option{
+    >label{
+      color: var(--orange);
+      font-size: small;
+    }
+  }
+}
 input.ng-invalid.ng-touched {
   border-color: var(--bs-danger-border-subtle);
 }

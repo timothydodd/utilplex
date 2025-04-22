@@ -89,6 +89,7 @@ $purple : #b07df7;
 $blue: #6cd9f1;
 $yellow: #e4b676;
 :root {
+    --font-color:rgba(255, 255, 255, 0.8);
         --border-color: rgba(255, 255, 255, 0.1);
         --background: #282a36;
         --background-dark: #{darken(#282a36, 2%)};
