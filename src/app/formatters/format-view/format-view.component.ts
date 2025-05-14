@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
-import { getRouteData } from 'src/app/_services/route.service';
+import { getRouteData, RouteService } from 'src/app/_services/route.service';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from '../../monaco/ng-monaco-config';
 import { FormatViewService } from '../_services/sql-format.service';
@@ -23,7 +23,7 @@ export class FormatViewComponent {
   inputCode = signal<string>('');
   outputCode = signal<string>('');
   error = signal<string>('');
-  title = '';
+
   private meta = inject(Meta);
   private titleService = inject(Title);
   constructor() {
@@ -33,7 +33,7 @@ export class FormatViewComponent {
     }
     this.titleService.setTitle('UtilPlex |' + data.title);
     if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
-    this.title = this.formatService.title;
+    RouteService.Title.set(this.formatService.title);
 
     this.inputOptions = {
       theme: 'dracula',

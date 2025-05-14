@@ -1,8 +1,9 @@
-import { Component, Type } from '@angular/core';
+import { Component, signal, Type } from '@angular/core';
 import { DefaultExport, Routes } from '@angular/router';
 import { Observable } from 'rxjs';
 
 export class RouteService {
+  public static Title = signal<string>('Util Plex');
   public static getRoutes() {
     const routes: Routes = [];
 

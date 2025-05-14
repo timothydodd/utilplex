@@ -6,7 +6,7 @@ import { from } from 'rxjs';
 
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
-import { getRouteData } from 'src/app/_services/route.service';
+import { getRouteData, RouteService } from 'src/app/_services/route.service';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { SwitchComponent } from '../../components/switch/switch.component';
@@ -71,7 +71,6 @@ export class EncoderViewComponent {
   mode = signal<string>('encode');
   isEncode = signal<boolean>(true);
   modeLabel = computed(() => (this.isEncode() ? 'Encode' : 'Decode'));
-  title = '';
   private meta = inject(Meta);
   private titleService = inject(Title);
   constructor() {
@@ -81,7 +80,8 @@ export class EncoderViewComponent {
     }
     this.titleService.setTitle('UtilPlex |' + data.title);
     if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
-    this.title = this.convertService.title;
+
+    RouteService.Title.set(this.convertService.title);
     toObservable(this.isEncode)
       .pipe(takeUntilDestroyed())
       .subscribe(() => {

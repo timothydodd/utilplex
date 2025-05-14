@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
-import { getRouteData } from 'src/app/_services/route.service';
+import { getRouteData, RouteService } from 'src/app/_services/route.service';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { ConverterServiceBase } from '../_services/converter.service';
@@ -25,8 +25,6 @@ export class ConvertViewComponent {
   outputCode = signal<string>('');
   error = signal<string>('');
 
-  title = '';
-
   private meta = inject(Meta);
   private titleService = inject(Title);
   constructor() {
@@ -36,7 +34,7 @@ export class ConvertViewComponent {
     }
     this.titleService.setTitle('UtilPlex |' + data.title);
     if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
-    this.title = this.convertService.title;
+    RouteService.Title.set(this.convertService.title);
     this.inputOptions = {
       theme: 'dracula',
       language: this.convertService.languageFrom,

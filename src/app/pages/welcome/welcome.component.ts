@@ -49,5 +49,6 @@ export class WelcomeComponent {
     }
     this.title.setTitle('UtilPlex |' + data.title);
     if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
+    RouteService.Title.set('Welcome to Util Plex');
   }
 }

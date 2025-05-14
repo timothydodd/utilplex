@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TimepickerModule } from 'ngx-bootstrap/timepicker';
-import { getRouteData } from 'src/app/_services/route.service';
+import { getRouteData, RouteService } from 'src/app/_services/route.service';
 import { SwitchComponent } from 'src/app/components/switch/switch.component';
 @Component({
   selector: 'app-time-zones',
@@ -34,6 +34,7 @@ export class TimeZonesComponent {
     this.title.setTitle('UtilPlex |' + data.title);
     if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
     this.loadData();
+    RouteService.Title.set(data.title);
   }
   loadData() {
     this.httpClient.get<TimeZone[]>('./assets/json/timezones.json').subscribe((res) => {

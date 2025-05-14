@@ -1,5 +1,6 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
+import { RouteService } from './_services/route.service';
 import { SideBarComponent } from './nav/side-bar/side-bar.component';
 @Component({
   selector: 'app-root',
@@ -9,5 +10,5 @@ import { SideBarComponent } from './nav/side-bar/side-bar.component';
 })
 export class AppComponent {
   router = inject(Router);
-  title = signal(null);
+  RouterService = RouteService;
 }
