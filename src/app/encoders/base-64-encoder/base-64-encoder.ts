@@ -5,6 +5,7 @@ import { EncoderServiceBase } from '../_services/encoder.service';
 @Injectable()
 export class Base64Encoder extends EncoderServiceBase {
   override title = 'Base64 Encoder';
+  override routeName = 'Base64';
   override options: Base64EncodingOptions = new Base64EncodingOptions();
   override optionsChanged = new EventEmitter<Base64EncodingOptions>();
   constructor() {

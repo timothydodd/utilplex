@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Meta, Title } from '@angular/platform-browser';
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
+import { getRouteData } from 'src/app/_services/route.service';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { ConverterServiceBase } from '../_services/converter.service';
@@ -15,6 +17,7 @@ import { ConverterServiceBase } from '../_services/converter.service';
   providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
 })
 export class ConvertViewComponent {
+  private convertService = inject(ConverterServiceBase);
   inputOptions: MonacoConfig;
   outputOptions: MonacoConfig;
 
@@ -24,15 +27,23 @@ export class ConvertViewComponent {
 
   title = '';
 
-  constructor(private convertService: ConverterServiceBase) {
-    this.title = convertService.title;
+  private meta = inject(Meta);
+  private titleService = inject(Title);
+  constructor() {
+    var data = getRouteData(this.convertService.routeName);
+    if (!data) {
+      throw new Error('Route data not found for welcome');
+    }
+    this.titleService.setTitle('UtilPlex |' + data.title);
+    if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
+    this.title = this.convertService.title;
     this.inputOptions = {
       theme: 'dracula',
-      language: convertService.languageFrom,
+      language: this.convertService.languageFrom,
     } as MonacoConfig;
     this.outputOptions = {
       theme: 'dracula',
-      language: convertService.languageTo,
+      language: this.convertService.languageTo,
       readOnly: false,
     };
   }

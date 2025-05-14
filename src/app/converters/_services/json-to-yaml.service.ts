@@ -9,6 +9,7 @@ export class JsonToYamlConverter extends ConverterServiceBase {
   override title = 'Json to Yaml';
   override languageFrom = 'json';
   override languageTo = 'yaml';
+  override routeName = 'Json To Yaml';
   override convert(input: string): Observable<string> {
     if (!input) return of('');
     const json = JSON.parse(input);

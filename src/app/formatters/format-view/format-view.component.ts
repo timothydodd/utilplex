@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Meta, Title } from '@angular/platform-browser';
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
+import { getRouteData } from 'src/app/_services/route.service';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from '../../monaco/ng-monaco-config';
 import { FormatViewService } from '../_services/sql-format.service';
@@ -14,21 +16,28 @@ import { FormatViewService } from '../_services/sql-format.service';
   providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
 })
 export class FormatViewComponent {
+  private formatService = inject(FormatViewService);
   inputOptions: MonacoConfig;
   outputOptions: MonacoConfig;
 
   inputCode = signal<string>('');
   outputCode = signal<string>('');
   error = signal<string>('');
-
   title = '';
-
-  constructor(private formatService: FormatViewService) {
-    this.title = formatService.title;
+  private meta = inject(Meta);
+  private titleService = inject(Title);
+  constructor() {
+    var data = getRouteData(this.formatService.routeName);
+    if (!data) {
+      throw new Error('Route data not found for welcome');
+    }
+    this.titleService.setTitle('UtilPlex |' + data.title);
+    if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
+    this.title = this.formatService.title;
 
     this.inputOptions = {
       theme: 'dracula',
-      language: formatService.language,
+      language: this.formatService.language,
     } as MonacoConfig;
     this.outputOptions = { ...this.inputOptions, readOnly: true };
   }

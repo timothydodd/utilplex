@@ -6,12 +6,10 @@ import { JsonToYamlConverter } from '../_services/json-to-yaml.service';
 import { ConvertViewComponent } from '../convert-view/convert-view.component';
 
 @Component({
-    selector: 'app-c-json-yaml',
-    templateUrl: './c-json-yaml.component.html',
-    styleUrls: ['./c-json-yaml.component.scss'],
-    providers: [{ provide: ConverterServiceBase, useClass: JsonToYamlConverter }],
-    imports: [CommonModule, FormsModule, ConvertViewComponent]
+  selector: 'app-c-json-yaml',
+  templateUrl: './c-json-yaml.component.html',
+  styleUrls: ['./c-json-yaml.component.scss'],
+  providers: [{ provide: ConverterServiceBase, useClass: JsonToYamlConverter }],
+  imports: [CommonModule, FormsModule, ConvertViewComponent],
 })
-export class CJsonYamlComponent {
-
-}
+export class CJsonYamlComponent {}

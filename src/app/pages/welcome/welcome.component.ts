@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-import { RouteService } from 'src/app/_services/route.service';
+import { getRouteData, RouteService } from 'src/app/_services/route.service';
 
 @Component({
   selector: 'app-welcome',
@@ -35,6 +36,18 @@ import { RouteService } from 'src/app/_services/route.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WelcomeComponent {
-  categories = RouteService.routeCategories;
+  categories = RouteService.routeCategories.filter((x) => x.name !== 'Home');
   router = inject(Router);
+  private meta = inject(Meta);
+  private title = inject(Title);
+
+  constructor() {
+    var data = getRouteData('Welcome');
+    if (!data) {
+      this.title.setTitle('error');
+      throw new Error('Route data not found for welcome');
+    }
+    this.title.setTitle('UtilPlex |' + data.title);
+    if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
+  }
 }

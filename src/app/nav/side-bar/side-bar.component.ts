@@ -14,7 +14,7 @@ export class SideBarComponent {
   categories: RouterCategory[] = [];
   router = inject(Router);
   constructor() {
-    this.categories = RouteService.routeCategories;
+    this.categories = RouteService.routeCategories.filter((x) => x.name !== 'Home');
   }
   isRouteActive(url: string) {
     return this.router.isActive(url, {

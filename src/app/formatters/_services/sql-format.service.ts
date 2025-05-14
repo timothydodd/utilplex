@@ -3,6 +3,7 @@ import { Observable, of } from 'rxjs';
 import { format as formatsql } from 'sql-formatter';
 export abstract class FormatViewService {
   abstract title: string;
+  abstract routeName: string;
   abstract language: string;
   abstract format(input: string): Observable<string>;
 }
@@ -11,6 +12,7 @@ export abstract class FormatViewService {
 export class SqlFormatProvider extends FormatViewService {
   override title = 'SQL Formatter';
   override language = 'sql';
+  override routeName = 'SQL';
   override format(input: string): Observable<string> {
     return of(formatsql(input, { language: 'transactsql' }));
   }

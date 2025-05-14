@@ -9,6 +9,7 @@ import { FormatViewService } from './sql-format.service';
 export class JavascriptFormatProvider extends FormatViewService {
   override title = 'JavaScript Formatter';
   override language = 'javascript';
+  override routeName = 'JavaScript';
   override format(input: string): Observable<string> {
     return from(
       prettier.format(input, { parser: 'babel', plugins: [babel, estree as unknown as prettier.Plugin<any>] })

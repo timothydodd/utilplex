@@ -4,17 +4,7 @@ import { Observable } from 'rxjs';
 
 export class RouteService {
   public static getRoutes() {
-    const routes: Routes = [
-      {
-        path: '',
-        pathMatch: 'full',
-        loadComponent: () => import('../pages/welcome/welcome.component').then((mod) => mod.WelcomeComponent),
-        data: {
-          title: 'UtilPlex | Free Online JSON Formatter, SQL Beautifier, YAML Converter',
-          description: 'Welcome to Util Plex, your go-to online developer tools for various utilities.',
-        },
-      },
-    ];
+    const routes: Routes = [];
 
     for (const c of RouteService.routeCategories) {
       for (const route of c.routes) {
@@ -23,14 +13,12 @@ export class RouteService {
             path: route.url.substring(1),
             pathMatch: 'full',
             loadComponent: route.loadComponent,
-            data: { title: route.title, description: route.description },
           });
         } else {
           routes.push({
             path: route.url.substring(1),
             pathMatch: 'full',
             component: route.component,
-            data: { title: route.title, description: route.description },
           });
         }
       }
@@ -38,6 +26,19 @@ export class RouteService {
     return routes;
   }
   public static routeCategories: RouteCategory[] = [
+    {
+      name: 'Home',
+      routes: [
+        {
+          name: 'Welcome',
+          title: 'Free Online JSON Formatter, SQL Beautifier, YAML Converter',
+          url: '/',
+          description:
+            'Util Plex is a web-based platform designed to assist developers and coders by providing tools for formatting programming code and converting data formats.',
+          loadComponent: () => import('../pages/welcome/welcome.component').then((mod) => mod.WelcomeComponent),
+        },
+      ],
+    },
     {
       name: 'Formatters',
       routes: [
@@ -125,4 +126,15 @@ export interface UpRoute {
     | Type<unknown>
     | Observable<Type<unknown> | DefaultExport<Type<unknown>>>
     | Promise<Type<unknown> | DefaultExport<Type<unknown>>>;
+}
+
+export function getRouteData(name: string): UpRoute | null {
+  for (const c of RouteService.routeCategories) {
+    for (const route of c.routes) {
+      if (route.name === name) {
+        return route;
+      }
+    }
+  }
+  return null;
 }

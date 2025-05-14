@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
 
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
+import { Meta, Title } from '@angular/platform-browser';
+import { getRouteData } from 'src/app/_services/route.service';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { SwitchComponent } from '../../components/switch/switch.component';
@@ -59,6 +61,7 @@ import { EncoderServiceBase } from '../_services/encoder.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EncoderViewComponent {
+  private convertService = inject(EncoderServiceBase);
   inputOptions: MonacoConfig;
   outputOptions: MonacoConfig;
 
@@ -69,9 +72,16 @@ export class EncoderViewComponent {
   isEncode = signal<boolean>(true);
   modeLabel = computed(() => (this.isEncode() ? 'Encode' : 'Decode'));
   title = '';
-
-  constructor(private convertService: EncoderServiceBase) {
-    this.title = convertService.title;
+  private meta = inject(Meta);
+  private titleService = inject(Title);
+  constructor() {
+    var data = getRouteData(this.convertService.routeName);
+    if (!data) {
+      throw new Error('Route data not found for welcome');
+    }
+    this.titleService.setTitle('UtilPlex |' + data.title);
+    if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
+    this.title = this.convertService.title;
     toObservable(this.isEncode)
       .pipe(takeUntilDestroyed())
       .subscribe(() => {
@@ -87,7 +97,7 @@ export class EncoderViewComponent {
       language: '',
       readOnly: true,
     };
-    convertService.optionsChanged.subscribe(() => {
+    this.convertService.optionsChanged.subscribe(() => {
       this.inputChanged(this.inputCode());
     });
   }
