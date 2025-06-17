@@ -10,7 +10,8 @@ import { FormatViewComponent } from '../format-view/format-view.component';
     templateUrl: './f-json.component.html',
     styleUrls: ['./f-json.component.scss'],
     providers: [{ provide: FormatViewService, useClass: JsonFormatProvider }],
-    imports: [CommonModule, FormsModule, FormatViewComponent]
+    imports: [CommonModule, FormsModule, FormatViewComponent],
+    host: { class: 'host-flex-container' }
 })
 export class FJsonComponent {
 

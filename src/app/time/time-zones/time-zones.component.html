@@ -1,13 +1,13 @@
-<div class="timezone-container">
-  <div class="tool-header">
+<div class="tool-container">
+  <div class="tool-header primary-gradient">
     <div class="tool-info">
       <h1 class="tool-title">Time Zone Converter</h1>
       <p class="tool-description">Convert times between different time zones and explore current time differences globally</p>
     </div>
     <div class="timezone-indicator">
-      <div class="current-zone">
-        <span class="zone-label">Your Zone</span>
-        <span class="zone-name">{{ currentZone?.text || 'Loading...' }}</span>
+      <div class="stat-item">
+        <span class="stat-label">Your Zone</span>
+        <span class="stat-value primary-color">{{ currentZone?.text || 'Loading...' }}</span>
       </div>
     </div>
   </div>
@@ -21,15 +21,15 @@
   </div>
 
   <div class="controls-section">
-    <div class="time-controls-panel">
-      <div class="panel-header">
+    <div class="controls-panel primary-accent time-controls-panel">
+      <div class="panel-header primary-bg">
         <div class="panel-title">
           <div class="panel-icon">⏰</div>
           <h3>Time Settings</h3>
         </div>
       </div>
       <div class="time-controls">
-        <div class="time-picker-group">
+        <div class="option-group">
           <label for="timePicker">Select Time</label>
           <timepicker
             id="timePicker"
@@ -51,8 +51,8 @@
       </div>
     </div>
 
-    <div class="timezone-controls-panel">
-      <div class="panel-header">
+    <div class="controls-panel secondary-accent timezone-controls-panel">
+      <div class="panel-header secondary-bg">
         <div class="panel-title">
           <div class="panel-icon">🌍</div>
           <h3>Time Zone Selection</h3>
@@ -63,7 +63,7 @@
         </button>
       </div>
       <div class="timezone-selectors">
-        <div class="selector-group from-zone">
+        <div class="option-group from-zone">
           <label for="tzFrom">From Time Zone</label>
           <ng-select
             id="tzFrom"
@@ -72,13 +72,13 @@
             [(ngModel)]="currentZone"
             (change)="timeZoneChanged()"
             placeholder="Select source timezone"
-            class="timezone-select"
+            class="form-input primary-focus timezone-select"
           ></ng-select>
         </div>
         <div class="conversion-arrow">
           <div class="arrow-icon">→</div>
         </div>
-        <div class="selector-group to-zone">
+        <div class="option-group to-zone">
           <label for="tzTo">To Time Zone</label>
           <ng-select
             id="tzTo"
@@ -87,7 +87,7 @@
             [(ngModel)]="covertToZone"
             (change)="timeZoneChanged()"
             placeholder="Select target timezone"
-            class="timezone-select"
+            class="form-input primary-focus timezone-select"
           ></ng-select>
         </div>
       </div>
@@ -95,8 +95,8 @@
   </div>
 
   <div class="results-section">
-    <div class="time-result-panel from-panel">
-      <div class="panel-header">
+    <div class="controls-panel primary-accent time-result-panel from-panel">
+      <div class="panel-header primary-bg">
         <div class="panel-title">
           <div class="panel-icon">📍</div>
           <h3>Source Time</h3>
@@ -111,8 +111,8 @@
       </div>
     </div>
 
-    <div class="time-result-panel to-panel">
-      <div class="panel-header">
+    <div class="controls-panel secondary-accent time-result-panel to-panel">
+      <div class="panel-header secondary-bg">
         <div class="panel-title">
           <div class="panel-icon">🎯</div>
           <h3>Converted Time</h3>

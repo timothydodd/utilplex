@@ -12,6 +12,7 @@ import { SwitchComponent } from 'src/app/components/switch/switch.component';
   templateUrl: './time-zones.component.html',
   styleUrls: ['./time-zones.component.scss'],
   imports: [CommonModule, NgSelectModule, FormsModule, HttpClientModule, TimepickerModule, SwitchComponent],
+  host: { class: 'host-flex-container' }
 })
 export class TimeZonesComponent {
   error = signal<string>('');

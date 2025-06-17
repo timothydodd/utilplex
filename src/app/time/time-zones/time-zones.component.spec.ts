@@ -8,8 +8,8 @@ describe('TimeZonesComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [TimeZonesComponent]
-});
+      imports: [TimeZonesComponent],
+    });
     fixture = TestBed.createComponent(TimeZonesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

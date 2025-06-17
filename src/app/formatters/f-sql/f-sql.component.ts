@@ -10,5 +10,6 @@ import { FormatViewComponent } from '../format-view/format-view.component';
   styleUrls: ['./f-sql.component.scss'],
   providers: [{ provide: FormatViewService, useClass: SqlFormatProvider }],
   imports: [CommonModule, FormsModule, FormatViewComponent],
+  host: { class: 'host-flex-container' }
 })
 export class FSqlComponent {}

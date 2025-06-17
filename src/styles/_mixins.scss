@@ -1,3 +1,220 @@
 @mixin border-radius($pixel...) {
     border-radius: $pixel;
 }
+
+// Tool Layout Mixins
+@mixin host-flex-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 100%;
+  overflow: hidden;
+}
+
+@mixin tool-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  max-width: 100%;
+}
+
+@mixin tool-header-base {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+@mixin tool-header-primary {
+  @include tool-header-base;
+  background: linear-gradient(135deg, 
+    rgba(80, 250, 123, 0.1) 0%, 
+    rgba(139, 233, 253, 0.1) 100%);
+}
+
+@mixin tool-header-secondary {
+  @include tool-header-base;
+  background: linear-gradient(135deg, 
+    rgba(139, 233, 253, 0.1) 0%, 
+    rgba(189, 147, 249, 0.1) 100%);
+}
+
+@mixin tool-title-base {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@mixin tool-title-primary {
+  @include tool-title-base;
+  background: linear-gradient(135deg, #50fa7b, #8be9fd);
+}
+
+@mixin tool-title-secondary {
+  @include tool-title-base;
+  background: linear-gradient(135deg, #8be9fd, #bd93f9);
+}
+
+@mixin controls-panel-base {
+  background: linear-gradient(145deg, 
+    rgba(40, 42, 54, 0.8) 0%, 
+    rgba(40, 42, 54, 0.4) 100%);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  overflow: visible;
+  transition: all 0.3s ease;
+  position: relative;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+}
+
+@mixin controls-panel-primary {
+  @include controls-panel-base;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #50fa7b, #8be9fd);
+    border-radius: 15px 15px 0 0;
+  }
+}
+
+@mixin controls-panel-secondary {
+  @include controls-panel-base;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #8be9fd, #bd93f9);
+    border-radius: 15px 15px 0 0;
+  }
+}
+
+@mixin panel-header-base {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid rgba(80, 250, 123, 0.2);
+}
+
+@mixin panel-header-primary {
+  @include panel-header-base;
+  background: linear-gradient(135deg, 
+    rgba(80, 250, 123, 0.08) 0%, 
+    rgba(139, 233, 253, 0.05) 100%);
+}
+
+@mixin panel-header-secondary {
+  @include panel-header-base;
+  background: linear-gradient(135deg, 
+    rgba(139, 233, 253, 0.08) 0%, 
+    rgba(189, 147, 249, 0.05) 100%);
+  border-bottom: 1px solid rgba(139, 233, 253, 0.2);
+}
+
+@mixin form-input-base {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.75rem;
+  color: var(--font-color);
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+  width: 100%;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+@mixin form-input-primary {
+  @include form-input-base;
+  
+  &:focus {
+    border-color: #50fa7b;
+    box-shadow: 0 0 0 2px rgba(80, 250, 123, 0.2);
+    background: rgba(80, 250, 123, 0.05);
+  }
+}
+
+@mixin form-input-secondary {
+  @include form-input-base;
+  
+  &:focus {
+    border-color: #8be9fd;
+    box-shadow: 0 0 0 2px rgba(139, 233, 253, 0.2);
+    background: rgba(139, 233, 253, 0.05);
+  }
+}
+
+@mixin action-btn-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 10px;
+  color: var(--background);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: none;
+  height: 50px;
+  white-space: nowrap;
+  min-width: 200px;
+  
+  &:hover {
+    transform: translateY(-2px);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+@mixin action-btn-primary {
+  @include action-btn-base;
+  background: linear-gradient(135deg, #50fa7b, #8be9fd);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(80, 250, 123, 0.4);
+    background: linear-gradient(135deg, #8be9fd, #50fa7b);
+  }
+}
+
+@mixin action-btn-secondary {
+  @include action-btn-base;
+  background: linear-gradient(135deg, #8be9fd, #bd93f9);
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 233, 253, 0.4);
+    background: linear-gradient(135deg, #bd93f9, #8be9fd);
+  }
+}

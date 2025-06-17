@@ -11,5 +11,6 @@ import { ConvertViewComponent } from '../convert-view/convert-view.component';
   styleUrls: ['./c-json-yaml.component.scss'],
   providers: [{ provide: ConverterServiceBase, useClass: JsonToYamlConverter }],
   imports: [CommonModule, FormsModule, ConvertViewComponent],
+  host: { class: 'host-flex-container' }
 })
 export class CJsonYamlComponent {}

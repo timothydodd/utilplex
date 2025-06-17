@@ -9,27 +9,28 @@ import { GeneratorServiceBase } from '../_services/generator.service';
   selector: 'app-g-guid',
   imports: [CommonModule, FormsModule, GeneratorViewComponent],
   providers: [{ provide: GeneratorServiceBase, useClass: GuidGeneratorService }],
+  host: { class: 'host-flex-container' },
   template: `
-    <div class="generator-container">
-      <div class="tool-header">
+    <div class="tool-container">
+      <div class="tool-header primary-gradient">
         <div class="tool-info">
-          <h1 class="tool-title">GUID Generator</h1>
+          <h1 class="tool-title primary-gradient">GUID Generator</h1>
           <p class="tool-description">Generate unique identifiers (GUIDs/UUIDs) for your applications and databases with customizable quantity</p>
         </div>
         <div class="guid-stats">
           <div class="stat-item">
             <span class="stat-label">Format</span>
-            <span class="stat-value">UUID v4</span>
+            <span class="stat-value primary-color">UUID v4</span>
           </div>
           <div class="stat-item">
             <span class="stat-label">Uniqueness</span>
-            <span class="stat-value">~5.3×10³⁶</span>
+            <span class="stat-value primary-color">~5.3×10³⁶</span>
           </div>
         </div>
       </div>
 
-      <div class="controls-panel">
-        <div class="panel-header">
+      <div class="controls-panel primary-accent">
+        <div class="panel-header primary-bg">
           <div class="panel-title">
             <div class="panel-icon">⚙️</div>
             <h3>Generation Options</h3>
@@ -45,7 +46,7 @@ import { GeneratorServiceBase } from '../_services/generator.service';
               max="1000" 
               [ngModel]="count()" 
               (ngModelChange)="count.set($event)"
-              class="count-input"
+              class="form-input primary-focus"
             />
           </div>
           <div class="format-options">
@@ -87,7 +88,7 @@ import { GeneratorServiceBase } from '../_services/generator.service';
             </div>
           </div>
           <button 
-            class="btn btn-primary generate-btn" 
+            class="action-btn primary-gradient" 
             (click)="generateGuids()"
           >
             <span class="btn-icon">⚡</span>
