@@ -1,18 +1,20 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
+
 import { from } from 'rxjs';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
+import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
+import { EditorComponent } from 'src/app/components/editor/editor.component';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { GeneratorServiceBase } from '../_services/generator.service';
 
 @Component({
   selector: 'app-generator-view',
-  imports: [CommonModule, FormsModule, MonacoEditorModule],
+  imports: [CommonModule, FormsModule, EditorComponent],
   providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
   template: `
     <div *ngIf="error()" class="error-banner">
@@ -96,7 +98,7 @@ export class GeneratorViewComponent {
 
   downloadOutput() {
     if (!this.outputCode()) return;
-    
+
     const blob = new Blob([this.outputCode()], { type: 'text/plain' });
     const url = window.URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -110,8 +112,8 @@ export class GeneratorViewComponent {
 
   getToolDescription(): string {
     const descriptions: Record<string, string> = {
-      'GUID': 'Generate unique identifiers (GUIDs/UUIDs) for your applications and databases',
-      'Lorem': 'Generate Lorem Ipsum placeholder text for design mockups and content layouts'
+      GUID: 'Generate unique identifiers (GUIDs/UUIDs) for your applications and databases',
+      Lorem: 'Generate Lorem Ipsum placeholder text for design mockups and content layouts',
     };
     return descriptions[this.generatorService.routeName] || 'Generate useful content for development and testing';
   }

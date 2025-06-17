@@ -2,9 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
-import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
+import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
+import { EditorComponent } from 'src/app/components/editor/editor.component';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from '../../monaco/ng-monaco-config';
 import { FormatViewService } from '../_services/sql-format.service';
@@ -12,7 +13,7 @@ import { FormatViewService } from '../_services/sql-format.service';
   selector: 'app-format-view',
   templateUrl: './format-view.component.html',
   styleUrls: ['./format-view.component.scss'],
-  imports: [CommonModule, FormsModule, MonacoEditorModule],
+  imports: [CommonModule, FormsModule, EditorComponent],
   providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
 })
 export class FormatViewComponent {

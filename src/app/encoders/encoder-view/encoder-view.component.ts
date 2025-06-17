@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MonacoEditorModule, NGX_MONACO_EDITOR_CONFIG } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
 
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
+import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
+import { EditorComponent } from 'src/app/components/editor/editor.component';
 import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
 import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
 import { SwitchComponent } from '../../components/switch/switch.component';
@@ -14,7 +15,7 @@ import { EncoderServiceBase } from '../_services/encoder.service';
 
 @Component({
   selector: 'app-encoder-view',
-  imports: [CommonModule, FormsModule, MonacoEditorModule, SwitchComponent],
+  imports: [CommonModule, FormsModule, EditorComponent, SwitchComponent],
   providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
   template: `
     <div class="encoder-container">

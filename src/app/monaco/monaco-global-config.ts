@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from '@angular/common';
 import { inject, PLATFORM_ID } from '@angular/core';
-import { NgxMonacoEditorConfig } from 'ngx-monaco-editor-v2';
+import { NgxMonacoEditorConfig } from '../components/editor/config';
 
 declare const monaco: any;
 

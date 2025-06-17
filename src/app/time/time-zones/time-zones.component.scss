@@ -184,43 +184,10 @@
   line-height: 1.4;
 }
 
-/* Timepicker Styling */
-:host ::ng-deep .modern-timepicker {
-  .btn-light {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    color: var(--font-color);
-    
-    &:hover {
-      background: rgba(80, 250, 123, 0.2);
-      border-color: #50fa7b;
-      color: #50fa7b;
-    }
-    
-    &:focus {
-      outline: none;
-      border-color: #50fa7b;
-      box-shadow: 0 0 0 2px rgba(80, 250, 123, 0.2);
-      background: rgba(80, 250, 123, 0.05);
-    }
-  }
-  
-  .form-control {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    color: var(--font-color);
-    text-align: center;
-    font-weight: 600;
-    
-    &:focus {
-      outline: none;
-      border-color: #50fa7b;
-      box-shadow: 0 0 0 2px rgba(80, 250, 123, 0.2);
-      background: rgba(80, 250, 123, 0.05);
-    }
-  }
+/* Custom Timepicker Integration */
+.modern-timepicker {
+  display: flex;
+  justify-content: center;
 }
 
 /* ng-select Styling */

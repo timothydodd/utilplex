@@ -2,12 +2,14 @@
   <div class="tool-header primary-gradient">
     <div class="tool-info">
       <h1 class="tool-title">Time Zone Converter</h1>
-      <p class="tool-description">Convert times between different time zones and explore current time differences globally</p>
+      <p class="tool-description">
+        Convert times between different time zones and explore current time differences globally
+      </p>
     </div>
     <div class="timezone-indicator">
       <div class="stat-item">
         <span class="stat-label">Your Zone</span>
-        <span class="stat-value primary-color">{{ currentZone?.text || 'Loading...' }}</span>
+        <span class="stat-value primary-color">{{ currentZone()?.text || 'Loading...' }}</span>
       </div>
     </div>
   </div>
@@ -31,21 +33,21 @@
       <div class="time-controls">
         <div class="option-group">
           <label for="timePicker">Select Time</label>
-          <timepicker
+          <app-timepicker
             id="timePicker"
             [(ngModel)]="selectedTime"
-            (ngModelChange)="timeZoneChanged()"
-            [showMeridian]="this.amPM"
+            (timeChange)="onTimeChange($event)"
+            [showMeridian]="!amPM()"
             class="modern-timepicker"
-          ></timepicker>
+          ></app-timepicker>
         </div>
         <div class="format-toggle">
           <label for="amPMSwitch">24-Hour Format</label>
-          <app-switch 
-            id="amPMSwitch" 
+          <app-switch
+            id="amPMSwitch"
             [(ngModel)]="amPM"
             (ngModelChange)="timeZoneChanged()"
-            [label]="amPM ? '12-Hour' : '24-Hour'"
+            [label]="amPM() ? '12-Hour' : '24-Hour'"
           ></app-switch>
         </div>
       </div>
@@ -102,12 +104,12 @@
           <h3>Source Time</h3>
         </div>
         <div class="timezone-badge">
-          {{ currentZone?.abbr || 'N/A' }}
+          {{ currentZone()?.abbr || 'N/A' }}
         </div>
       </div>
       <div class="time-display">
         <div class="time-value">{{ currentTimeFrom() || 'Select time and zones' }}</div>
-        <div class="timezone-name">{{ currentZone?.text || 'No timezone selected' }}</div>
+        <div class="timezone-name">{{ currentZone()?.text || 'No timezone selected' }}</div>
       </div>
     </div>
 
@@ -118,12 +120,12 @@
           <h3>Converted Time</h3>
         </div>
         <div class="timezone-badge">
-          {{ covertToZone?.abbr || 'N/A' }}
+          {{ covertToZone()?.abbr || 'N/A' }}
         </div>
       </div>
       <div class="time-display">
         <div class="time-value">{{ currentTimeTo() || 'Select time and zones' }}</div>
-        <div class="timezone-name">{{ covertToZone?.text || 'No timezone selected' }}</div>
+        <div class="timezone-name">{{ covertToZone()?.text || 'No timezone selected' }}</div>
       </div>
     </div>
   </div>

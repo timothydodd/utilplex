@@ -1,43 +1,33 @@
-@use "sass:color";
-
-$control-background: #fbf8ff;
-$green: rgba(color.mix(green, $control-background, 40%),
-        $alpha: 0.8,
-    );
-
-$red: rgba(color.mix(black, $control-background, 15%),
-        $alpha: 0.8,
-    );
-$small-size: 16px;
+$small-size: 18px;
 
 :host {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
 
     .s-label {
-        font-weight: bold;
+        font-weight: 600;
+        color: var(--font-color);
+        font-size: 0.9rem;
     }
 
     &.s-disable {
         opacity: 0.5;
+        pointer-events: none;
     }
 
     label.switch {
         position: relative;
         display: inline-block;
-        width: 60px;
-        height: 34px;
+        width: 70px;
+        height: 40px;
+        cursor: pointer;
 
         &.s-small {
-            width: 38px;
-            height: 22px;
+            width: 45px;
+            height: 26px;
         }
-
-
-
-
 
         .slider {
             position: absolute;
@@ -46,21 +36,29 @@ $small-size: 16px;
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: $red;
-            -webkit-transition: 0.4s;
-            transition: 0.4s;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+
+            &:hover {
+                background: rgba(255, 255, 255, 0.15);
+                border-color: rgba(80, 250, 123, 0.3);
+            }
         }
 
         .slider:before {
             position: absolute;
             content: "";
-            height: 26px;
-            width: 26px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            -webkit-transition: 0.4s;
-            transition: 0.4s;
+            height: 32px;
+            width: 32px;
+            left: 3px;
+            bottom: 3px;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .slider.s-small:before {
@@ -70,9 +68,8 @@ $small-size: 16px;
             bottom: 3px;
         }
 
-        /* Rounded sliders */
         .slider.round {
-            border-radius: 34px;
+            border-radius: 25px;
         }
 
         .slider.round:before {
@@ -84,28 +81,66 @@ $small-size: 16px;
             width: 0;
             height: 0;
 
-            .slider {
-                cursor: default !important;
+            &:checked + .slider {
+                background: rgba(80, 250, 123, 0.2);
+                border-color: #50fa7b;
+                box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1), 0 0 15px rgba(80, 250, 123, 0.3);
             }
 
-            &:checked+.slider {
-                background-color: $green;
+            &:focus + .slider {
+                box-shadow: 0 0 0 3px rgba(80, 250, 123, 0.3);
+                outline: none;
             }
 
-            &:focus+.slider {
-                box-shadow: 0 0 1px $green;
+            &:checked + .slider:before {
+                transform: translateX(30px);
+                background: linear-gradient(135deg, #50fa7b 0%, #40e060 100%);
+                border-color: #50fa7b;
+                box-shadow: 0 2px 12px rgba(80, 250, 123, 0.4);
             }
 
-            &:checked+.slider:before {
-                -webkit-transform: translateX(26px);
-                -ms-transform: translateX(26px);
-                transform: translateX(26px);
-            }
-
-            &:checked+.slider.s-small:before {
-                -webkit-transform: translateX($small-size);
-                -ms-transform: translateX($small-size);
+            &:checked + .slider.s-small:before {
                 transform: translateX($small-size);
+                background: linear-gradient(135deg, #50fa7b 0%, #40e060 100%);
+                border-color: #50fa7b;
+            }
+
+            &:disabled + .slider {
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+        }
+
+        &:hover input:not(:disabled) + .slider:before {
+            transform: scale(1.05);
+        }
+
+        &:hover input:checked:not(:disabled) + .slider:before {
+            transform: translateX(30px) scale(1.05);
+        }
+
+        &:hover input:checked:not(:disabled) + .slider.s-small:before {
+            transform: translateX($small-size) scale(1.05);
+        }
+    }
+}
+
+// Dark theme adjustments
+@media (prefers-color-scheme: dark) {
+    :host {
+        label.switch {
+            .slider {
+                background: rgba(0, 0, 0, 0.3);
+                border-color: rgba(255, 255, 255, 0.15);
+            }
+
+            .slider:before {
+                background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+                border-color: rgba(255, 255, 255, 0.2);
+            }
+
+            input:checked + .slider {
+                background: rgba(80, 250, 123, 0.15);
             }
         }
     }
