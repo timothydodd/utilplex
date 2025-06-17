@@ -24,6 +24,7 @@ export class SideBarComponent {
       matrixParams: 'ignored',
     } as IsActiveMatchOptions);
   }
+
 }
 
 export interface RouterCategory {

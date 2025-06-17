@@ -1,28 +1,89 @@
-<div *ngIf="error()" class="error">{{ error() }}</div>
-
-<div class="split-view">
-  <div class="editor-wrap">
-    <div class="tool-bar section-header">
-      <label>Input</label>
-      <button class="btn btn-secondary" (click)="pasteClick()">Paste</button>
+<div class="converter-container">
+  <div class="tool-header">
+    <div class="tool-info">
+      <h1 class="tool-title">{{ convertService.title }}</h1>
+      <p class="tool-description">{{ getToolDescription() }}</p>
     </div>
-    <div class="sub-wrap">
-      <ngx-monaco-editor
-        #editor
-        class="editor"
-        [options]="inputOptions"
-        [ngModel]="inputCode()"
-        (ngModelChange)="inputChanged($event)"
-      ></ngx-monaco-editor>
+    <div class="conversion-flow">
+      <div class="format-badge from-format">{{ convertService.languageFrom.toUpperCase() }}</div>
+      <div class="conversion-arrow">→</div>
+      <div class="format-badge to-format">{{ convertService.languageTo.toUpperCase() }}</div>
     </div>
   </div>
-  <div class="editor-wrap">
-    <div class="tool-bar section-header">
-      <label>Output</label>
-      <button class="btn btn-secondary" (click)="copyClick()">Copy</button>
+
+  <div *ngIf="error()" class="error-banner">
+    <div class="error-icon">⚠️</div>
+    <div class="error-content">
+      <span class="error-title">Conversion Error</span>
+      <span class="error-message">{{ error() }}</span>
     </div>
-    <div class="sub-wrap">
-      <ngx-monaco-editor class="editor" [options]="outputOptions" [ngModel]="outputCode()"></ngx-monaco-editor>
+  </div>
+
+  <div class="editors-container">
+    <div class="editor-panel input-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">📄</div>
+          <h3>{{ convertService.languageFrom.toUpperCase() }} Input</h3>
+        </div>
+        <div class="panel-actions">
+          <button class="action-btn paste-btn" (click)="pasteClick()" title="Paste from clipboard">
+            <span class="btn-icon">📋</span>
+            Paste
+          </button>
+          <button class="action-btn clear-btn" (click)="clearInput()" title="Clear input">
+            <span class="btn-icon">🗑️</span>
+            Clear
+          </button>
+        </div>
+      </div>
+      <div class="editor-wrapper">
+        <ngx-monaco-editor
+          #editor
+          class="editor"
+          [options]="inputOptions"
+          [ngModel]="inputCode()"
+          (ngModelChange)="inputChanged($event)"
+        ></ngx-monaco-editor>
+        <div class="editor-overlay" *ngIf="!inputCode()">
+          <div class="placeholder-content">
+            <div class="placeholder-icon">📝</div>
+            <p class="placeholder-text">Paste or type your {{ convertService.languageFrom.toUpperCase() }} data here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-panel output-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">✨</div>
+          <h3>{{ convertService.languageTo.toUpperCase() }} Output</h3>
+        </div>
+        <div class="panel-actions">
+          <button class="action-btn copy-btn" (click)="copyClick()" title="Copy to clipboard" [disabled]="!outputCode()">
+            <span class="btn-icon">📄</span>
+            Copy
+          </button>
+          <button class="action-btn download-btn" (click)="downloadOutput()" title="Download as file" [disabled]="!outputCode()">
+            <span class="btn-icon">💾</span>
+            Download
+          </button>
+        </div>
+      </div>
+      <div class="editor-wrapper">
+        <ngx-monaco-editor 
+          class="editor" 
+          [options]="outputOptions" 
+          [ngModel]="outputCode()"
+        ></ngx-monaco-editor>
+        <div class="editor-overlay" *ngIf="!outputCode() && !error()">
+          <div class="placeholder-content">
+            <div class="placeholder-icon">🔄</div>
+            <p class="placeholder-text">Converted {{ convertService.languageTo.toUpperCase() }} will appear here</p>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -17,42 +17,108 @@ import { EncoderServiceBase } from '../_services/encoder.service';
   imports: [CommonModule, FormsModule, MonacoEditorModule, SwitchComponent],
   providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
   template: `
-    <div *ngIf="error()" class="error">{{ error() }}</div>
-    <div class="tool-bar options">
-      <div class="option">
-        <label>Mode</label>
-        <app-switch
-          [small]="true"
-          [label]="modeLabel()"
-          [ngModel]="isEncode()"
-          (ngModelChange)="isEncode.set($event)"
-        ></app-switch>
-      </div>
-      <ng-content select="[tools]"></ng-content>
-    </div>
-    <div class="split-view">
-      <div class="editor-wrap">
-        <div class="tool-bar section-header">
-          <label>Input</label>
-          <button class="btn btn-secondary" (click)="pasteClick()">Paste</button>
+    <div class="encoder-container">
+      <div class="tool-header">
+        <div class="tool-info">
+          <h1 class="tool-title">{{ convertService.title }}</h1>
+          <p class="tool-description">{{ getToolDescription() }}</p>
         </div>
-        <div class="sub-wrap">
-          <ngx-monaco-editor
-            #editor
-            class="editor"
-            [options]="inputOptions"
-            [ngModel]="inputCode()"
-            (ngModelChange)="inputChanged($event)"
-          ></ngx-monaco-editor>
+        <div class="mode-controls">
+          <div class="mode-switcher">
+            <app-switch
+              [small]="true"
+              [label]="modeLabel()"
+              [ngModel]="isEncode()"
+              (ngModelChange)="isEncode.set($event)"
+            ></app-switch>
+          </div>
+          <ng-content select="[tools]"></ng-content>
         </div>
       </div>
-      <div class="editor-wrap">
-        <div class="tool-bar section-header">
-          <label>Output</label>
-          <button class="btn btn-secondary" (click)="copyClick()">Copy</button>
+
+      <div *ngIf="error()" class="error-banner">
+        <div class="error-icon">⚠️</div>
+        <div class="error-content">
+          <span class="error-title">{{ isEncode() ? 'Encoding' : 'Decoding' }} Error</span>
+          <span class="error-message">{{ error() }}</span>
         </div>
-        <div class="sub-wrap">
-          <ngx-monaco-editor class="editor" [options]="outputOptions" [ngModel]="outputCode()"></ngx-monaco-editor>
+      </div>
+
+      <div class="editors-container">
+        <div class="editor-panel input-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <div class="panel-icon">{{ isEncode() ? '📝' : '🔓' }}</div>
+              <h3>{{ isEncode() ? 'Plain Text' : 'Encoded Data' }}</h3>
+            </div>
+            <div class="panel-actions">
+              <button class="action-btn paste-btn" (click)="pasteClick()" title="Paste from clipboard">
+                <span class="btn-icon">📋</span>
+                Paste
+              </button>
+              <button class="action-btn clear-btn" (click)="clearInput()" title="Clear input">
+                <span class="btn-icon">🗑️</span>
+                Clear
+              </button>
+            </div>
+          </div>
+          <div class="editor-wrapper">
+            <ngx-monaco-editor
+              #editor
+              class="editor"
+              [options]="inputOptions"
+              [ngModel]="inputCode()"
+              (ngModelChange)="inputChanged($event)"
+            ></ngx-monaco-editor>
+            <div class="editor-overlay" *ngIf="!inputCode()">
+              <div class="placeholder-content">
+                <div class="placeholder-icon">{{ isEncode() ? '✏️' : '🔐' }}</div>
+                <p class="placeholder-text">
+                  {{ isEncode() ? 'Enter text to encode' : 'Paste encoded data to decode' }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-panel output-panel">
+          <div class="panel-header">
+            <div class="panel-title">
+              <div class="panel-icon">{{ isEncode() ? '🔐' : '📄' }}</div>
+              <h3>{{ isEncode() ? 'Encoded Output' : 'Decoded Text' }}</h3>
+            </div>
+            <div class="panel-actions">
+              <button
+                class="action-btn copy-btn"
+                (click)="copyClick()"
+                title="Copy to clipboard"
+                [disabled]="!outputCode()"
+              >
+                <span class="btn-icon">📄</span>
+                Copy
+              </button>
+              <button
+                class="action-btn download-btn"
+                (click)="downloadOutput()"
+                title="Download as file"
+                [disabled]="!outputCode()"
+              >
+                <span class="btn-icon">💾</span>
+                Download
+              </button>
+            </div>
+          </div>
+          <div class="editor-wrapper">
+            <ngx-monaco-editor class="editor" [options]="outputOptions" [ngModel]="outputCode()"></ngx-monaco-editor>
+            <div class="editor-overlay" *ngIf="!outputCode() && !error()">
+              <div class="placeholder-content">
+                <div class="placeholder-icon">⏳</div>
+                <p class="placeholder-text">
+                  {{ isEncode() ? 'Encoded data will appear here' : 'Decoded text will appear here' }}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -61,7 +127,7 @@ import { EncoderServiceBase } from '../_services/encoder.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EncoderViewComponent {
-  private convertService = inject(EncoderServiceBase);
+  convertService = inject(EncoderServiceBase);
   inputOptions: MonacoConfig;
   outputOptions: MonacoConfig;
 
@@ -121,7 +187,33 @@ export class EncoderViewComponent {
   copyClick() {
     from(navigator.clipboard.writeText(this.outputCode())).subscribe();
   }
+
   pasteClick() {
     from(navigator.clipboard.readText()).subscribe((txt) => this.inputChanged(txt));
+  }
+
+  clearInput() {
+    this.inputChanged('');
+  }
+
+  downloadOutput() {
+    if (!this.outputCode()) return;
+
+    const blob = new Blob([this.outputCode()], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${this.isEncode() ? 'encoded' : 'decoded'}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }
+
+  getToolDescription(): string {
+    const descriptions: Record<string, string> = {
+      Base64: 'Encode and decode text using Base64 encoding for secure data transmission and storage',
+    };
+    return descriptions[this.convertService.routeName] || 'Encode and decode data for secure transmission and storage';
   }
 }

@@ -1,85 +1,235 @@
 :host {
-    display: flex;
-    flex-direction: row;
-    min-height: 100%;
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  background: linear-gradient(180deg, 
+    rgba(15, 15, 26, 0.95) 0%, 
+    rgba(26, 26, 46, 0.9) 50%,
+    rgba(22, 33, 62, 0.95) 100%);
+  position: relative;
+  overflow-x: hidden;
+}
 
+:host::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 50% 0%, rgba(80, 250, 123, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(139, 233, 253, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 100% 50%, rgba(189, 147, 249, 0.02) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 0;
+}
 
-    app-side-bar {
-        flex-shrink: 1;
-    }
+app-side-bar {
+  flex-shrink: 0;
+  z-index: 10;
+  position: fixed;
+}
 
-    .left-gutter {
-        background-color: var(--background-dark);
-    }
+.left-gutter {
+  background: linear-gradient(180deg, 
+    rgba(15, 15, 26, 0.95) 0%, 
+    rgba(26, 26, 46, 0.9) 50%,
+    rgba(22, 33, 62, 0.95) 100%);
+  min-width: 0;
+}
 
-    .middle-section {
-        display: flex;
-        flex-direction: row;
-        min-height: 100%;
-        height: 100vh;
-        width: 1600px;
-    }
+.right-gutter {
+  background: linear-gradient(180deg, 
+    rgba(15, 15, 26, 0.95) 0%, 
+    rgba(26, 26, 46, 0.9) 50%,
+    rgba(22, 33, 62, 0.95) 100%);
+  min-width: 0;
+}
 
-    .left-gutter,
-    .right-gutter,
-    .middle-section {
-        flex-grow: 1;
-    }
+.middle-section {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  max-width: 1600px;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+  margin-left: 280px;
+}
 
-    .route-container {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        padding: 20px;
-        padding-left: 35px;
-        padding-bottom: 35px;
-        gap: 15px;
-        //backdrop-filter: blur(5px);
-        .top-bar {
-            display: flex;
-            flex-direction: row;
-            flex-shrink: 1;
+.left-gutter,
+.right-gutter {
+  flex-grow: 1;
+}
 
-            a {
-                margin-left: auto;
-            }
+.back {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  position: relative;
+  background: transparent;
+  overflow: auto;
+  
+  /* Custom Scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139, 233, 253, 0.3) rgba(255, 255, 255, 0.05);
+}
 
-            img {
+.back::-webkit-scrollbar {
+  width: 8px;
+}
 
-                width: 32px;
-                height: 32px;
-            }
-        }
-    }
-           .back {
-            //   background-color: var(--background);
-            height: 100vh;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            // background: linear-gradient(135deg, #0f0c29, #302b63);
-    
-            //  background-size: cover;
-            position: relative;
-    
-            background-repeat: no-repeat;
-            /* Prevent repeating */
-         background-attachment: fixed;
-            /* Keeps it fixed even on scroll */
-    
-            /* Stretches the gradient to cover the entire body */
-    //    background-image:
-    //             linear-gradient(135deg, #0e161abb, #4a5d67e7);
+.back::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
 
-            background-position: center;
-            background-size: cover;
-            overflow: auto;
-            transition-property: all;
-            transition-timing-function: cubic-bezier(.4, 0, .2, 1);
-            transition-duration: .15s;
-    
-            // scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-        
-        }
+.back::-webkit-scrollbar-thumb {
+  background: rgba(139, 233, 253, 0.3);
+  border-radius: 4px;
+  transition: background 0.3s ease;
+}
+
+.back::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 233, 253, 0.5);
+}
+
+/* Route Container */
+.route-container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  padding: 1.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+/* SEO Title - Hidden but accessible */
+.seo-title {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* Floating GitHub Icon */
+.github-float {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: rgba(40, 42, 54, 0.8);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.github-float:hover {
+  background: rgba(139, 233, 253, 0.2);
+  border-color: rgba(139, 233, 253, 0.4);
+  transform: scale(1.1) rotate(5deg);
+  box-shadow: 
+    0 8px 30px rgba(139, 233, 253, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.github-float img {
+  width: 24px;
+  height: 24px;
+  filter: invert(1) opacity(0.9);
+  transition: all 0.3s ease;
+}
+
+.github-float:hover img {
+  filter: invert(1) opacity(1);
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .middle-section {
+    max-width: 100%;
+    margin-left: 260px;
+  }
+  
+  .left-gutter,
+  .right-gutter {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  :host {
+    flex-direction: column;
+  }
+  
+  .middle-section {
+    flex-direction: column;
+    height: auto;
+    min-height: 100vh;
+    margin-left: 0;
+    margin-top: 120px;
+  }
+  
+  .back {
+    height: auto;
+    min-height: calc(100vh - 120px);
+  }
+  
+  .route-container {
+    padding: 1rem;
+  }
+  
+  .github-float {
+    top: 1rem;
+    right: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+  
+  .github-float img {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (max-width: 480px) {
+  .middle-section {
+    margin-top: 140px;
+  }
+  
+  .route-container {
+    padding: 0.75rem;
+  }
+  
+  .github-float {
+    top: 0.75rem;
+    right: 0.75rem;
+    width: 40px;
+    height: 40px;
+  }
+  
+  .github-float img {
+    width: 20px;
+    height: 20px;
+  }
 }

@@ -111,6 +111,25 @@ export class RouteService {
         },
       ],
     },
+    {
+      name: 'Generators',
+      routes: [
+        {
+          name: 'GUID',
+          title: 'GUID Generator',
+          url: '/generate/guid',
+          description: 'Generate unique identifiers (GUIDs/UUIDs) with customizable quantity for your applications.',
+          loadComponent: () => import('../generators/g-guid/g-guid.component').then((mod) => mod.GGuidComponent),
+        },
+        {
+          name: 'Lorem',
+          title: 'Lorem Ipsum Generator',
+          url: '/generate/lorem',
+          description: 'Generate Lorem Ipsum placeholder text with options for words, sentences, or paragraphs.',
+          loadComponent: () => import('../generators/g-lorem/g-lorem.component').then((mod) => mod.GLoremComponent),
+        },
+      ],
+    },
   ];
 }
 export interface RouteCategory {

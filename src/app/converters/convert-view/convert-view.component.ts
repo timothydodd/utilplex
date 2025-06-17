@@ -17,7 +17,7 @@ import { ConverterServiceBase } from '../_services/converter.service';
   providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
 })
 export class ConvertViewComponent {
-  private convertService = inject(ConverterServiceBase);
+  convertService = inject(ConverterServiceBase);
   inputOptions: MonacoConfig;
   outputOptions: MonacoConfig;
 
@@ -65,7 +65,47 @@ export class ConvertViewComponent {
   copyClick() {
     from(navigator.clipboard.writeText(this.outputCode())).subscribe();
   }
+
   pasteClick() {
     from(navigator.clipboard.readText()).subscribe((txt) => this.inputChanged(txt));
+  }
+
+  clearInput() {
+    this.inputChanged('');
+  }
+
+  downloadOutput() {
+    if (!this.outputCode()) return;
+
+    const blob = new Blob([this.outputCode()], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `converted.${this.getFileExtension()}`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  }
+
+  getFileExtension(): string {
+    const extensions: Record<string, string> = {
+      json: 'json',
+      yaml: 'yaml',
+      yml: 'yml',
+      xml: 'xml',
+      csv: 'csv',
+    };
+    return extensions[this.convertService.languageTo.toLowerCase()] || 'txt';
+  }
+
+  getToolDescription(): string {
+    const descriptions: Record<string, string> = {
+      'Json To Yaml':
+        'Convert JSON data to YAML format while preserving structure and maintaining readability for configuration files',
+    };
+    return (
+      descriptions[this.convertService.routeName] || 'Convert data between different formats seamlessly and efficiently'
+    );
   }
 }

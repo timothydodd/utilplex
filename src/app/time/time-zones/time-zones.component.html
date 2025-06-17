@@ -1,54 +1,130 @@
-<div class="flex-row">
-  <div class="flex-column f-center">
-    <label for="timePicker">Time</label>
-    <timepicker
-      id="timePicker"
-      [(ngModel)]="selectedTime"
-      (ngModelChange)="timeZoneChanged()"
-      [showMeridian]="this.amPM"
-    >
-    </timepicker>
-  </div>
-  <div class="flex-column f-center grow">
-    <label for="amPMSwitch">AM / PM</label>
-    <div class="flex-column f-center grow">
-      <app-switch id="amPMSwitch" [(ngModel)]="amPM"></app-switch>
+<div class="timezone-container">
+  <div class="tool-header">
+    <div class="tool-info">
+      <h1 class="tool-title">Time Zone Converter</h1>
+      <p class="tool-description">Convert times between different time zones and explore current time differences globally</p>
+    </div>
+    <div class="timezone-indicator">
+      <div class="current-zone">
+        <span class="zone-label">Your Zone</span>
+        <span class="zone-name">{{ currentZone?.text || 'Loading...' }}</span>
+      </div>
     </div>
   </div>
-</div>
 
-<div class="flex-row">
-  <div class="flex-column grow gap-24">
-    <div class="flex-column">
-      <label for="tzFrom">Time Zone From</label>
-
-      <ng-select
-        id="tzFrom"
-        [items]="this.zones"
-        bindLabel="text"
-        [(ngModel)]="currentZone"
-        (change)="timeZoneChanged()"
-      ></ng-select>
-    </div>
-    <div class="flex-column">
-      <label for="tzFrom">Time Zone To</label>
-      <ng-select
-        [items]="this.zones"
-        bindLabel="text"
-        [(ngModel)]="covertToZone"
-        (change)="timeZoneChanged()"
-      ></ng-select>
+  <div *ngIf="error()" class="error-banner">
+    <div class="error-icon">⚠️</div>
+    <div class="error-content">
+      <span class="error-title">Time Zone Error</span>
+      <span class="error-message">{{ error() }}</span>
     </div>
   </div>
-  <button class="btn btn-secondary" (click)="btnSwitch()">Switch</button>
-</div>
-<div *ngIf="error()" class="error">{{ error() }}</div>
 
-<div class="flex-column">
-  <label for="tzFrom">Time From</label>
-  <div class="time">{{ currentTimeFrom() }}</div>
-</div>
-<div class="flex-column">
-  <label for="tzFrom">Time To</label>
-  <div class="time">{{ currentTimeTo() }}</div>
+  <div class="controls-section">
+    <div class="time-controls-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">⏰</div>
+          <h3>Time Settings</h3>
+        </div>
+      </div>
+      <div class="time-controls">
+        <div class="time-picker-group">
+          <label for="timePicker">Select Time</label>
+          <timepicker
+            id="timePicker"
+            [(ngModel)]="selectedTime"
+            (ngModelChange)="timeZoneChanged()"
+            [showMeridian]="this.amPM"
+            class="modern-timepicker"
+          ></timepicker>
+        </div>
+        <div class="format-toggle">
+          <label for="amPMSwitch">24-Hour Format</label>
+          <app-switch 
+            id="amPMSwitch" 
+            [(ngModel)]="amPM"
+            (ngModelChange)="timeZoneChanged()"
+            [label]="amPM ? '12-Hour' : '24-Hour'"
+          ></app-switch>
+        </div>
+      </div>
+    </div>
+
+    <div class="timezone-controls-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">🌍</div>
+          <h3>Time Zone Selection</h3>
+        </div>
+        <button class="action-btn switch-btn" (click)="btnSwitch()" title="Switch time zones">
+          <span class="btn-icon">🔄</span>
+          Switch
+        </button>
+      </div>
+      <div class="timezone-selectors">
+        <div class="selector-group from-zone">
+          <label for="tzFrom">From Time Zone</label>
+          <ng-select
+            id="tzFrom"
+            [items]="this.zones"
+            bindLabel="text"
+            [(ngModel)]="currentZone"
+            (change)="timeZoneChanged()"
+            placeholder="Select source timezone"
+            class="timezone-select"
+          ></ng-select>
+        </div>
+        <div class="conversion-arrow">
+          <div class="arrow-icon">→</div>
+        </div>
+        <div class="selector-group to-zone">
+          <label for="tzTo">To Time Zone</label>
+          <ng-select
+            id="tzTo"
+            [items]="this.zones"
+            bindLabel="text"
+            [(ngModel)]="covertToZone"
+            (change)="timeZoneChanged()"
+            placeholder="Select target timezone"
+            class="timezone-select"
+          ></ng-select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="results-section">
+    <div class="time-result-panel from-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">📍</div>
+          <h3>Source Time</h3>
+        </div>
+        <div class="timezone-badge">
+          {{ currentZone?.abbr || 'N/A' }}
+        </div>
+      </div>
+      <div class="time-display">
+        <div class="time-value">{{ currentTimeFrom() || 'Select time and zones' }}</div>
+        <div class="timezone-name">{{ currentZone?.text || 'No timezone selected' }}</div>
+      </div>
+    </div>
+
+    <div class="time-result-panel to-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">🎯</div>
+          <h3>Converted Time</h3>
+        </div>
+        <div class="timezone-badge">
+          {{ covertToZone?.abbr || 'N/A' }}
+        </div>
+      </div>
+      <div class="time-display">
+        <div class="time-value">{{ currentTimeTo() || 'Select time and zones' }}</div>
+        <div class="timezone-name">{{ covertToZone?.text || 'No timezone selected' }}</div>
+      </div>
+    </div>
+  </div>
 </div>
