@@ -23,15 +23,16 @@ export class MonacoEditorConfig implements NgxMonacoEditorConfig {
       inherit: true,
       rules: [
         {
-          background: '282a36',
+          background: '1a1a2e',
           token: '',
         },
         {
-          foreground: '6272a4',
+          foreground: '8be9fd',
+          fontStyle: 'italic',
           token: 'comment',
         },
         {
-          foreground: 'f1fa8c',
+          foreground: '50fa7b',
           token: 'string',
         },
         {
@@ -51,59 +52,62 @@ export class MonacoEditorConfig implements NgxMonacoEditorConfig {
           token: 'constant.other',
         },
         {
-          foreground: 'ffb86c',
+          foreground: '8be9fd',
           token: 'variable.other.readwrite.instance',
         },
         {
-          foreground: 'ff79c6',
+          foreground: '50fa7b',
           token: 'constant.character.escaped',
         },
         {
-          foreground: 'ff79c6',
+          foreground: '50fa7b',
           token: 'constant.character.escape',
         },
         {
-          foreground: 'ff79c6',
+          foreground: '50fa7b',
           token: 'string source',
         },
         {
-          foreground: 'ff79c6',
+          foreground: '50fa7b',
           token: 'string source.ruby',
         },
         {
-          foreground: 'ff79c6',
+          foreground: '8be9fd',
+          fontStyle: 'bold',
           token: 'keyword',
         },
         {
-          foreground: 'ff79c6',
+          foreground: '8be9fd',
+          fontStyle: 'bold',
           token: 'storage',
         },
         {
-          foreground: '8be9fd',
+          foreground: '50fa7b',
           fontStyle: 'italic',
           token: 'storage.type',
         },
         {
           foreground: '50fa7b',
-          fontStyle: 'underline',
+          fontStyle: 'bold',
           token: 'entity.name.class',
         },
         {
           foreground: '50fa7b',
-          fontStyle: 'italic underline',
+          fontStyle: 'italic',
           token: 'entity.other.inherited-class',
         },
         {
-          foreground: '50fa7b',
+          foreground: '8be9fd',
+          fontStyle: 'bold',
           token: 'entity.name.function',
         },
         {
-          foreground: 'ffb86c',
+          foreground: 'bd93f9',
           fontStyle: 'italic',
           token: 'variable.parameter',
         },
         {
-          foreground: 'ff79c6',
+          foreground: '8be9fd',
           token: 'entity.name.tag',
         },
         {
@@ -115,43 +119,45 @@ export class MonacoEditorConfig implements NgxMonacoEditorConfig {
           token: 'support.function',
         },
         {
-          foreground: '6be5fd',
+          foreground: '50fa7b',
           token: 'support.constant',
         },
         {
-          foreground: '66d9ef',
-          fontStyle: ' italic',
+          foreground: 'bd93f9',
+          fontStyle: 'italic',
           token: 'support.type',
         },
         {
-          foreground: '66d9ef',
-          fontStyle: ' italic',
+          foreground: 'bd93f9',
+          fontStyle: 'italic',
           token: 'support.class',
         },
         {
-          foreground: 'f8f8f0',
-          background: 'ff79c6',
+          foreground: 'ffffff',
+          background: 'ff5555',
           token: 'invalid',
         },
         {
-          foreground: 'f8f8f0',
-          background: 'bd93f9',
+          foreground: 'ffffff',
+          background: 'ffb86c',
           token: 'invalid.deprecated',
         },
         {
-          foreground: 'cfcfc2',
+          foreground: 'e2e8f0',
           token: 'meta.structure.dictionary.json string.quoted.double.json',
         },
         {
-          foreground: '6272a4',
+          foreground: '8be9fd',
+          fontStyle: 'italic',
           token: 'meta.diff',
         },
         {
-          foreground: '6272a4',
+          foreground: '8be9fd',
+          fontStyle: 'italic',
           token: 'meta.diff.header',
         },
         {
-          foreground: 'ff79c6',
+          foreground: 'ff5555',
           token: 'markup.deleted',
         },
         {
@@ -159,7 +165,7 @@ export class MonacoEditorConfig implements NgxMonacoEditorConfig {
           token: 'markup.inserted',
         },
         {
-          foreground: 'e6db74',
+          foreground: 'ffb86c',
           token: 'markup.changed',
         },
         {
@@ -167,19 +173,20 @@ export class MonacoEditorConfig implements NgxMonacoEditorConfig {
           token: 'constant.numeric.line-number.find-in-files - match',
         },
         {
-          foreground: 'e6db74',
+          foreground: 'ffb86c',
           token: 'entity.name.filename',
         },
         {
-          foreground: 'f83333',
+          foreground: 'ff5555',
+          fontStyle: 'bold',
           token: 'message.error',
         },
         {
-          foreground: 'eeeeee',
+          foreground: 'f1f5f9',
           token: 'punctuation.definition.string.begin.json - meta.structure.dictionary.value.json',
         },
         {
-          foreground: 'eeeeee',
+          foreground: 'f1f5f9',
           token: 'punctuation.definition.string.end.json - meta.structure.dictionary.value.json',
         },
         {
@@ -187,7 +194,7 @@ export class MonacoEditorConfig implements NgxMonacoEditorConfig {
           token: 'meta.structure.dictionary.json string.quoted.double.json',
         },
         {
-          foreground: 'f1fa8c',
+          foreground: '50fa7b',
           token: 'meta.structure.dictionary.value.json string.quoted.double.json',
         },
         {
@@ -195,35 +202,46 @@ export class MonacoEditorConfig implements NgxMonacoEditorConfig {
           token: 'meta meta meta meta meta meta meta.structure.dictionary.value string',
         },
         {
-          foreground: 'ffb86c',
+          foreground: '8be9fd',
           token: 'meta meta meta meta meta meta.structure.dictionary.value string',
         },
         {
-          foreground: 'ff79c6',
+          foreground: 'bd93f9',
           token: 'meta meta meta meta meta.structure.dictionary.value string',
         },
         {
-          foreground: 'bd93f9',
+          foreground: '50fa7b',
           token: 'meta meta meta meta.structure.dictionary.value string',
         },
         {
-          foreground: '50fa7b',
+          foreground: '8be9fd',
           token: 'meta meta meta.structure.dictionary.value string',
         },
         {
-          foreground: 'ffb86c',
+          foreground: 'bd93f9',
           token: 'meta meta.structure.dictionary.value string',
         },
       ],
       colors: {
-        'editor.foreground': '#f8f8f2',
-        'editor.background': '#282a36',
-        'editor.selectionBackground': '#44475a',
-        'editor.lineHighlightBackground': '#44475a',
-        'editorCursor.foreground': '#f8f8f0',
-        'editorWhitespace.foreground': '#3B3A32',
-        'editorIndentGuide.activeBackground': '#9D550FB0',
-        'editor.selectionHighlightBorder': '#222218',
+        'editor.foreground': '#f1f5f9',
+        'editor.background': '#1a1a2e',
+        'editor.selectionBackground': '#3d4852',
+        'editor.lineHighlightBackground': '#252b3a',
+        'editorCursor.foreground': '#50fa7b',
+        'editorWhitespace.foreground': '#475569',
+        'editorIndentGuide.background': '#374151',
+        'editorIndentGuide.activeBackground': '#50fa7b80',
+        'editor.selectionHighlightBorder': '#8be9fd40',
+        'editorLineNumber.foreground': '#64748b',
+        'editorLineNumber.activeForeground': '#8be9fd',
+        'scrollbarSlider.background': '#50fa7b30',
+        'scrollbarSlider.hoverBackground': '#50fa7b50',
+        'scrollbarSlider.activeBackground': '#50fa7b70',
+        'editorGutter.background': '#16213e',
+        'editorError.foreground': '#ff5555',
+        'editorWarning.foreground': '#ffb86c',
+        'editorInfo.foreground': '#8be9fd',
+        'editorHint.foreground': '#50fa7b',
       },
     });
   }
