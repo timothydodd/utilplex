@@ -90,6 +90,7 @@ export class FormatViewComponent {
       json: 'json',
       sql: 'sql',
       css: 'css',
+      scss: 'scss',
       javascript: 'js',
       yaml: 'yaml',
     };
@@ -101,6 +102,7 @@ export class FormatViewComponent {
       JSON: 'Beautify and validate your JSON data with proper indentation and formatting',
       SQL: 'Format SQL queries for better readability and consistency across your database code',
       CSS: 'Organize and beautify your CSS stylesheets with proper spacing and structure',
+      SCSS: 'Format and beautify your SCSS/Sass code with proper indentation and structure',
       JavaScript: 'Clean up and format your JavaScript code with consistent indentation and style',
       YAML: 'Format YAML files with proper alignment and structure for configuration files',
     };

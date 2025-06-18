@@ -94,6 +94,7 @@ export class WelcomeComponent {
       'SQL': '🗃️',
       'JSON': '📋',
       'CSS': '🎨',
+      'SCSS': '🎨',
       'JavaScript': '📜',
       'Json To Yaml': '🔄',
       'Base64': '🔐',

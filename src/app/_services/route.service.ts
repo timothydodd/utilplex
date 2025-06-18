@@ -61,6 +61,7 @@ export class RouteService {
           name: 'CSS',
           title: 'CSS Formatter',
           url: '/format/css',
+          description: 'Organize and beautify your CSS stylesheets with proper spacing and structure',
           loadComponent: () => import('../formatters/f-css/f-css.component').then((mod) => mod.FCssComponent),
         },
         {
@@ -70,6 +71,13 @@ export class RouteService {
           description: 'Beautify your JavaScript code to enhance readability and maintain clean syntax.',
           loadComponent: () =>
             import('../formatters/f-javascript/f-javascript.component').then((mod) => mod.FJavascriptComponent),
+        },
+        {
+          name: 'SCSS',
+          title: 'SCSS Formatter',
+          url: '/format/scss',
+          description: 'Format and beautify your SCSS/Sass code with proper indentation and structure.',
+          loadComponent: () => import('../formatters/f-scss/f-scss.component').then((mod) => mod.FScssComponent),
         },
       ],
     },
