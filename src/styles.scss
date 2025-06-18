@@ -24,13 +24,32 @@
 
 
 body {
-    background-color: var(--background-dark2);
+    background: linear-gradient(135deg, 
+        #0f0f1a 0%,
+        #1a1a2e 25%,
+        #16213e 50%,
+        #0f3460 75%,
+        #533483 100%);
+    background-attachment: fixed;
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
     font-family: 'Montserrat', sans-serif;
     color: var(--font-color);
     scroll-behavior: smooth;
     height: 100%;
     overscroll-behavior-y: none;
+}
 
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
 }
 
 h1,

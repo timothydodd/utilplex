@@ -8,7 +8,10 @@ import {
   output,
   signal,
   viewChild,
+  Inject,
+  PLATFORM_ID,
 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { toObservable } from '@angular/core/rxjs-interop';
 import { Subscription, take } from 'rxjs';
 import { NGX_MONACO_EDITOR_CONFIG, NgxMonacoEditorConfig } from './config';
@@ -22,6 +25,7 @@ let loadPromise: Promise<void>;
 // eslint-disable-next-line @angular-eslint/component-class-suffix
 export abstract class BaseEditor implements AfterViewInit, OnDestroy {
   config = inject<NgxMonacoEditorConfig>(NGX_MONACO_EDITOR_CONFIG);
+  protected isBrowser: boolean;
 
   // Signal inputs
   insideNg = input<boolean>(false);
@@ -36,21 +40,29 @@ export abstract class BaseEditor implements AfterViewInit, OnDestroy {
   _editorContainer = viewChild<ElementRef>('editorContainer');
   protected _windowResizeSubscription: Subscription | undefined = undefined;
 
-  constructor() {
-    toObservable(this.insideNg)
-      .pipe(take(1))
-      .subscribe((insideNgValue) => {
-        const editor = this._editor();
-        const options = this._options();
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+    
+    if (this.isBrowser) {
+      toObservable(this.insideNg)
+        .pipe(take(1))
+        .subscribe((insideNgValue) => {
+          const editor = this._editor();
+          const options = this._options();
 
-        if (editor && options) {
-          editor.dispose();
-          this.initMonaco(options, insideNgValue);
-        }
-      });
+          if (editor && options) {
+            editor.dispose();
+            this.initMonaco(options, insideNgValue);
+          }
+        });
+    }
   }
 
   ngAfterViewInit(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+    
     if (loadedMonaco) {
       // Wait until monaco editor is available
       loadPromise.then(() => {
@@ -129,6 +141,10 @@ export abstract class BaseEditor implements AfterViewInit, OnDestroy {
   protected abstract initMonaco(options: any, insideNg: boolean): void;
 
   ngOnDestroy() {
+    if (!this.isBrowser) {
+      return;
+    }
+    
     if (this._windowResizeSubscription) {
       this._windowResizeSubscription.unsubscribe();
     }

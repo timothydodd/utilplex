@@ -1,4 +1,14 @@
-import { ChangeDetectionStrategy, Component, forwardRef, inject, input, NgZone, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  inject,
+  Inject,
+  input,
+  NgZone,
+  PLATFORM_ID,
+  signal,
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { combineLatest, fromEvent } from 'rxjs';
 
@@ -48,23 +58,26 @@ export class EditorComponent extends BaseEditor implements ControlValueAccessor 
   propagateChange = (_: any) => {};
   onTouched = () => {};
 
-  constructor() {
-    super();
+  constructor(@Inject(PLATFORM_ID) platformId: object) {
+    super(platformId);
 
-    var ops$ = toObservable(this.options);
-    var moel$ = toObservable(this.model);
-    combineLatest([ops$, moel$])
-      .pipe(takeUntilDestroyed())
-      .subscribe(([options, model]) => {
-        const mergedOptions = Object.assign({}, this.config.defaultOptions, options);
-        this._options.set(mergedOptions);
-        this.options().model = model;
-        const editor = this._editor();
-        if (editor) {
-          editor.dispose();
-          this.initMonaco(mergedOptions, this.insideNg());
-        }
-      });
+    // Only set up observables in the browser
+    if (this.isBrowser) {
+      var ops$ = toObservable(this.options);
+      var moel$ = toObservable(this.model);
+      combineLatest([ops$, moel$])
+        .pipe(takeUntilDestroyed())
+        .subscribe(([options, model]) => {
+          const mergedOptions = Object.assign({}, this.config.defaultOptions, options);
+          this._options.set(mergedOptions);
+          this.options().model = model;
+          const editor = this._editor();
+          if (editor) {
+            editor.dispose();
+            this.initMonaco(mergedOptions, this.insideNg());
+          }
+        });
+    }
   }
 
   writeValue(value: any): void {
@@ -133,7 +146,9 @@ export class EditorComponent extends BaseEditor implements ControlValueAccessor 
     if (this._windowResizeSubscription) {
       this._windowResizeSubscription.unsubscribe();
     }
-    this._windowResizeSubscription = fromEvent(window, 'resize').subscribe(() => editor.layout());
+    if (this.isBrowser) {
+      this._windowResizeSubscription = fromEvent(window, 'resize').subscribe(() => editor.layout());
+    }
     this.onInit.emit(editor);
   }
 }

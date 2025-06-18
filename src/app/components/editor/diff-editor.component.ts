@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, NgZone, inject, input, effect, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, NgZone, inject, input, effect, signal, Inject, PLATFORM_ID } from '@angular/core';
 import { fromEvent } from 'rxjs';
 
 import { BaseEditor } from './base-editor';
@@ -33,36 +33,39 @@ export class DiffEditorComponent extends BaseEditor {
   originalModel = input<DiffEditorModel | undefined>(undefined);
   modifiedModel = input<DiffEditorModel | undefined>(undefined);
 
-  constructor() {
-    super();
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    super(platformId);
     
-    // React to options changes
-    effect(() => {
-      const options = this.options();
-      const mergedOptions = Object.assign({}, this.config.defaultOptions, options);
-      this._options.set(mergedOptions);
-      
-      const editor = this._editor();
-      if (editor) {
-        editor.dispose();
-        this.initMonaco(mergedOptions, this.insideNg());
-      }
-    });
-
-    // React to model changes
-    effect(() => {
-      const originalModel = this.originalModel();
-      const modifiedModel = this.modifiedModel();
-      const options = this._options();
-      
-      if (originalModel && modifiedModel) {
+    // Only set up effects in the browser
+    if (this.isBrowser) {
+      // React to options changes
+      effect(() => {
+        const options = this.options();
+        const mergedOptions = Object.assign({}, this.config.defaultOptions, options);
+        this._options.set(mergedOptions);
+        
         const editor = this._editor();
         if (editor) {
           editor.dispose();
-          this.initMonaco(options, this.insideNg());
+          this.initMonaco(mergedOptions, this.insideNg());
         }
-      }
-    });
+      });
+
+      // React to model changes
+      effect(() => {
+        const originalModel = this.originalModel();
+        const modifiedModel = this.modifiedModel();
+        const options = this._options();
+        
+        if (originalModel && modifiedModel) {
+          const editor = this._editor();
+          if (editor) {
+            editor.dispose();
+            this.initMonaco(options, this.insideNg());
+          }
+        }
+      });
+    }
   }
 
   protected initMonaco(options: any, insideNg: boolean): void {
@@ -106,7 +109,9 @@ export class DiffEditorComponent extends BaseEditor {
     if (this._windowResizeSubscription) {
       this._windowResizeSubscription.unsubscribe();
     }
-    this._windowResizeSubscription = fromEvent(window, 'resize').subscribe(() => editor.layout());
+    if (this.isBrowser) {
+      this._windowResizeSubscription = fromEvent(window, 'resize').subscribe(() => editor.layout());
+    }
     this.onInit.emit(editor);
   }
 }

@@ -1,0 +1,181 @@
+.background-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: transparent;
+}
+
+.background-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.geometric-shapes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.shape {
+  position: absolute;
+  border-radius: 50%;
+  background: linear-gradient(45deg, 
+    rgba(80, 250, 123, 0.12) 0%, 
+    rgba(139, 233, 253, 0.12) 50%, 
+    rgba(255, 121, 198, 0.12) 100%);
+  filter: blur(2px);
+  animation: float 20s infinite ease-in-out;
+  backdrop-filter: blur(1px);
+}
+
+.shape-1 {
+  width: 300px;
+  height: 300px;
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+  animation-duration: 25s;
+}
+
+.shape-2 {
+  width: 200px;
+  height: 200px;
+  top: 20%;
+  right: 15%;
+  animation-delay: -5s;
+  animation-duration: 30s;
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+  background: linear-gradient(135deg, 
+    rgba(139, 233, 253, 0.1) 0%, 
+    rgba(80, 250, 123, 0.1) 100%);
+}
+
+.shape-3 {
+  width: 150px;
+  height: 150px;
+  bottom: 20%;
+  left: 20%;
+  animation-delay: -10s;
+  animation-duration: 35s;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+.shape-4 {
+  width: 250px;
+  height: 250px;
+  bottom: 30%;
+  right: 20%;
+  animation-delay: -15s;
+  animation-duration: 28s;
+  border-radius: 40% 60% 60% 40% / 70% 30% 70% 30%;
+  background: linear-gradient(225deg, 
+    rgba(255, 121, 198, 0.08) 0%, 
+    rgba(139, 233, 253, 0.08) 100%);
+}
+
+.shape-5 {
+  width: 180px;
+  height: 180px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation-delay: -20s;
+  animation-duration: 40s;
+  border-radius: 80% 20% 55% 45% / 25% 75% 25% 75%;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-10px) rotate(180deg);
+    opacity: 0.4;
+  }
+  75% {
+    transform: translateY(-30px) rotate(270deg);
+    opacity: 0.6;
+  }
+}
+
+// Additional floating elements for more dynamic feel
+.shape::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 60%;
+  height: 60%;
+  background: radial-gradient(circle, 
+    rgba(80, 250, 123, 0.08) 0%, 
+    transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulse 4s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.6;
+  }
+}
+
+// Remove the overlay since we now have a nice body gradient
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .shape {
+    transform: scale(0.7);
+  }
+  
+  .shape-1 { width: 200px; height: 200px; }
+  .shape-2 { width: 150px; height: 150px; }
+  .shape-3 { width: 100px; height: 100px; }
+  .shape-4 { width: 180px; height: 180px; }
+  .shape-5 { width: 120px; height: 120px; }
+}
+
+@media (max-width: 480px) {
+  .shape {
+    transform: scale(0.5);
+  }
+  
+  .geometric-shapes {
+    opacity: 0.7;
+  }
+}
+
+// Reduce motion for accessibility
+@media (prefers-reduced-motion: reduce) {
+  .shape {
+    animation: none;
+  }
+  
+  .shape::before {
+    animation: none;
+  }
+  
+  .background-canvas {
+    display: none;
+  }
+}
