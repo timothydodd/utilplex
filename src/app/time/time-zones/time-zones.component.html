@@ -14,13 +14,15 @@
     </div>
   </div>
 
-  <div *ngIf="error()" class="error-banner">
-    <div class="error-icon">⚠️</div>
-    <div class="error-content">
-      <span class="error-title">Time Zone Error</span>
-      <span class="error-message">{{ error() }}</span>
+  @if (error()) {
+    <div class="error-banner">
+      <div class="error-icon">⚠️</div>
+      <div class="error-content">
+        <span class="error-title">Time Zone Error</span>
+        <span class="error-message">{{ error() }}</span>
+      </div>
     </div>
-  </div>
+  }
 
   <div class="controls-section">
     <div class="controls-panel primary-accent time-controls-panel">

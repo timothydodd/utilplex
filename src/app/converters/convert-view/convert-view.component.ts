@@ -4,23 +4,19 @@ import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { from } from 'rxjs';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
-import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
-import { EditorComponent } from 'src/app/components/editor/editor.component';
-import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
-import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
+import { CodeMirrorEditorComponent, CodeMirrorConfig } from 'src/app/components/codemirror-editor/codemirror-editor.component';
 import { ConverterServiceBase } from '../_services/converter.service';
 
 @Component({
   selector: 'app-convert-view',
   templateUrl: './convert-view.component.html',
   styleUrls: ['./convert-view.component.scss'],
-  imports: [CommonModule, FormsModule, EditorComponent],
-  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
+  imports: [CommonModule, FormsModule, CodeMirrorEditorComponent],
 })
 export class ConvertViewComponent {
   convertService = inject(ConverterServiceBase);
-  inputOptions: MonacoConfig;
-  outputOptions: MonacoConfig;
+  inputOptions: CodeMirrorConfig;
+  outputOptions: CodeMirrorConfig;
 
   inputCode = signal<string>('');
   outputCode = signal<string>('');
@@ -39,7 +35,7 @@ export class ConvertViewComponent {
     this.inputOptions = {
       theme: 'dracula',
       language: this.convertService.languageFrom,
-    } as MonacoConfig;
+    } as CodeMirrorConfig;
     this.outputOptions = {
       theme: 'dracula',
       language: this.convertService.languageTo,

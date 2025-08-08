@@ -6,17 +6,13 @@ import { from } from 'rxjs';
 import { takeUntilDestroyed, toObservable } from '@angular/core/rxjs-interop';
 import { Meta, Title } from '@angular/platform-browser';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
-import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
-import { EditorComponent } from 'src/app/components/editor/editor.component';
-import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
-import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
+import { CodeMirrorEditorComponent, CodeMirrorConfig } from 'src/app/components/codemirror-editor/codemirror-editor.component';
 import { SwitchComponent } from '../../components/switch/switch.component';
 import { EncoderServiceBase } from '../_services/encoder.service';
 
 @Component({
   selector: 'app-encoder-view',
-  imports: [CommonModule, FormsModule, EditorComponent, SwitchComponent],
-  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
+  imports: [CommonModule, FormsModule, CodeMirrorEditorComponent, SwitchComponent],
   template: `
     <div class="encoder-container">
       <div class="tool-header">
@@ -37,13 +33,15 @@ import { EncoderServiceBase } from '../_services/encoder.service';
         </div>
       </div>
 
-      <div *ngIf="error()" class="error-banner">
-        <div class="error-icon">⚠️</div>
-        <div class="error-content">
-          <span class="error-title">{{ isEncode() ? 'Encoding' : 'Decoding' }} Error</span>
-          <span class="error-message">{{ error() }}</span>
+      @if (error()) {
+        <div class="error-banner">
+          <div class="error-icon">⚠️</div>
+          <div class="error-content">
+            <span class="error-title">{{ isEncode() ? 'Encoding' : 'Decoding' }} Error</span>
+            <span class="error-message">{{ error() }}</span>
+          </div>
         </div>
-      </div>
+      }
 
       <div class="editors-container">
         <div class="editor-panel input-panel">
@@ -64,21 +62,14 @@ import { EncoderServiceBase } from '../_services/encoder.service';
             </div>
           </div>
           <div class="editor-wrapper">
-            <ngx-monaco-editor
+            <app-codemirror-editor
               #editor
               class="editor"
-              [options]="inputOptions"
+              [config]="inputOptions"
+              [placeholder]="isEncode() ? 'Enter text to encode' : 'Paste encoded data to decode'"
               [ngModel]="inputCode()"
               (ngModelChange)="inputChanged($event)"
-            ></ngx-monaco-editor>
-            <div class="editor-overlay" *ngIf="!inputCode()">
-              <div class="placeholder-content">
-                <div class="placeholder-icon">{{ isEncode() ? '✏️' : '🔐' }}</div>
-                <p class="placeholder-text">
-                  {{ isEncode() ? 'Enter text to encode' : 'Paste encoded data to decode' }}
-                </p>
-              </div>
-            </div>
+            ></app-codemirror-editor>
           </div>
         </div>
 
@@ -110,15 +101,12 @@ import { EncoderServiceBase } from '../_services/encoder.service';
             </div>
           </div>
           <div class="editor-wrapper">
-            <ngx-monaco-editor class="editor" [options]="outputOptions" [ngModel]="outputCode()"></ngx-monaco-editor>
-            <div class="editor-overlay" *ngIf="!outputCode() && !error()">
-              <div class="placeholder-content">
-                <div class="placeholder-icon">⏳</div>
-                <p class="placeholder-text">
-                  {{ isEncode() ? 'Encoded data will appear here' : 'Decoded text will appear here' }}
-                </p>
-              </div>
-            </div>
+            <app-codemirror-editor 
+              class="editor" 
+              [config]="outputOptions" 
+              [placeholder]="isEncode() ? 'Encoded data will appear here' : 'Decoded text will appear here'"
+              [ngModel]="outputCode()">
+            </app-codemirror-editor>
           </div>
         </div>
       </div>
@@ -129,8 +117,8 @@ import { EncoderServiceBase } from '../_services/encoder.service';
 })
 export class EncoderViewComponent {
   convertService = inject(EncoderServiceBase);
-  inputOptions: MonacoConfig;
-  outputOptions: MonacoConfig;
+  inputOptions: CodeMirrorConfig;
+  outputOptions: CodeMirrorConfig;
 
   inputCode = signal<string>('');
   outputCode = signal<string>('');
@@ -158,7 +146,7 @@ export class EncoderViewComponent {
     this.inputOptions = {
       theme: 'dracula',
       language: '',
-    } as MonacoConfig;
+    } as CodeMirrorConfig;
     this.outputOptions = {
       theme: 'dracula',
       language: '',

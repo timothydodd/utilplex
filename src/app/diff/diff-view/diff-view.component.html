@@ -58,18 +58,13 @@
         </div>
       </div>
       <div class="editor-wrapper">
-        <ngx-monaco-editor
+        <app-codemirror-editor
           class="editor"
-          [options]="originalOptions"
+          [config]="originalOptions"
+          [placeholder]="'Paste or type your original file content here'"
           [ngModel]="originalCode()"
           (ngModelChange)="originalChanged($event)">
-        </ngx-monaco-editor>
-        <div class="editor-overlay" *ngIf="!originalCode()">
-          <div class="placeholder-content">
-            <div class="placeholder-icon">📝</div>
-            <p class="placeholder-text">Paste or type your original file content here</p>
-          </div>
-        </div>
+        </app-codemirror-editor>
       </div>
     </div>
 
@@ -89,18 +84,13 @@
         </div>
       </div>
       <div class="editor-wrapper">
-        <ngx-monaco-editor
+        <app-codemirror-editor
           class="editor"
-          [options]="modifiedOptions"
+          [config]="modifiedOptions"
+          [placeholder]="'Paste or type your modified file content here'"
           [ngModel]="modifiedCode()"
           (ngModelChange)="modifiedChanged($event)">
-        </ngx-monaco-editor>
-        <div class="editor-overlay" *ngIf="!modifiedCode()">
-          <div class="placeholder-content">
-            <div class="placeholder-icon">✨</div>
-            <p class="placeholder-text">Paste or type your modified file content here</p>
-          </div>
-        </div>
+        </app-codemirror-editor>
       </div>
     </div>
   </div>

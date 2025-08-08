@@ -22,7 +22,7 @@ interface TimeZone {
   styleUrls: ['./time-zones.component.scss'],
 })
 export class TimeZonesComponent implements OnInit {
-  selectedTime = new Date();
+  selectedTime = signal<Date>(new Date());
   amPM = signal(true);
   currentZone = signal<TimeZone | null>(null);
   covertToZone = signal<TimeZone | null>(null);
@@ -68,10 +68,11 @@ export class TimeZonesComponent implements OnInit {
 
   currentTimeFrom = computed(() => {
     const zone = this.currentZone();
-    if (!zone || !this.selectedTime) return null;
+    const time = this.selectedTime();
+    if (!zone || !time) return null;
 
     try {
-      return this.formatTimeForDisplay(this.selectedTime);
+      return this.formatTimeForDisplay(time);
     } catch (error) {
       this.error.set('Error formatting source time');
       return null;
@@ -81,11 +82,11 @@ export class TimeZonesComponent implements OnInit {
   currentTimeTo = computed(() => {
     const fromZone = this.currentZone();
     const toZone = this.covertToZone();
-
-    if (!fromZone || !toZone || !this.selectedTime) return null;
+    const time = this.selectedTime();
+    if (!fromZone || !toZone || !time) return null;
 
     try {
-      const convertedTime = this.convertTime(this.selectedTime, fromZone, toZone);
+      const convertedTime = this.convertTime(time, fromZone, toZone);
       return this.formatTimeForDisplay(convertedTime);
     } catch (error) {
       this.error.set('Error converting time');
@@ -101,31 +102,32 @@ export class TimeZonesComponent implements OnInit {
   private initializeWithCurrentTime(): void {
     try {
       const now = new Date();
-      this.selectedTime = now;
+      this.selectedTime.set(now);
 
       // Try to detect user's timezone
       const userOffset = -now.getTimezoneOffset() / 60;
-      
+
       // Find matching timezone or default to UTC
       let matchingZone = this.zones.find((zone) => Math.abs(zone.offset - userOffset) < 0.1);
-      
+
       // If no exact match found, try to find by timezone name
       if (!matchingZone) {
         const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-        matchingZone = this.zones.find(zone => 
-          zone.value === userTimezone || 
-          zone.value.includes(userTimezone.split('/')[1]) ||
-          zone.text.toLowerCase().includes(userTimezone.toLowerCase())
+        matchingZone = this.zones.find(
+          (zone) =>
+            zone.value === userTimezone ||
+            zone.value.includes(userTimezone.split('/')[1]) ||
+            zone.text.toLowerCase().includes(userTimezone.toLowerCase())
         );
       }
-      
+
       // Default to UTC if still no match
       if (!matchingZone) {
         matchingZone = this.zones[0]; // UTC
       }
 
       this.currentZone.set(matchingZone);
-      
+
       // Set target zone to a different zone for demonstration
       const targetZone = matchingZone === this.zones[0] ? this.zones[1] : this.zones[0];
       this.covertToZone.set(targetZone);
@@ -141,7 +143,7 @@ export class TimeZonesComponent implements OnInit {
   private formatTimeForDisplay(date: Date): string {
     const hours = date.getHours();
     const minutes = date.getMinutes();
-    
+
     if (this.amPM()) {
       // 12-hour format
       const displayHour = hours === 0 ? 12 : hours > 12 ? hours - 12 : hours;
@@ -156,16 +158,16 @@ export class TimeZonesComponent implements OnInit {
   private convertTime(date: Date, fromZone: TimeZone, toZone: TimeZone): Date {
     // The selectedTime represents a time in the "from" timezone
     // We need to convert it to the "to" timezone
-    
+
     // Create a new date with the same time components
     const sourceTime = new Date(date);
-    
+
     // Calculate the difference in hours between timezones
     const offsetDifference = toZone.offset - fromZone.offset;
-    
+
     // Apply the offset difference
-    const convertedTime = new Date(sourceTime.getTime() + (offsetDifference * 60 * 60 * 1000));
-    
+    const convertedTime = new Date(sourceTime.getTime() + offsetDifference * 60 * 60 * 1000);
+
     return convertedTime;
   }
 
@@ -182,7 +184,8 @@ export class TimeZonesComponent implements OnInit {
   }
 
   onTimeChange(newTime: Date): void {
-    this.selectedTime = newTime;
+    this.selectedTime.set(newTime);
+
     this.timeZoneChanged();
   }
 }

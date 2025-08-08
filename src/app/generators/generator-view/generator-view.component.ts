@@ -6,24 +6,22 @@ import { from } from 'rxjs';
 
 import { Meta, Title } from '@angular/platform-browser';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
-import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
-import { EditorComponent } from 'src/app/components/editor/editor.component';
-import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
-import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
+import { CodeMirrorEditorComponent, CodeMirrorConfig } from 'src/app/components/codemirror-editor/codemirror-editor.component';
 import { GeneratorServiceBase } from '../_services/generator.service';
 
 @Component({
   selector: 'app-generator-view',
-  imports: [CommonModule, FormsModule, EditorComponent],
-  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
+  imports: [CommonModule, FormsModule, CodeMirrorEditorComponent],
   template: `
-    <div *ngIf="error()" class="error-banner">
-      <div class="error-icon">⚠️</div>
-      <div class="error-content">
-        <span class="error-title">Generation Error</span>
-        <span class="error-message">{{ error() }}</span>
+    @if (error()) {
+      <div class="error-banner">
+        <div class="error-icon">⚠️</div>
+        <div class="error-content">
+          <span class="error-title">Generation Error</span>
+          <span class="error-message">{{ error() }}</span>
+        </div>
       </div>
-    </div>
+    }
     <ng-content select="[tools]"></ng-content>
     <div class="single-view">
       <div class="editor-wrap">
@@ -32,7 +30,7 @@ import { GeneratorServiceBase } from '../_services/generator.service';
           <button class="btn btn-secondary" (click)="copyClick()">Copy</button>
         </div>
         <div class="sub-wrap">
-          <ngx-monaco-editor class="editor" [options]="outputOptions" [ngModel]="outputCode()"></ngx-monaco-editor>
+          <app-codemirror-editor class="editor" [config]="outputOptions" [ngModel]="outputCode()"></app-codemirror-editor>
         </div>
       </div>
     </div>
@@ -42,7 +40,7 @@ import { GeneratorServiceBase } from '../_services/generator.service';
 })
 export class GeneratorViewComponent {
   private generatorService = inject(GeneratorServiceBase);
-  outputOptions: MonacoConfig;
+  outputOptions: CodeMirrorConfig;
 
   outputCode = signal<string>('');
   error = signal<string>('');
@@ -64,10 +62,7 @@ export class GeneratorViewComponent {
       theme: 'dracula',
       language: 'text',
       readOnly: true,
-      wordWrap: 'on',
-      wordWrapMinified: true,
-      wrappingIndent: 'same',
-      wrappingStrategy: 'advanced',
+      wordWrap: true,
       automaticLayout: false,
       scrollBeyondLastLine: false,
       minimap: {

@@ -4,22 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { from } from 'rxjs';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
-import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
-import { EditorComponent } from 'src/app/components/editor/editor.component';
-import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
-import { MonacoConfig } from '../../monaco/ng-monaco-config';
+import {
+  CodeMirrorConfig,
+  CodeMirrorEditorComponent,
+} from 'src/app/components/codemirror-editor/codemirror-editor.component';
 import { FormatViewService } from '../_services/sql-format.service';
 @Component({
   selector: 'app-format-view',
   templateUrl: './format-view.component.html',
   styleUrls: ['./format-view.component.scss'],
-  imports: [CommonModule, FormsModule, EditorComponent],
-  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
+  imports: [CommonModule, FormsModule, CodeMirrorEditorComponent],
 })
 export class FormatViewComponent {
   formatService = inject(FormatViewService);
-  inputOptions: MonacoConfig;
-  outputOptions: MonacoConfig;
+  inputOptions: CodeMirrorConfig;
+  outputOptions: CodeMirrorConfig;
 
   inputCode = signal<string>('');
   outputCode = signal<string>('');
@@ -39,7 +38,7 @@ export class FormatViewComponent {
     this.inputOptions = {
       theme: 'dracula',
       language: this.formatService.language,
-    } as MonacoConfig;
+    } as CodeMirrorConfig;
     this.outputOptions = { ...this.inputOptions, readOnly: true };
   }
 

@@ -36,8 +36,13 @@ app-side-bar {
   //   rgba(15, 15, 26, 0.95) 0%, 
   //   rgba(26, 26, 46, 0.9) 50%,
   //   rgba(22, 33, 62, 0.95) 100%);
-  width: 280px;
+  width: 240px;
   flex-shrink: 0;
+  transition: width 0.3s ease;
+}
+
+.left-gutter.collapsed {
+  width: 64px;
 }
 
 
@@ -93,7 +98,7 @@ app-side-bar {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  padding: 1.5rem;
+  padding: 1rem 1.25rem;
   position: relative;
   z-index: 2;
 }

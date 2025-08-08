@@ -2,4 +2,6 @@
   <input [id]="uniqueId" type="checkbox" [disabled]="disabled" [(ngModel)]="checked" (change)="change()" />
   <span class="slider round" [ngClass]="{ 's-small': small() }"></span>
 </label>
-<label [for]="uniqueId" class="s-label" *ngIf="label">{{ label() }}</label>
+@if (label()) {
+  <label [for]="uniqueId" class="s-label">{{ label() }}</label>
+}

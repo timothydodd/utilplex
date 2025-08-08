@@ -12,13 +12,15 @@
     </div>
   </div>
 
-  <div *ngIf="error()" class="error-banner">
-    <div class="error-icon">⚠️</div>
-    <div class="error-content">
-      <span class="error-title">Formatting Error</span>
-      <span class="error-message">{{ error() }}</span>
+  @if (error()) {
+    <div class="error-banner">
+      <div class="error-icon">⚠️</div>
+      <div class="error-content">
+        <span class="error-title">Formatting Error</span>
+        <span class="error-message">{{ error() }}</span>
+      </div>
     </div>
-  </div>
+  }
 
   <div class="editors-container">
     <div class="editor-panel input-panel">
@@ -39,19 +41,14 @@
         </div>
       </div>
       <div class="editor-wrapper">
-        <ngx-monaco-editor
+        <app-codemirror-editor
           #editor
           class="editor"
-          [options]="inputOptions"
+          [config]="inputOptions"
+          [placeholder]="'Paste or type your ' + formatService.language.toUpperCase() + ' code here'"
           [ngModel]="inputCode()"
           (ngModelChange)="inputChanged($event)"
-        ></ngx-monaco-editor>
-        <div class="editor-overlay" *ngIf="!inputCode()">
-          <div class="placeholder-content">
-            <div class="placeholder-icon">✨</div>
-            <p class="placeholder-text">Paste or type your {{ formatService.language.toUpperCase() }} code here</p>
-          </div>
-        </div>
+        ></app-codemirror-editor>
       </div>
     </div>
 
@@ -83,13 +80,12 @@
         </div>
       </div>
       <div class="editor-wrapper">
-        <ngx-monaco-editor class="editor" [options]="outputOptions" [ngModel]="outputCode()"></ngx-monaco-editor>
-        <div class="editor-overlay" *ngIf="!outputCode() && !error()">
-          <div class="placeholder-content">
-            <div class="placeholder-icon">⏳</div>
-            <p class="placeholder-text">Formatted code will appear here</p>
-          </div>
-        </div>
+        <app-codemirror-editor 
+          class="editor" 
+          [config]="outputOptions" 
+          [placeholder]="'Formatted code will appear here'"
+          [ngModel]="outputCode()">
+        </app-codemirror-editor>
       </div>
     </div>
   </div>

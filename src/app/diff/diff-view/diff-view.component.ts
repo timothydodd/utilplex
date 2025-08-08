@@ -4,18 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Meta, Title } from '@angular/platform-browser';
 import { from } from 'rxjs';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
-import { NGX_MONACO_EDITOR_CONFIG } from 'src/app/components/editor/config';
-import { EditorComponent } from 'src/app/components/editor/editor.component';
-import { MonacoEditorConfig } from 'src/app/monaco/monaco-global-config';
-import { MonacoConfig } from 'src/app/monaco/ng-monaco-config';
+import { CodeMirrorEditorComponent, CodeMirrorConfig } from 'src/app/components/codemirror-editor/codemirror-editor.component';
 import { DiffResult, DiffService } from '../_services/diff.service';
 
 @Component({
   selector: 'app-diff-view',
   templateUrl: './diff-view.component.html',
   styleUrls: ['./diff-view.component.scss'],
-  imports: [CommonModule, FormsModule, EditorComponent],
-  providers: [{ provide: NGX_MONACO_EDITOR_CONFIG, useClass: MonacoEditorConfig }],
+  imports: [CommonModule, FormsModule, CodeMirrorEditorComponent],
 })
 export class DiffViewComponent {
   diffService = inject(DiffService);
@@ -26,13 +22,13 @@ export class DiffViewComponent {
   error = signal<string>('');
   showDiffView = signal<boolean>(false);
 
-  originalOptions: MonacoConfig = {
+  originalOptions: CodeMirrorConfig = {
     theme: 'dracula',
     language: 'text',
     readOnly: false,
   };
   
-  modifiedOptions: MonacoConfig = {
+  modifiedOptions: CodeMirrorConfig = {
     theme: 'dracula',
     language: 'text',
     readOnly: false,

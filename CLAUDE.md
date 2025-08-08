@@ -64,3 +64,6 @@ Routes are centrally managed in `src/app/_services/route.service.ts` with:
 - Prefer signals over observables for component state
 - Follow existing naming patterns: `f-json` (formatter), `c-json-yaml` (converter)
 - Abstract base classes for extensibility
+- Use Angular control flow syntax (`@if`, `@for`, `@switch`) instead of structural directives (`*ngIf`, `*ngFor`, `*ngSwitch`)
+- Use `@for` syntax: `@for (item of items; track item.id) { ... }` instead of `*ngFor="let item of items; trackBy: trackByFn"`
+- Use signal-based inputs/outputs: `myInput = input()` and `myOutput = output()` instead of `@Input()` and `@Output()` decorators

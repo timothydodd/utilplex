@@ -73,6 +73,14 @@ export class RouteService {
             import('../formatters/f-javascript/f-javascript.component').then((mod) => mod.FJavascriptComponent),
         },
         {
+          name: 'TypeScript',
+          title: 'TypeScript Formatter',
+          url: '/format/typescript',
+          description: 'Format and beautify your TypeScript code with proper indentation and type definitions.',
+          loadComponent: () =>
+            import('../formatters/f-typescript/f-typescript.component').then((mod) => mod.FTypescriptComponent),
+        },
+        {
           name: 'SCSS',
           title: 'SCSS Formatter',
           url: '/format/scss',
@@ -145,7 +153,8 @@ export class RouteService {
           name: 'File Diff',
           title: 'File Diff Checker',
           url: '/diff/files',
-          description: 'Compare two files or text blocks and highlight the differences between them. Perfect for code reviews and content comparison.',
+          description:
+            'Compare two files or text blocks and highlight the differences between them. Perfect for code reviews and content comparison.',
           loadComponent: () => import('../diff/diff-view/diff-view.component').then((mod) => mod.DiffViewComponent),
         },
       ],
