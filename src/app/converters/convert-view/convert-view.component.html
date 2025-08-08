@@ -27,11 +27,11 @@
           <h3>{{ convertService.languageFrom.toUpperCase() }} Input</h3>
         </div>
         <div class="panel-actions">
-          <button class="action-btn paste-btn" (click)="pasteClick()" title="Paste from clipboard">
+          <button class="action-btn-sm paste-btn" (click)="pasteClick()" title="Paste from clipboard">
             <span class="btn-icon">📋</span>
             Paste
           </button>
-          <button class="action-btn clear-btn" (click)="clearInput()" title="Clear input">
+          <button class="action-btn-sm clear-btn" (click)="clearInput()" title="Clear input">
             <span class="btn-icon">🗑️</span>
             Clear
           </button>
@@ -61,11 +61,11 @@
           <h3>{{ convertService.languageTo.toUpperCase() }} Output</h3>
         </div>
         <div class="panel-actions">
-          <button class="action-btn copy-btn" (click)="copyClick()" title="Copy to clipboard" [disabled]="!outputCode()">
+          <button class="action-btn-sm copy-btn" (click)="copyClick()" title="Copy to clipboard" [disabled]="!outputCode()">
             <span class="btn-icon">📄</span>
             Copy
           </button>
-          <button class="action-btn download-btn" (click)="downloadOutput()" title="Download as file" [disabled]="!outputCode()">
+          <button class="action-btn-sm download-btn" (click)="downloadOutput()" title="Download as file" [disabled]="!outputCode()">
             <span class="btn-icon">💾</span>
             Download
           </button>

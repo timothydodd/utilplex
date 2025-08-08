@@ -138,6 +138,18 @@ export class RouteService {
         },
       ],
     },
+    {
+      name: 'Diff',
+      routes: [
+        {
+          name: 'File Diff',
+          title: 'File Diff Checker',
+          url: '/diff/files',
+          description: 'Compare two files or text blocks and highlight the differences between them. Perfect for code reviews and content comparison.',
+          loadComponent: () => import('../diff/diff-view/diff-view.component').then((mod) => mod.DiffViewComponent),
+        },
+      ],
+    },
   ];
 }
 export interface RouteCategory {

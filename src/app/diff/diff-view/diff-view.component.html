@@ -1,0 +1,183 @@
+<div class="diff-container">
+  <div class="tool-header">
+    <div class="tool-info">
+      <h1 class="tool-title">File Diff Checker</h1>
+      <p class="tool-description">
+        Compare two files or text blocks to see the differences between them. Added lines are highlighted in green, removed lines in red.
+      </p>
+    </div>
+    <div class="tool-stats">
+      <div class="stat-item">
+        <span class="stat-label">Mode:</span>
+        <span class="stat-value">{{ showDiffView() ? 'DIFF VIEW' : 'EDITOR VIEW' }}</span>
+      </div>
+      @if (diffResult()) {
+      <div class="stat-item changes-stat">
+        <span class="stat-label">Changes:</span>
+        <span class="stat-value">{{ getAddedCount() + getRemovedCount() }}</span>
+      </div>
+      }
+    </div>
+  </div>
+
+  @if (error()) {
+  <div class="error-banner">
+    <div class="error-icon">⚠️</div>
+    <div class="error-content">
+      <span class="error-title">Comparison Error</span>
+      <span class="error-message">{{ error() }}</span>
+    </div>
+  </div>
+  }
+
+  <div class="diff-controls">
+    <div class="control-group">
+      <button type="button" class="action-btn toggle-btn" (click)="toggleView()">
+        <span class="btn-icon">{{ showDiffView() ? '📝' : '👁️' }}</span>
+        {{ showDiffView() ? 'Show Editors' : 'Show Diff View' }}
+      </button>
+    </div>
+  </div>
+
+  @if (!showDiffView()) {
+  <!-- Editor View -->
+  <div class="editors-container">
+    <div class="editor-panel input-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">📄</div>
+          <h3>Original File</h3>
+        </div>
+        <div class="panel-actions">
+          <button type="button" class="action-btn-sm paste-btn" (click)="pasteOriginal()">
+            <span class="btn-icon">📋</span>Paste
+          </button>
+          <button type="button" class="action-btn-sm clear-btn" (click)="clearOriginal()">
+            <span class="btn-icon">🗑️</span>Clear
+          </button>
+        </div>
+      </div>
+      <div class="editor-wrapper">
+        <ngx-monaco-editor
+          class="editor"
+          [options]="originalOptions"
+          [ngModel]="originalCode()"
+          (ngModelChange)="originalChanged($event)">
+        </ngx-monaco-editor>
+        <div class="editor-overlay" *ngIf="!originalCode()">
+          <div class="placeholder-content">
+            <div class="placeholder-icon">📝</div>
+            <p class="placeholder-text">Paste or type your original file content here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-panel output-panel">
+      <div class="panel-header">
+        <div class="panel-title">
+          <div class="panel-icon">📝</div>
+          <h3>Modified File</h3>
+        </div>
+        <div class="panel-actions">
+          <button type="button" class="action-btn-sm paste-btn" (click)="pasteModified()">
+            <span class="btn-icon">📋</span>Paste
+          </button>
+          <button type="button" class="action-btn-sm clear-btn" (click)="clearModified()">
+            <span class="btn-icon">🗑️</span>Clear
+          </button>
+        </div>
+      </div>
+      <div class="editor-wrapper">
+        <ngx-monaco-editor
+          class="editor"
+          [options]="modifiedOptions"
+          [ngModel]="modifiedCode()"
+          (ngModelChange)="modifiedChanged($event)">
+        </ngx-monaco-editor>
+        <div class="editor-overlay" *ngIf="!modifiedCode()">
+          <div class="placeholder-content">
+            <div class="placeholder-icon">✨</div>
+            <p class="placeholder-text">Paste or type your modified file content here</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  } @else if (diffResult()) {
+  <!-- Diff View -->
+  <div class="diff-view-container">
+    <div class="diff-panels">
+      <div class="diff-panel original-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-icon">📄</div>
+            <h3>Original</h3>
+          </div>
+        </div>
+        <div class="diff-content">
+          @for (line of diffResult()!.original; track line.lineNumber) {
+          <div class="diff-line" [class]="'diff-' + line.type">
+            <span class="line-number">{{ line.lineNumber }}</span>
+            <span class="line-prefix">{{ line.type === 'removed' ? '-' : ' ' }}</span>
+            <span class="line-content">{{ line.content || ' ' }}</span>
+          </div>
+          }
+        </div>
+      </div>
+
+      <div class="diff-panel modified-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-icon">📝</div>
+            <h3>Modified</h3>
+          </div>
+        </div>
+        <div class="diff-content">
+          @for (line of diffResult()!.modified; track line.lineNumber) {
+          <div class="diff-line" [class]="'diff-' + line.type">
+            <span class="line-number">{{ line.lineNumber }}</span>
+            <span class="line-prefix">{{ line.type === 'added' ? '+' : ' ' }}</span>
+            <span class="line-content">{{ line.content || ' ' }}</span>
+          </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  @if (diffResult()) {
+  <div class="diff-summary">
+    <div class="summary-header">
+      <div class="panel-title">
+        <div class="panel-icon">📊</div>
+        <h3>Diff Summary</h3>
+      </div>
+    </div>
+    <div class="summary-stats">
+      <div class="stat-card added-stat">
+        <div class="stat-icon">➕</div>
+        <div class="stat-info">
+          <span class="stat-number">{{ getAddedCount() }}</span>
+          <span class="stat-label">Lines Added</span>
+        </div>
+      </div>
+      <div class="stat-card removed-stat">
+        <div class="stat-icon">➖</div>
+        <div class="stat-info">
+          <span class="stat-number">{{ getRemovedCount() }}</span>
+          <span class="stat-label">Lines Removed</span>
+        </div>
+      </div>
+      <div class="stat-card unchanged-stat">
+        <div class="stat-icon">➡️</div>
+        <div class="stat-info">
+          <span class="stat-number">{{ getUnchangedCount() }}</span>
+          <span class="stat-label">Lines Unchanged</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

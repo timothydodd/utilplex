@@ -2,46 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc>https://utilplex.com/</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/convert/json-yaml</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/encoding/base64</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/format/css</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/format/javascript</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/format/json</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/format/scss</loc>
-        <lastmod>2025-06-18</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/format/sql</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/time/zones</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/generate/guid</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
     </url>
     <url>
         <loc>https://utilplex.com/generate/lorem</loc>
-        <lastmod>2025-06-17</lastmod>
+        <lastmod>2025-08-08</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/diff/files</loc>
+        <lastmod>2025-08-08</lastmod>
     </url>
 </urlset>

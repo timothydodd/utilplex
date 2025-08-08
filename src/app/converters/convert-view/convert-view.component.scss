@@ -222,61 +222,8 @@
   gap: 0.5rem;
 }
 
-.action-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
-  color: var(--font-color);
-  font-size: 0.9rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-decoration: none;
-}
+/* Action button styles are now in global _buttons.scss */
 
-.action-btn:hover:not(:disabled) {
-  background: rgba(139, 233, 253, 0.2);
-  border-color: #8be9fd;
-  color: #8be9fd;
-  transform: translateY(-1px);
-}
-
-.action-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
-
-.btn-icon {
-  font-size: 0.9rem;
-}
-
-.copy-btn:hover:not(:disabled) {
-  background: rgba(80, 250, 123, 0.2);
-  border-color: #50fa7b;
-  color: #50fa7b;
-}
-
-.paste-btn:hover:not(:disabled) {
-  background: rgba(139, 233, 253, 0.2);
-  border-color: #8be9fd;
-  color: #8be9fd;
-}
-
-.clear-btn:hover:not(:disabled) {
-  background: rgba(255, 121, 198, 0.2);
-  border-color: #ff79c6;
-  color: #ff79c6;
-}
-
-.download-btn:hover:not(:disabled) {
-  background: rgba(241, 250, 140, 0.2);
-  border-color: #f1fa8c;
-  color: #f1fa8c;
-}
 
 /* Editor Wrapper */
 .editor-wrapper {
@@ -368,10 +315,6 @@
     flex-wrap: wrap;
   }
   
-  .action-btn {
-    font-size: 0.8rem;
-    padding: 0.4rem 0.8rem;
-  }
   
   .conversion-flow {
     padding: 0.75rem;

@@ -28,11 +28,11 @@
           <h3>Input</h3>
         </div>
         <div class="panel-actions">
-          <button class="action-btn paste-btn" (click)="pasteClick()" title="Paste from clipboard">
+          <button class="action-btn-sm paste-btn" (click)="pasteClick()" title="Paste from clipboard">
             <span class="btn-icon">📋</span>
             Paste
           </button>
-          <button class="action-btn clear-btn" (click)="clearInput()" title="Clear input">
+          <button class="action-btn-sm clear-btn" (click)="clearInput()" title="Clear input">
             <span class="btn-icon">🗑️</span>
             Clear
           </button>
@@ -63,7 +63,7 @@
         </div>
         <div class="panel-actions">
           <button
-            class="action-btn copy-btn"
+            class="action-btn-sm copy-btn"
             (click)="copyClick()"
             title="Copy to clipboard"
             [disabled]="!outputCode()"
@@ -72,7 +72,7 @@
             Copy
           </button>
           <button
-            class="action-btn download-btn"
+            class="action-btn-sm download-btn"
             (click)="downloadOutput()"
             title="Download as file"
             [disabled]="!outputCode()"
