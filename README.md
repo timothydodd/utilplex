@@ -1,6 +1,6 @@
 # UtilPlex - Developer Utilities
 
-UtilPlex is a modern Angular 20.x web application providing essential developer utilities for code formatting, data conversion, encoding, and time zone management. Built with standalone components, signals, and server-side rendering (SSR), UtilPlex offers a comprehensive suite of tools to streamline your development workflow.
+UtilPlex is a modern Angular 20.1.x web application providing essential developer utilities for code formatting, data conversion, encoding, diff comparison, and time zone management. Built with standalone components, signals, and server-side rendering (SSR), UtilPlex offers a comprehensive suite of tools to streamline your development workflow.
 
 ## 🌐 Live Version 
 [https://www.utilplex.com](https://www.utilplex.com)
@@ -15,6 +15,7 @@ UtilPlex is a modern Angular 20.x web application providing essential developer 
     - [Data Converters](#data-converters)
     - [Encoders/Decoders](#encodersdecoders)
     - [Content Generators](#content-generators)
+    - [Diff Tools](#diff-tools)
     - [Time Zone Tools](#time-zone-tools)
   - [Getting Started](#getting-started)
     - [Prerequisites](#prerequisites)
@@ -33,6 +34,8 @@ UtilPlex is a modern Angular 20.x web application providing essential developer 
 - **JSON Formatter** - Format and minify JSON data with advanced prettification
 - **CSS Formatter** - Clean and organize CSS code with professional formatting
 - **JavaScript Formatter** - Beautify JavaScript code with modern syntax support
+- **TypeScript Formatter** - Format and beautify TypeScript code with proper indentation and type definitions
+- **SCSS Formatter** - Format and beautify SCSS/Sass code with proper indentation and structure
 
 ### Data Converters
 - **JSON to YAML Converter** - Convert JSON data to YAML format while preserving structure
@@ -44,13 +47,17 @@ UtilPlex is a modern Angular 20.x web application providing essential developer 
 - **GUID Generator** - Generate UUIDs with multiple format options (standard, compact, uppercase)
 - **Lorem Ipsum Generator** - Create placeholder text with customizable word, sentence, or paragraph output
 
+### Diff Tools
+- **File Diff Checker** - Compare two files or text blocks and highlight the differences between them with side-by-side comparison
+
 ### Time Zone Tools
 - **Time Zone Converter** - Convert times between global time zones with daylight saving awareness
 
 All tools feature:
-- Monaco Editor integration with syntax highlighting
+- CodeMirror editor integration with syntax highlighting
 - Custom Dracula theme for optimal readability
 - Copy/paste functionality
+- Side-by-side diff comparison for text analysis
 - Responsive design for mobile compatibility
 - Comprehensive error handling
 
@@ -59,7 +66,7 @@ All tools feature:
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) (v20 or higher)
-- [Angular CLI](https://angular.io/cli) (v19 or higher)
+- [Angular CLI](https://angular.io/cli) (v20 or higher)
 - npm or yarn package manager
 
 ### Installation
@@ -102,8 +109,9 @@ src/app/
 ├── converters/         # Data conversion tools
 ├── encoders/           # Encoding/decoding tools
 ├── generators/         # Content generation utilities
+├── diff/              # File and text comparison tools
 ├── time/              # Time zone tools
-├── monaco/            # Monaco editor configuration
+├── codemirror/        # CodeMirror editor configuration and themes
 └── components/        # Shared UI components
 ```
 
@@ -119,8 +127,10 @@ UtilPlex uses a modern Angular architecture with:
 
 ### Key Design Patterns
 
-- **Formatters**: `FormatViewService` (abstract) → `SqlFormatProvider`, `JsonFormatProvider`
+- **Formatters**: `FormatViewService` (abstract) → `SqlFormatProvider`, `JsonFormatProvider`, `CssFormatProvider`, `JavascriptFormatProvider`, `TypescriptFormatProvider`, `ScssFormatProvider`
 - **Converters**: `ConverterServiceBase` (abstract) → `JsonToYamlConverter`
+- **Generators**: `GeneratorServiceBase` (abstract) → `GuidGeneratorService`, `LoremIpsumGeneratorService`
+- **Diff Tools**: `DiffService` for file and text comparison functionality
 - **Generic Views**: Reusable components that work with any service implementation
 
 ## License
