@@ -58,7 +58,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.2.1",
     "angular-eslint": "^20.1.1",
-    "eslint": "^9.32.0",
+    "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "jasmine-core": "~5.9.0",
