@@ -87,6 +87,13 @@ export class RouteService {
           description: 'Format and beautify your SCSS/Sass code with proper indentation and structure.',
           loadComponent: () => import('../formatters/f-scss/f-scss.component').then((mod) => mod.FScssComponent),
         },
+        {
+          name: 'HTML',
+          title: 'HTML/XML Formatter',
+          url: '/format/html',
+          description: 'Format and beautify your HTML and XML markup with proper indentation and structure.',
+          loadComponent: () => import('../formatters/f-html/f-html.component').then((mod) => mod.FHtmlComponent),
+        },
       ],
     },
     {

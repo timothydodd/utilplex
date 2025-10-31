@@ -18,13 +18,6 @@ interface Particle {
   template: `
     <div class="background-container">
       <canvas #canvas class="background-canvas"></canvas>
-      <div class="geometric-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-        <div class="shape shape-3"></div>
-        <div class="shape shape-4"></div>
-        <div class="shape shape-5"></div>
-      </div>
     </div>
   `,
   styleUrls: ['./animated-background.component.scss'],
@@ -37,8 +30,7 @@ export class AnimatedBackgroundComponent implements OnInit, AfterViewInit, OnDes
   private animationId = signal<number | null>(null);
   private isBrowser: boolean;
 
-  private readonly PARTICLE_COUNT = 50;
-  private readonly CONNECTION_DISTANCE = 150;
+  private readonly PARTICLE_COUNT = 100;
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -95,8 +87,8 @@ export class AnimatedBackgroundComponent implements OnInit, AfterViewInit, OnDes
         y: Math.random() * height,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 2 + 1, // Back to original small size
-        opacity: Math.random() * 0.5 + 0.2,
+        size: Math.random() * 1.5 + 0.5, // Small star-like particles
+        opacity: Math.random() * 0.8 + 0.2,
         hue: Math.random() * 60 + 180, // Blue to cyan range
       });
     }
@@ -153,35 +145,11 @@ export class AnimatedBackgroundComponent implements OnInit, AfterViewInit, OnDes
     });
   }
 
-  private drawConnections() {
-    if (!this.isBrowser || !this.ctx) return;
-    this.ctx.strokeStyle = '#50fa7b';
-    this.ctx.lineWidth = 1.5;
-
-    for (let i = 0; i < this.particles.length; i++) {
-      for (let j = i + 1; j < this.particles.length; j++) {
-        const dx = this.particles[i].x - this.particles[j].x;
-        const dy = this.particles[i].y - this.particles[j].y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-
-        if (distance < this.CONNECTION_DISTANCE) {
-          const opacity = (this.CONNECTION_DISTANCE - distance) / this.CONNECTION_DISTANCE;
-          this.ctx.globalAlpha = opacity * 0.6; // Increased from 0.2 to 0.6
-          this.ctx.beginPath();
-          this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
-          this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-          this.ctx.stroke();
-        }
-      }
-    }
-  }
-
   private animate = () => {
     if (!this.isBrowser || !this.ctx) return;
     this.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
     this.updateParticles();
-    this.drawConnections();
     this.drawParticles();
 
     this.animationId.set(requestAnimationFrame(this.animate));

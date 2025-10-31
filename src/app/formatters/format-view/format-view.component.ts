@@ -92,6 +92,7 @@ export class FormatViewComponent {
       scss: 'scss',
       javascript: 'js',
       yaml: 'yaml',
+      html: 'html',
     };
     return extensions[this.formatService.language] || 'txt';
   }
@@ -104,6 +105,7 @@ export class FormatViewComponent {
       SCSS: 'Format and beautify your SCSS/Sass code with proper indentation and structure',
       JavaScript: 'Clean up and format your JavaScript code with consistent indentation and style',
       YAML: 'Format YAML files with proper alignment and structure for configuration files',
+      HTML: 'Format and beautify your HTML and XML markup with proper indentation and structure',
     };
     return descriptions[this.formatService.routeName] || 'Format and beautify your code for better readability';
   }
