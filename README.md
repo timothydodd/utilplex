@@ -95,10 +95,79 @@ All tools feature:
 
 - `npm start` - Start development server
 - `npm run build` - Production build
-- `npm run build:ci` - CI production build  
+- `npm run build:ci` - CI production build
 - `npm test` - Run unit tests
 - `npm run lint` - Run ESLint
 - `npm run serve:ssr:utilplex` - Serve SSR build
+
+## Deployment
+
+UtilPlex is configured for automated deployment to Azure Storage static website hosting via GitHub Actions.
+
+### Azure Storage Setup
+
+1. **Create Azure Storage Account**:
+   ```bash
+   az storage account create \
+     --name <your-storage-account-name> \
+     --resource-group <your-resource-group> \
+     --location <your-region> \
+     --sku Standard_LRS \
+     --kind StorageV2
+   ```
+
+2. **Enable Static Website Hosting**:
+   ```bash
+   az storage blob service-properties update \
+     --account-name <your-storage-account-name> \
+     --static-website \
+     --index-document index.html \
+     --404-document index.html
+   ```
+
+3. **Get Storage Account Key**:
+   ```bash
+   az storage account keys list \
+     --account-name <your-storage-account-name> \
+     --query "[0].value" \
+     --output tsv
+   ```
+
+### GitHub Secrets Configuration
+
+Add the following secrets to your GitHub repository (Settings → Secrets and variables → Actions):
+
+- `AZURE_STORAGE_ACCOUNT_NAME` - Your Azure Storage account name
+- `AZURE_STORAGE_ACCOUNT_KEY` - Your Azure Storage account access key
+
+### Deployment Workflow
+
+The GitHub Actions workflow automatically:
+1. Builds the Angular application on push to `main` branch
+2. Deploys pre-rendered static files to Azure Storage `$web` container
+3. Configures optimal cache headers:
+   - `index.html`: 5 minutes (frequent updates)
+   - Hashed JS/CSS: 1 year (immutable content)
+   - Other assets: 1 day (moderate caching)
+
+### Manual Deployment
+
+To deploy manually:
+```bash
+# Build the application
+npm run build:ci
+
+# Upload to Azure Storage
+az storage blob upload-batch \
+  --account-name <your-storage-account-name> \
+  --account-key <your-storage-account-key> \
+  --destination '$web' \
+  --source dist/utilplex/browser/
+```
+
+Your site will be available at: `https://<your-storage-account-name>.z13.web.core.windows.net/`
+
+Note: The exact URL format depends on your Azure region. Check your storage account properties for the correct endpoint.
 
 ### Project Structure
 
