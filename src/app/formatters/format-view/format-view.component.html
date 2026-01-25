@@ -12,6 +12,43 @@
     </div>
   </div>
 
+  @if (hasOptions) {
+    <div class="options-panel">
+      <div class="options-header">
+        <span class="options-icon">⚙️</span>
+        <span class="options-title">Options</span>
+      </div>
+      <div class="options-content">
+        @for (option of options; track option.key) {
+          <div class="option-group">
+            <label class="option-label" [for]="option.key">{{ option.label }}</label>
+            @if (option.type === 'select') {
+              <select
+                [id]="option.key"
+                class="option-select"
+                [value]="option.value()"
+                (change)="onOptionChange(option, $event)"
+              >
+                @for (opt of option.options; track opt.value) {
+                  <option [value]="opt.value">{{ opt.label }}</option>
+                }
+              </select>
+            }
+            @if (option.type === 'checkbox') {
+              <input
+                type="checkbox"
+                [id]="option.key"
+                class="option-checkbox"
+                [checked]="option.value()"
+                (change)="onOptionChange(option, $event)"
+              />
+            }
+          </div>
+        }
+      </div>
+    </div>
+  }
+
   @if (error()) {
     <div class="error-banner">
       <div class="error-icon">⚠️</div>

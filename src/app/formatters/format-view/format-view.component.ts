@@ -8,7 +8,7 @@ import {
   CodeMirrorConfig,
   CodeMirrorEditorComponent,
 } from 'src/app/components/codemirror-editor/codemirror-editor.component';
-import { FormatViewService } from '../_services/sql-format.service';
+import { FormatterOption, FormatViewService } from '../_services/sql-format.service';
 @Component({
   selector: 'app-format-view',
   templateUrl: './format-view.component.html',
@@ -17,6 +17,14 @@ import { FormatViewService } from '../_services/sql-format.service';
 })
 export class FormatViewComponent {
   formatService = inject(FormatViewService);
+
+  get hasOptions(): boolean {
+    return this.formatService.formatterOptions.length > 0;
+  }
+
+  get options(): FormatterOption[] {
+    return this.formatService.formatterOptions;
+  }
   inputOptions: CodeMirrorConfig;
   outputOptions: CodeMirrorConfig;
 
@@ -108,5 +116,18 @@ export class FormatViewComponent {
       HTML: 'Format and beautify your HTML and XML markup with proper indentation and structure',
     };
     return descriptions[this.formatService.routeName] || 'Format and beautify your code for better readability';
+  }
+
+  onOptionChange(option: FormatterOption, event: Event) {
+    const target = event.target as HTMLSelectElement | HTMLInputElement;
+    if (option.type === 'select') {
+      option.value.set(target.value);
+    } else if (option.type === 'checkbox') {
+      option.value.set((target as HTMLInputElement).checked);
+    }
+    // Re-run formatting with new options
+    if (this.inputCode()) {
+      this.inputChanged(this.inputCode());
+    }
   }
 }
