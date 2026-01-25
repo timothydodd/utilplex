@@ -7,11 +7,11 @@ import { ConverterOption, ConverterServiceBase } from './converter.service';
 export type PropertyCaseFormat = 'original' | 'camelCase' | 'PascalCase' | 'snake_case' | 'kebab-case' | 'CONSTANT_CASE';
 
 @Injectable()
-export class JsonToYamlConverter extends ConverterServiceBase {
-  override title = 'Json to Yaml';
-  override languageFrom = 'json';
-  override languageTo = 'yaml';
-  override routeName = 'Json To Yaml';
+export class YamlToJsonConverter extends ConverterServiceBase {
+  override title = 'Yaml to Json';
+  override languageFrom = 'yaml';
+  override languageTo = 'json';
+  override routeName = 'Yaml To Json';
 
   private propertyCaseFormat = signal<string>('original');
 
@@ -34,12 +34,12 @@ export class JsonToYamlConverter extends ConverterServiceBase {
 
   override convert(input: string): Observable<string> {
     if (!input) return of('');
-    let json = JSON.parse(input);
+    let parsed = yaml.load(input);
     const caseFormat = this.propertyCaseFormat() as PropertyCaseFormat;
     if (caseFormat !== 'original') {
-      json = this.transformKeys(json, caseFormat);
+      parsed = this.transformKeys(parsed, caseFormat);
     }
-    return of(yaml.dump(json));
+    return of(JSON.stringify(parsed, null, 2));
   }
 
   private transformKeys(obj: unknown, format: PropertyCaseFormat): unknown {
@@ -58,10 +58,9 @@ export class JsonToYamlConverter extends ConverterServiceBase {
   }
 
   private convertCase(str: string, format: PropertyCaseFormat): string {
-    // Split by common separators (camelCase, PascalCase, snake_case, kebab-case, spaces)
     const words = str
-      .replace(/([a-z])([A-Z])/g, '$1 $2') // camelCase/PascalCase split
-      .replace(/[_\-\s]+/g, ' ') // normalize separators
+      .replace(/([a-z])([A-Z])/g, '$1 $2')
+      .replace(/[_\-\s]+/g, ' ')
       .toLowerCase()
       .split(' ')
       .filter((w) => w.length > 0);

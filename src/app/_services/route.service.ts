@@ -101,11 +101,21 @@ export class RouteService {
       routes: [
         {
           name: 'Json To Yaml',
-          title: 'Json To Yaml',
+          title: 'JSON to YAML Converter',
           url: '/convert/json-yaml',
-          description: 'Convert JSON data to YAML format with ease, preserving structure and readability.',
+          description:
+            'Convert JSON data to YAML format with property case transformation options including camelCase, snake_case, and more.',
           loadComponent: () =>
             import('../converters/c-json-yaml/c-json-yaml.component').then((mod) => mod.CJsonYamlComponent),
+        },
+        {
+          name: 'Yaml To Json',
+          title: 'YAML to JSON Converter',
+          url: '/convert/yaml-json',
+          description:
+            'Convert YAML data to JSON format with property case transformation options including camelCase, snake_case, and more.',
+          loadComponent: () =>
+            import('../converters/c-yaml-json/c-yaml-json.component').then((mod) => mod.CYamlJsonComponent),
         },
       ],
     },

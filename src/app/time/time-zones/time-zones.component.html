@@ -1,16 +1,15 @@
-<div class="tool-container">
-  <div class="tool-header primary-gradient">
+<div class="timezone-container">
+  <div class="tool-header">
     <div class="tool-info">
       <h1 class="tool-title">Time Zone Converter</h1>
       <p class="tool-description">
         Convert times between different time zones and explore current time differences globally
       </p>
     </div>
-    <div class="timezone-indicator">
-      <div class="stat-item">
-        <span class="stat-label">Your Zone</span>
-        <span class="stat-value primary-color">{{ currentZone()?.text || 'Loading...' }}</span>
-      </div>
+    <div class="zone-indicator">
+      <div class="format-badge from-format">{{ currentZone()?.abbr || 'N/A' }}</div>
+      <div class="conversion-arrow">→</div>
+      <div class="format-badge to-format">{{ covertToZone()?.abbr || 'N/A' }}</div>
     </div>
   </div>
 
@@ -24,110 +23,99 @@
     </div>
   }
 
-  <div class="controls-section">
-    <div class="controls-panel primary-accent time-controls-panel">
-      <div class="panel-header primary-bg">
-        <div class="panel-title">
-          <div class="panel-icon">⏰</div>
-          <h3>Time Settings</h3>
+  <div class="main-content">
+    <div class="controls-section">
+      <div class="control-panel time-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-icon">⏰</div>
+            <h3>Time Settings</h3>
+          </div>
+          <div class="format-toggle">
+            <app-switch
+              [(ngModel)]="amPM"
+              (ngModelChange)="timeZoneChanged()"
+              [label]="amPM() ? '12h' : '24h'"
+            ></app-switch>
+          </div>
         </div>
-      </div>
-      <div class="time-controls">
-        <div class="option-group">
-          <label for="timePicker">Select Time</label>
+        <div class="panel-content time-picker-content">
           <app-timepicker
-            id="timePicker"
             [(ngModel)]="selectedTime"
             (timeChange)="onTimeChange($event)"
             [showMeridian]="!amPM()"
             class="modern-timepicker"
           ></app-timepicker>
         </div>
-        <div class="format-toggle">
-          <label for="amPMSwitch">24-Hour Format</label>
-          <app-switch
-            id="amPMSwitch"
-            [(ngModel)]="amPM"
-            (ngModelChange)="timeZoneChanged()"
-            [label]="amPM() ? '12-Hour' : '24-Hour'"
-          ></app-switch>
+      </div>
+
+      <div class="control-panel zones-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-icon">🌍</div>
+            <h3>Time Zones</h3>
+          </div>
+          <button class="action-btn-sm switch-btn" (click)="btnSwitch()" title="Switch time zones">
+            <span class="btn-icon">🔄</span>
+            Switch
+          </button>
+        </div>
+        <div class="panel-content zones-content">
+          <div class="zone-selector">
+            <label for="tzFrom">From</label>
+            <ng-select
+              id="tzFrom"
+              [items]="this.zones"
+              bindLabel="text"
+              [(ngModel)]="currentZone"
+              (change)="timeZoneChanged()"
+              placeholder="Select source timezone"
+              class="timezone-select"
+            ></ng-select>
+          </div>
+          <div class="zone-selector">
+            <label for="tzTo">To</label>
+            <ng-select
+              id="tzTo"
+              [items]="this.zones"
+              bindLabel="text"
+              [(ngModel)]="covertToZone"
+              (change)="timeZoneChanged()"
+              placeholder="Select target timezone"
+              class="timezone-select"
+            ></ng-select>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="controls-panel secondary-accent timezone-controls-panel">
-      <div class="panel-header secondary-bg">
-        <div class="panel-title">
-          <div class="panel-icon">🌍</div>
-          <h3>Time Zone Selection</h3>
+    <div class="results-section">
+      <div class="result-panel from-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-icon">📍</div>
+            <h3>Source Time</h3>
+          </div>
+          <div class="timezone-badge from-badge">{{ currentZone()?.abbr || 'N/A' }}</div>
         </div>
-        <button class="action-btn switch-btn" (click)="btnSwitch()" title="Switch time zones">
-          <span class="btn-icon">🔄</span>
-          Switch
-        </button>
-      </div>
-      <div class="timezone-selectors">
-        <div class="option-group from-zone">
-          <label for="tzFrom">From Time Zone</label>
-          <ng-select
-            id="tzFrom"
-            [items]="this.zones"
-            bindLabel="text"
-            [(ngModel)]="currentZone"
-            (change)="timeZoneChanged()"
-            placeholder="Select source timezone"
-            class="form-input primary-focus timezone-select"
-          ></ng-select>
-        </div>
-        <div class="conversion-arrow">
-          <div class="arrow-icon">→</div>
-        </div>
-        <div class="option-group to-zone">
-          <label for="tzTo">To Time Zone</label>
-          <ng-select
-            id="tzTo"
-            [items]="this.zones"
-            bindLabel="text"
-            [(ngModel)]="covertToZone"
-            (change)="timeZoneChanged()"
-            placeholder="Select target timezone"
-            class="form-input primary-focus timezone-select"
-          ></ng-select>
+        <div class="panel-content result-content">
+          <div class="time-value">{{ currentTimeFrom() || '--:--' }}</div>
+          <div class="timezone-name">{{ currentZone()?.text || 'Select a timezone' }}</div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <div class="results-section">
-    <div class="controls-panel primary-accent time-result-panel from-panel">
-      <div class="panel-header primary-bg">
-        <div class="panel-title">
-          <div class="panel-icon">📍</div>
-          <h3>Source Time</h3>
+      <div class="result-panel to-panel">
+        <div class="panel-header">
+          <div class="panel-title">
+            <div class="panel-icon">🎯</div>
+            <h3>Converted Time</h3>
+          </div>
+          <div class="timezone-badge to-badge">{{ covertToZone()?.abbr || 'N/A' }}</div>
         </div>
-        <div class="timezone-badge">
-          {{ currentZone()?.abbr || 'N/A' }}
+        <div class="panel-content result-content">
+          <div class="time-value">{{ currentTimeTo() || '--:--' }}</div>
+          <div class="timezone-name">{{ covertToZone()?.text || 'Select a timezone' }}</div>
         </div>
-      </div>
-      <div class="time-display">
-        <div class="time-value">{{ currentTimeFrom() || 'Select time and zones' }}</div>
-        <div class="timezone-name">{{ currentZone()?.text || 'No timezone selected' }}</div>
-      </div>
-    </div>
-
-    <div class="controls-panel secondary-accent time-result-panel to-panel">
-      <div class="panel-header secondary-bg">
-        <div class="panel-title">
-          <div class="panel-icon">🎯</div>
-          <h3>Converted Time</h3>
-        </div>
-        <div class="timezone-badge">
-          {{ covertToZone()?.abbr || 'N/A' }}
-        </div>
-      </div>
-      <div class="time-display">
-        <div class="time-value">{{ currentTimeTo() || 'Select time and zones' }}</div>
-        <div class="timezone-name">{{ covertToZone()?.text || 'No timezone selected' }}</div>
       </div>
     </div>
   </div>

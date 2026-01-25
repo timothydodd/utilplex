@@ -5,7 +5,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { from } from 'rxjs';
 import { getRouteData, RouteService } from 'src/app/_services/route.service';
 import { CodeMirrorEditorComponent, CodeMirrorConfig } from 'src/app/components/codemirror-editor/codemirror-editor.component';
-import { ConverterServiceBase } from '../_services/converter.service';
+import { ConverterServiceBase, ConverterOption } from '../_services/converter.service';
 
 @Component({
   selector: 'app-convert-view',
@@ -15,6 +15,14 @@ import { ConverterServiceBase } from '../_services/converter.service';
 })
 export class ConvertViewComponent {
   convertService = inject(ConverterServiceBase);
+
+  get hasOptions(): boolean {
+    return this.convertService.converterOptions.length > 0;
+  }
+
+  get options(): ConverterOption[] {
+    return this.convertService.converterOptions;
+  }
   inputOptions: CodeMirrorConfig;
   outputOptions: CodeMirrorConfig;
 
@@ -99,10 +107,25 @@ export class ConvertViewComponent {
   getToolDescription(): string {
     const descriptions: Record<string, string> = {
       'Json To Yaml':
-        'Convert JSON data to YAML format while preserving structure and maintaining readability for configuration files',
+        'Convert JSON data to YAML format with property case transformation options for configuration files',
+      'Yaml To Json':
+        'Convert YAML data to JSON format with property case transformation options for API consumption',
     };
     return (
       descriptions[this.convertService.routeName] || 'Convert data between different formats seamlessly and efficiently'
     );
+  }
+
+  onOptionChange(option: ConverterOption, event: Event) {
+    const target = event.target as HTMLSelectElement | HTMLInputElement;
+    if (option.type === 'select') {
+      option.value.set(target.value);
+    } else if (option.type === 'checkbox') {
+      option.value.set((target as HTMLInputElement).checked);
+    }
+    // Re-run conversion with new options
+    if (this.inputCode()) {
+      this.inputChanged(this.inputCode());
+    }
   }
 }
