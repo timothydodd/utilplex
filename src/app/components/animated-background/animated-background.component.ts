@@ -42,10 +42,18 @@ export class AnimatedBackgroundComponent implements OnInit, AfterViewInit, OnDes
 
   ngAfterViewInit() {
     if (this.isBrowser) {
-      this.initCanvas();
-      this.createParticles();
-      this.startAnimation();
-      this.addResizeListener();
+      // Defer animation start so it doesn't block first contentful paint
+      const start = () => {
+        this.initCanvas();
+        this.createParticles();
+        this.startAnimation();
+        this.addResizeListener();
+      };
+      if ('requestIdleCallback' in window) {
+        (window as any).requestIdleCallback(start);
+      } else {
+        setTimeout(start, 200);
+      }
     }
   }
 

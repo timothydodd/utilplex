@@ -14,31 +14,35 @@ import { getRouteData, RouteService } from 'src/app/_services/route.service';
         <p class="hero-subtitle">
           Your ultimate developer toolkit for formatting, converting, and generating code and data
         </p>
-        <div class="hero-features">
-          <span class="feature-badge">Fast</span>
-          <span class="feature-badge">Secure</span>
-          <span class="feature-badge">Free</span>
+        <div class="hero-links">
+          <button class="whats-new-link" (click)="router.navigate(['/patch-notes'])">
+            What's new in v2.5 →
+          </button>
+          <button class="how-link" (click)="router.navigate(['/how-it-works'])">
+            How it works
+          </button>
         </div>
       </header>
 
-      <section class="tools-grid">
+      <section class="categories-grid">
         @for (c of categories; track c.name) {
-          <div class="category-section" [attr.data-category]="c.name.toLowerCase()">
-            <div class="category-header">
-              <div class="category-icon">{{ getCategoryIcon(c.name) }}</div>
-              <h2 class="category-title">{{ c.name }}</h2>
-              <p class="category-description">{{ getCategoryDescription(c.name) }}</p>
+          <div class="category-card">
+            <div class="category-header" [style.border-image]="c.gradient ? c.gradient + ' 1' : ''">
+              <span class="category-icon">{{ c.icon || '🛠️' }}</span>
+              <div class="category-info">
+                <h2 class="category-name">{{ c.name }}</h2>
+                <p class="category-desc">{{ c.categoryDescription }}</p>
+              </div>
             </div>
-            <div class="tools-list">
-              @for (r of c.routes; track r.name) {
-                <button 
-                  class="tool-card" 
-                  (click)="router.navigate([r.url])"
-                  [attr.title]="r.description"
-                >
-                  <div class="tool-icon">{{ getToolIcon(r.name) }}</div>
-                  <h3 class="tool-name">{{ r.name }}</h3>
-                  <p class="tool-description">{{ getShortDescription(r.description) }}</p>
+            <div class="tool-list">
+              @for (r of c.routes; track r.url) {
+                <button class="tool-item" (click)="router.navigate([r.url])" [attr.title]="r.description">
+                  <span class="tool-icon">{{ r.icon || '⚙️' }}</span>
+                  <div class="tool-text">
+                    <span class="tool-name">{{ r.name }}</span>
+                    <span class="tool-desc">{{ r.description }}</span>
+                  </div>
+                  <span class="tool-arrow">→</span>
                 </button>
               }
             </div>
@@ -65,48 +69,5 @@ export class WelcomeComponent {
     this.title.setTitle('UtilPlex |' + data.title);
     if (data.description) this.meta.updateTag({ name: 'description', content: data.description });
     RouteService.Title.set('Welcome to UtilPlex');
-  }
-
-  getCategoryIcon(categoryName: string): string {
-    const icons: Record<string, string> = {
-      'Formatters': '🎨',
-      'Converters': '🔄',
-      'Encoding': '🔐',
-      'Time': '⏰',
-      'Generators': '⚡'
-    };
-    return icons[categoryName] || '🛠️';
-  }
-
-  getCategoryDescription(categoryName: string): string {
-    const descriptions: Record<string, string> = {
-      'Formatters': 'Beautify and organize your code for better readability',
-      'Converters': 'Transform data between different formats seamlessly',
-      'Encoding': 'Encode and decode data for secure transmission',
-      'Time': 'Work with time zones and date conversions',
-      'Generators': 'Generate unique identifiers and placeholder content'
-    };
-    return descriptions[categoryName] || 'Useful developer tools';
-  }
-
-  getToolIcon(toolName: string): string {
-    const icons: Record<string, string> = {
-      'SQL': '🗃️',
-      'JSON': '📋',
-      'CSS': '🎨',
-      'SCSS': '🎨',
-      'JavaScript': '📜',
-      'Json To Yaml': '🔄',
-      'Base64': '🔐',
-      'Time Zones': '🌍',
-      'GUID': '🆔',
-      'Lorem': '📝'
-    };
-    return icons[toolName] || '⚙️';
-  }
-
-  getShortDescription(description?: string): string {
-    if (!description) return '';
-    return description.length > 60 ? description.substring(0, 60) + '...' : description;
   }
 }

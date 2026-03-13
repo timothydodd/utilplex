@@ -60,4 +60,16 @@
         <loc>https://utilplex.com/diff/files</loc>
         <lastmod>2025-08-08</lastmod>
     </url>
+    <url>
+        <loc>https://utilplex.com/text/string-measure</loc>
+        <lastmod>2026-03-13</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/patch-notes</loc>
+        <lastmod>2026-03-13</lastmod>
+    </url>
+    <url>
+        <loc>https://utilplex.com/how-it-works</loc>
+        <lastmod>2026-03-13</lastmod>
+    </url>
 </urlset>

@@ -1,0 +1,143 @@
+.patch-card {
+  background: linear-gradient(145deg,
+    rgba(40, 42, 54, 0.8) 0%,
+    rgba(40, 42, 54, 0.4) 100%);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+
+  &.latest {
+    border-color: rgba(139, 233, 253, 0.3);
+    box-shadow: 0 4px 20px rgba(139, 233, 253, 0.08);
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.patch-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.version-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 1rem;
+  border-radius: 20px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--font-color);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  &.latest-badge {
+    background: linear-gradient(135deg, rgba(139, 233, 253, 0.2), rgba(189, 147, 249, 0.2));
+    color: #8be9fd;
+    border-color: rgba(139, 233, 253, 0.3);
+  }
+}
+
+.patch-date {
+  font-size: 0.9rem;
+  color: var(--font-color);
+  opacity: 0.6;
+}
+
+.latest-tag {
+  padding: 0.2rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background: linear-gradient(135deg, #50fa7b, #8be9fd);
+  color: var(--background);
+}
+
+.highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.highlight-item {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  background: rgba(80, 250, 123, 0.08);
+  border: 1px solid rgba(80, 250, 123, 0.15);
+  color: #50fa7b;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.patch-section {
+  margin-bottom: 1rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.section-heading {
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #8be9fd;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.change-list {
+  margin: 0;
+  padding: 0 0 0 1.25rem;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding: 0.3rem 0;
+    color: var(--font-color);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    opacity: 0.9;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: -1rem;
+      top: 0.75rem;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(189, 147, 249, 0.6);
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .patch-card {
+    padding: 1.25rem;
+  }
+
+  .patch-header {
+    gap: 0.75rem;
+  }
+
+  .highlights {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 480px) {
+  .version-badge {
+    font-size: 1rem;
+  }
+}

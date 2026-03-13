@@ -69,6 +69,21 @@ Routes are centrally managed in `src/app/_services/route.service.ts` with:
 2. Add route definition in `route.service.ts`
 3. Component uses `DiffViewComponent` with CodeMirror diff editor
 
+## When Adding New Features/Utilities
+Whenever a new tool or feature is added, the following must also be updated:
+
+1. **Route** — Add route definition in `src/app/_services/route.service.ts`
+2. **Sitemap** — Add the new URL to `src/sitemap.xml` with the current date
+3. **SEO in `src/index.html`**:
+   - `<meta name="keywords">` — Add relevant keywords
+   - `<meta name="description">` and JSON-LD `description` — Mention the new tool
+   - JSON-LD `featureList` — Add an entry for the new tool
+   - OG and Twitter meta descriptions — Keep in sync with the main description
+   - `<meta name="date">` — Update to the current date
+4. **Welcome page** — Add category icon/description in `src/app/pages/welcome/welcome.component.ts` if a new category was created
+5. **Patch notes** — Add an entry in `src/app/pages/patch-notes/patch-notes.component.ts`
+6. **Version** — Bump version in `package.json` and update the sidebar version in `src/app/nav/side-bar/side-bar.component.html`
+
 ## CodeMirror Editor Integration
 - Custom Dracula theme in `src/app/codemirror/dracula-theme.ts`
 - Language-specific extensions in `src/app/codemirror/language-extensions.ts`
