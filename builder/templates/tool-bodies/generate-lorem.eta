@@ -1,0 +1,25 @@
+<div class="tool-controls">
+  <label>Unit
+    <select id="opt-unit">
+      <option value="paragraphs" selected>Paragraphs</option>
+      <option value="sentences">Sentences</option>
+      <option value="words">Words</option>
+    </select>
+  </label>
+  <label>Amount
+    <input type="number" id="opt-amount" value="3" min="1" max="50" step="1">
+  </label>
+  <label>
+    <input type="checkbox" id="opt-startclassic" checked>
+    Start with “Lorem ipsum…”
+  </label>
+  <button type="button" class="btn btn-primary" data-action="run">Generate</button>
+  <button type="button" class="btn" data-clear-target="#output">Clear</button>
+</div>
+<div class="editor-panes">
+  <div class="editor-pane">
+    <div class="editor-pane-head"><span>Output</span><span class="editor-pane-head-actions"><button type="button" class="btn" data-copy-target="#output">Copy</button></span></div>
+    <textarea id="output" class="editor-area editor-wrap" readonly spellcheck="false"></textarea>
+  </div>
+</div>
+<div class="tool-status" data-status role="status" aria-live="polite"></div>

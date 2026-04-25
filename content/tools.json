@@ -1,0 +1,195 @@
+{
+  "categories": [
+    {
+      "slug": "format",
+      "name": "Formatters",
+      "icon": "wand",
+      "description": "Beautify and organize your code.",
+      "tools": [
+        {
+          "slug": "json",
+          "name": "JSON",
+          "title": "JSON Formatter & Minifier",
+          "description": "Beautify, validate, or minify JSON. Catch syntax errors with line and column hints.",
+          "keywords": ["json formatter", "json beautifier", "json minifier", "json validator"],
+          "icon": "braces",
+          "entry": "format-json"
+        },
+        {
+          "slug": "sql",
+          "name": "SQL",
+          "title": "SQL Formatter",
+          "description": "Format SQL queries across dialects (Postgres, MySQL, SQL Server, SQLite, BigQuery, and more).",
+          "keywords": ["sql formatter", "sql beautifier", "postgres formatter", "tsql formatter"],
+          "icon": "database",
+          "entry": "format-sql"
+        },
+        {
+          "slug": "css",
+          "name": "CSS",
+          "title": "CSS Formatter",
+          "description": "Beautify CSS with consistent indentation and rule structure.",
+          "keywords": ["css formatter", "css beautifier"],
+          "icon": "palette",
+          "entry": "format-css"
+        },
+        {
+          "slug": "scss",
+          "name": "SCSS",
+          "title": "SCSS Formatter",
+          "description": "Format SCSS / Sass with proper nesting and indentation.",
+          "keywords": ["scss formatter", "sass formatter"],
+          "icon": "palette",
+          "entry": "format-scss"
+        },
+        {
+          "slug": "javascript",
+          "name": "JavaScript",
+          "title": "JavaScript Formatter",
+          "description": "Beautify JavaScript with Prettier-grade formatting.",
+          "keywords": ["javascript formatter", "js beautifier", "prettier"],
+          "icon": "code",
+          "entry": "format-javascript"
+        },
+        {
+          "slug": "typescript",
+          "name": "TypeScript",
+          "title": "TypeScript Formatter",
+          "description": "Format TypeScript with Prettier including type annotations and generics.",
+          "keywords": ["typescript formatter", "ts beautifier"],
+          "icon": "code",
+          "entry": "format-typescript"
+        },
+        {
+          "slug": "html",
+          "name": "HTML / XML",
+          "title": "HTML & XML Formatter",
+          "description": "Pretty-print HTML and XML with proper indentation.",
+          "keywords": ["html formatter", "xml formatter", "html beautifier"],
+          "icon": "tag",
+          "entry": "format-html"
+        }
+      ]
+    },
+    {
+      "slug": "convert",
+      "name": "Converters",
+      "icon": "shuffle",
+      "description": "Translate data between formats.",
+      "tools": [
+        {
+          "slug": "json-yaml",
+          "name": "JSON → YAML",
+          "title": "JSON to YAML Converter",
+          "description": "Convert JSON to YAML with optional key-case transformation.",
+          "keywords": ["json to yaml", "yaml converter"],
+          "icon": "shuffle",
+          "entry": "convert-json-yaml"
+        },
+        {
+          "slug": "yaml-json",
+          "name": "YAML → JSON",
+          "title": "YAML to JSON Converter",
+          "description": "Convert YAML to JSON with optional key-case transformation.",
+          "keywords": ["yaml to json", "json converter"],
+          "icon": "shuffle",
+          "entry": "convert-yaml-json"
+        }
+      ]
+    },
+    {
+      "slug": "encoding",
+      "name": "Encoding",
+      "icon": "lock",
+      "description": "Encode and decode data.",
+      "tools": [
+        {
+          "slug": "base64",
+          "name": "Base64",
+          "title": "Base64 Encoder & Decoder",
+          "description": "Encode any text to Base64 or decode it back. Supports UTF-8.",
+          "keywords": ["base64 encoder", "base64 decoder", "base64 converter"],
+          "icon": "lock",
+          "entry": "encoding-base64"
+        }
+      ]
+    },
+    {
+      "slug": "generate",
+      "name": "Generators",
+      "icon": "spark",
+      "description": "Generate identifiers and placeholder content.",
+      "tools": [
+        {
+          "slug": "guid",
+          "name": "GUID / UUID",
+          "title": "GUID & UUID Generator",
+          "description": "Generate v4 UUIDs in batches, with formatting options.",
+          "keywords": ["guid generator", "uuid generator", "uuid v4"],
+          "icon": "fingerprint",
+          "entry": "generate-guid"
+        },
+        {
+          "slug": "lorem",
+          "name": "Lorem Ipsum",
+          "title": "Lorem Ipsum Generator",
+          "description": "Generate placeholder text in words, sentences, or paragraphs.",
+          "keywords": ["lorem ipsum", "placeholder text"],
+          "icon": "type",
+          "entry": "generate-lorem"
+        }
+      ]
+    },
+    {
+      "slug": "text",
+      "name": "Text",
+      "icon": "type",
+      "description": "Analyze and measure text.",
+      "tools": [
+        {
+          "slug": "string-measure",
+          "name": "String Measure",
+          "title": "String Measure & Counter",
+          "description": "Count characters, words, sentences, lines, and bytes. See per-character breakdown.",
+          "keywords": ["character counter", "word counter", "byte counter", "string length"],
+          "icon": "ruler",
+          "entry": "text-string-measure"
+        }
+      ]
+    },
+    {
+      "slug": "diff",
+      "name": "Diff",
+      "icon": "diff",
+      "description": "Compare files and text.",
+      "tools": [
+        {
+          "slug": "files",
+          "name": "Text Diff",
+          "title": "Text & File Diff Checker",
+          "description": "Compare two pieces of text or pasted files line-by-line. Highlights additions, removals, and changes.",
+          "keywords": ["diff checker", "text diff", "file diff", "compare files"],
+          "icon": "diff",
+          "entry": "diff-files"
+        }
+      ]
+    },
+    {
+      "slug": "time",
+      "name": "Time",
+      "icon": "clock",
+      "description": "Work with time zones and timestamps.",
+      "tools": [
+        {
+          "slug": "zones",
+          "name": "Time Zones",
+          "title": "Time Zone Converter",
+          "description": "Convert times between zones and see the current time around the world.",
+          "keywords": ["time zone converter", "world clock", "utc converter"],
+          "icon": "clock",
+          "entry": "time-zones"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,26 @@
+<div class="tool-controls">
+  <label>Indent
+    <select id="opt-indent">
+      <option value="2" selected>2 spaces</option>
+      <option value="4">4 spaces</option>
+      <option value="tab">Tab</option>
+    </select>
+  </label>
+  <label>Wrap
+    <input type="number" id="opt-width" value="120" min="40" max="240" step="10">
+  </label>
+  <button type="button" class="btn btn-primary" data-action="run">Format</button>
+  <button type="button" class="btn" data-action="sample">Load sample</button>
+  <button type="button" class="btn" data-clear-target="#input">Clear</button>
+</div>
+<div class="editor-panes split-2">
+  <div class="editor-pane">
+    <div class="editor-pane-head"><span>HTML / XML Input</span></div>
+    <div id="input" class="cm-host"></div>
+  </div>
+  <div class="editor-pane">
+    <div class="editor-pane-head"><span>Output</span><span class="editor-pane-head-actions"><button type="button" class="btn" data-copy-target="#output">Copy</button></span></div>
+    <div id="output" class="cm-host"></div>
+  </div>
+</div>
+<div class="tool-status" data-status role="status" aria-live="polite"></div>

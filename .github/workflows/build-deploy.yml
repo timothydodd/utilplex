@@ -1,48 +1,93 @@
-# Build and Deploy to Azure Storage Static Website
+# Build and Deploy UtilPlex (static site) to Azure Storage Static Website.
+#
+# Cache tiers
+#   HTML pages         — 5 min, must-revalidate (content updates fast)
+#   CSS + JS bundles   — 1 day (filenames are not hashed yet; switch to
+#                        immutable + 1y once they are)
+#   PNG/WebP/SVG/ICO   — 1 week (logo and favicons change rarely)
+#   sitemap.xml / rss  — 10 min (crawlers pick up changes fast)
+#   manifest + robots  — 1 hour
+#
+# Patterns: every upload uses `**/*.<ext>` so nested paths
+# (e.g. /format/json/index.html) actually match — the previous `*.html`
+# pattern only matched the site root and silently fell into the catch-all
+# tier with the wrong header.
 
-name: Build and Deploy to Azure Storage
+name: Build and Deploy
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push events but only for the "main" branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    # Source-only filter: README, CLAUDE.md, legacy/, and anything else
+    # outside the build inputs shouldn't trigger a rebuild + redeploy.
+    paths:
+      - "content/**"
+      - "builder/**"
+      - "tools/**"
+      - "logo.png"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/build-deploy.yml"
   workflow_dispatch:
 
+# Cancel any in-flight deploy when a new commit lands on main; the latest
+# code wins, no half-finished uploads stomping on the next run.
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
-  PROJECT_NAME: utilplex
-  AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+  AZURE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}
+  AZURE_KEY: ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }}
 
 jobs:
   build:
-    name: Build Angular Application
+    name: Build static site
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Set up Node 24.x
         uses: actions/setup-node@v4
         with:
           node-version: "24.x"
-          cache: 'npm'
+          cache: "npm"
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Build application
-        run: npm run build:ci
+      - name: Build
+        run: npm run build
+
+      - name: Verify build output
+        run: |
+          set -e
+          required=(
+            site/index.html
+            site/404.html
+            site/sitemap.xml
+            site/rss.xml
+            site/robots.txt
+            site/site.webmanifest
+            site/assets/app.css
+            site/assets/main.js
+          )
+          missing=0
+          for f in "${required[@]}"; do
+            if [ ! -f "$f" ]; then echo "missing: $f"; missing=1; fi
+          done
+          if [ "$missing" = "1" ]; then exit 1; fi
+          echo "─ Build summary ─"
+          echo "  HTML pages:    $(find site -name 'index.html' -o -name '404.html' | wc -l)"
+          echo "  Tool bundles:  $(find site/assets/tools -name '*.js' | wc -l)"
+          echo "  Total size:    $(du -sh site | cut -f1)"
 
       - name: Archive build artifacts
-        if: success()
         uses: actions/upload-artifact@v4
         with:
-          name: browser-build
-          path: dist/utilplex/browser/
+          name: site
+          path: site/
           retention-days: 1
 
   deploy:
@@ -53,64 +98,111 @@ jobs:
       - name: Download build artifacts
         uses: actions/download-artifact@v4
         with:
-          name: browser-build
-          path: ./browser
+          name: site
+          path: ./site
 
       - name: Install Azure CLI
-        run: |
-          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+        run: curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
       - name: Enable static website hosting
         run: |
           az storage blob service-properties update \
-            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
-            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
+            --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
             --static-website \
             --index-document index.html \
-            --404-document index.html
+            --404-document 404.html
 
-      - name: Upload files to Azure Storage
+      # 1. HTML — short cache. Use **/*.html so nested tool pages match.
+      - name: Upload HTML
         run: |
-          # Upload index.html with short cache (5 minutes)
           az storage blob upload-batch \
-            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
-            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
-            --destination '$web' \
-            --source ./browser \
-            --pattern "index.html" \
+            --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+            --destination '$web' --source ./site \
+            --pattern "**/*.html" \
             --content-cache-control "public, max-age=300, must-revalidate" \
-            --overwrite
+            --overwrite --no-progress
 
-          # Upload hashed JS/CSS files with long cache (1 year)
-          az storage blob upload-batch \
-            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
-            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
-            --destination '$web' \
-            --source ./browser \
-            --pattern "*.js" \
-            --content-cache-control "public, max-age=31536000, immutable" \
-            --overwrite
-
-          az storage blob upload-batch \
-            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
-            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
-            --destination '$web' \
-            --source ./browser \
-            --pattern "*.css" \
-            --content-cache-control "public, max-age=31536000, immutable" \
-            --overwrite
-
-          # Upload all other files with medium cache (1 day)
-          az storage blob upload-batch \
-            --account-name ${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }} \
-            --account-key ${{ secrets.AZURE_STORAGE_ACCOUNT_KEY }} \
-            --destination '$web' \
-            --source ./browser \
-            --content-cache-control "public, max-age=86400" \
-            --overwrite
-
-      - name: Display deployment URL
+      # 2. CSS + JS — long cache (1 day). Filenames aren't content-hashed
+      #    yet, so we keep this conservative.
+      - name: Upload CSS and JS
         run: |
-          echo "🚀 Deployment successful!"
-          echo "Static website URL: https://${{ secrets.AZURE_STORAGE_ACCOUNT_NAME }}.z13.web.core.windows.net/"
-          echo "Note: The exact URL format depends on your Azure region."
+          for ext in css js; do
+            az storage blob upload-batch \
+              --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+              --destination '$web' --source ./site \
+              --pattern "**/*.$ext" \
+              --content-cache-control "public, max-age=86400" \
+              --overwrite --no-progress
+          done
+
+      # 3. Images — favicons, logo variants, OG card. Long cache (1 week).
+      - name: Upload images
+        run: |
+          for ext in png webp svg ico jpg jpeg; do
+            az storage blob upload-batch \
+              --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+              --destination '$web' --source ./site \
+              --pattern "**/*.$ext" \
+              --content-cache-control "public, max-age=604800" \
+              --overwrite --no-progress
+          done
+
+      # 4. Feeds — short cache so search engines and feed readers pick up
+      #    new tools and patch notes quickly.
+      - name: Upload sitemap + RSS
+        run: |
+          az storage blob upload-batch \
+            --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+            --destination '$web' --source ./site \
+            --pattern "**/*.xml" \
+            --content-cache-control "public, max-age=600" \
+            --overwrite --no-progress
+
+      # 5. Manifest — Azure does not auto-detect application/manifest+json,
+      #    so set the content-type explicitly.
+      - name: Upload web manifest
+        run: |
+          az storage blob upload \
+            --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+            --container-name '$web' \
+            --name site.webmanifest \
+            --file ./site/site.webmanifest \
+            --content-type "application/manifest+json" \
+            --content-cache-control "public, max-age=3600" \
+            --overwrite --no-progress
+
+      # 6. robots.txt — explicit MIME, short cache.
+      - name: Upload robots.txt
+        run: |
+          az storage blob upload \
+            --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+            --container-name '$web' \
+            --name robots.txt \
+            --file ./site/robots.txt \
+            --content-type "text/plain; charset=utf-8" \
+            --content-cache-control "public, max-age=3600" \
+            --overwrite --no-progress
+
+      # 7. Purge Cloudflare so the new HTML is visible immediately. Skips
+      #    silently if the Cloudflare secrets aren't set (e.g. preview
+      #    environments without a CDN in front).
+      - name: Purge Cloudflare cache
+        env:
+          CLOUDFLARE_ZONE_ID: ${{ secrets.CLOUDFLARE_ZONE_ID }}
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: |
+          if [ -z "${CLOUDFLARE_ZONE_ID}" ] || [ -z "${CLOUDFLARE_API_TOKEN}" ]; then
+            echo "Cloudflare not configured (CLOUDFLARE_ZONE_ID / CLOUDFLARE_API_TOKEN); skipping purge."
+            exit 0
+          fi
+          curl -sS --fail-with-body -X POST \
+            "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE_ID}/purge_cache" \
+            -H "Authorization: Bearer ${CLOUDFLARE_API_TOKEN}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
+          echo
+
+      - name: Done
+        run: |
+          echo "Deployed."
+          echo "Static website URL: https://$AZURE_ACCOUNT.z13.web.core.windows.net/"

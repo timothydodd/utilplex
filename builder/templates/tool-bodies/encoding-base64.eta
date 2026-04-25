@@ -1,0 +1,25 @@
+<div class="tool-controls">
+  <label>Mode
+    <select id="opt-mode">
+      <option value="encode" selected>Encode → Base64</option>
+      <option value="decode">Decode ← Base64</option>
+    </select>
+  </label>
+  <label>
+    <input type="checkbox" id="opt-urlsafe">
+    URL-safe
+  </label>
+  <button type="button" class="btn btn-primary" data-action="run">Run</button>
+  <button type="button" class="btn" data-clear-target="#input">Clear</button>
+</div>
+<div class="editor-panes split-2">
+  <div class="editor-pane">
+    <div class="editor-pane-head"><span>Input</span></div>
+    <textarea id="input" class="editor-area" spellcheck="false"></textarea>
+  </div>
+  <div class="editor-pane">
+    <div class="editor-pane-head"><span>Output</span><span class="editor-pane-head-actions"><button type="button" class="btn" data-copy-target="#output">Copy</button></span></div>
+    <textarea id="output" class="editor-area" readonly spellcheck="false"></textarea>
+  </div>
+</div>
+<div class="tool-status" data-status role="status" aria-live="polite"></div>

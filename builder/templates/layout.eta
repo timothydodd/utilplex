@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="<%= it.site.locale || 'en' %>">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= it.pageTitle %></title>
+  <meta name="description" content="<%= it.pageDescription %>">
+  <% if (it.keywords) { %><meta name="keywords" content="<%= it.keywords %>"><% } %>
+  <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="referrer" content="no-referrer-when-downgrade">
+  <meta name="robots" content="<%= it.robots || 'index, follow, max-image-preview:large' %>">
+  <meta name="generator" content="UtilPlex builder">
+  <link rel="canonical" href="<%= it.canonicalUrl %>">
+  <link rel="alternate" type="application/rss+xml" title="<%= it.site.title %>" href="<%= it.baseUrl %>/rss.xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <meta property="og:type" content="<%= it.ogType || 'website' %>">
+  <meta property="og:site_name" content="<%= it.site.title %>">
+  <meta property="og:title" content="<%= it.pageTitle %>">
+  <meta property="og:description" content="<%= it.pageDescription %>">
+  <meta property="og:url" content="<%= it.canonicalUrl %>">
+  <meta property="og:image" content="<%= it.ogImage || (it.baseUrl + '/assets/og-image.png') %>">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <% if (it.site.twitter) { %><meta name="twitter:site" content="<%= it.site.twitter %>"><% } %>
+
+  <link rel="preload" href="/assets/app.css" as="style">
+  <link rel="stylesheet" href="/assets/app.css">
+
+  <script><%~ it.themeInit %></script>
+  <script defer src="/assets/main.js"></script>
+  <% if (it.toolEntry) { %><script type="module" defer src="/assets/tools/<%= it.toolEntry %>.js"></script><% } %>
+
+  <% if (it.jsonLd) { %><script type="application/ld+json"><%~ it.jsonLd %></script><% } %>
+</head>
+<body class="<%= it.bodyClass || '' %>">
+  <header class="site-head">
+    <div class="container-x site-head-inner">
+      <a class="site-head-brand" href="/" aria-label="<%= it.site.title %> — home">
+        <picture>
+          <source srcset="/assets/logo.webp" type="image/webp">
+          <img class="brand-mark" src="/assets/logo.png" alt="" width="40" height="24" decoding="async" fetchpriority="high">
+        </picture>
+        <span><%= it.site.title %></span>
+      </a>
+      <nav class="site-head-nav" aria-label="Primary">
+        <ul>
+          <% (it.site.navigation || []).forEach(function(link){
+             const ext = /^https?:/i.test(link.url);
+          %>
+            <li>
+              <a href="<%= link.url %>"<%= ext ? ' target="_blank" rel="noopener noreferrer"' : '' %> class="site-head-link"><%= link.label %></a>
+            </li>
+          <% }) %>
+        </ul>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle theme">
+          <span class="icon-moon"><%~ it.icon('moon', { size: 16 }) %></span>
+          <span class="icon-sun"><%~ it.icon('sun', { size: 16 }) %></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <%~ it.body %>
+  </main>
+
+  <footer class="site-foot">
+    <div class="container-x site-foot-inner">
+      <div>© <%= new Date().getFullYear() %> <a href="/"><%= it.site.title %></a></div>
+      <nav class="site-foot-nav" aria-label="Secondary">
+        <ul>
+          <% (it.site.secondaryNavigation || []).forEach(function(link){ %>
+            <li><a href="<%= link.url %>"><%= link.label %></a></li>
+          <% }) %>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+</body>
+</html>

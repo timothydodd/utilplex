@@ -1,0 +1,52 @@
+{
+  "entries": [
+    {
+      "version": "3.1.0",
+      "date": "2026-04-25",
+      "title": "Syntax-highlighted editors and auto-format",
+      "summary": "Formatter and converter tools now use a real text editor with syntax highlighting on both panes, and result-producing tools auto-run on input change so you don't have to click a button to see output.",
+      "changes": [
+        "Added CodeMirror 6 editors with syntax highlighting to every formatter and converter tool.",
+        "Editors follow the site light/dark theme and pick token colors from the brand palette.",
+        "All result-producing tools auto-run on input or option changes (debounced).",
+        "Added a 404 page with a popular-tools fallback grid.",
+        "Patch-note entries now have stable anchor links matching the RSS feed."
+      ]
+    },
+    {
+      "version": "3.0.0",
+      "date": "2026-04-25",
+      "title": "Static rebuild",
+      "summary": "Full ground-up rebuild as a static site. Pages are now plain HTML with no framework runtime, faster first paint, and per-tool JavaScript loaded only on the page that needs it. Added a built-in dark theme that follows the system preference.",
+      "changes": [
+        "Pre-rendered every page to static HTML for instant first paint.",
+        "Replaced framework runtime with small per-tool ES module bundles.",
+        "Added a system-aware dark theme.",
+        "Replaced emoji icons with inline SVG for crisper rendering.",
+        "Generated sitemap.xml, rss.xml, and robots.txt at build time."
+      ]
+    },
+    {
+      "version": "2.4.0",
+      "date": "2025-11-05",
+      "title": "JSON minify and patch notes",
+      "summary": "Added a minify mode to the JSON formatter and introduced a patch notes page to track ongoing changes.",
+      "changes": [
+        "JSON formatter now supports a minify toggle.",
+        "Added the Patch Notes page.",
+        "Added the How It Works page."
+      ]
+    },
+    {
+      "version": "2.3.0",
+      "date": "2025-09-30",
+      "title": "Diff and time zones",
+      "summary": "Added a side-by-side text diff tool and a time zone converter.",
+      "changes": [
+        "New Text Diff tool with line-by-line highlighting.",
+        "New Time Zone converter.",
+        "String Measure tool now reports per-character breakdown."
+      ]
+    }
+  ]
+}

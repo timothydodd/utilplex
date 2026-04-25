@@ -1,0 +1,36 @@
+<div class="tool-controls">
+  <label>View
+    <select id="opt-view">
+      <option value="inline" selected>Inline</option>
+      <option value="side">Side by side</option>
+    </select>
+  </label>
+  <label>
+    <input type="checkbox" id="opt-ignore-ws">
+    Ignore whitespace
+  </label>
+  <button type="button" class="btn btn-primary" data-action="run">Compare</button>
+  <button type="button" class="btn" data-clear-target="#input-a">Clear A</button>
+  <button type="button" class="btn" data-clear-target="#input-b">Clear B</button>
+</div>
+
+<div class="editor-panes split-2">
+  <div class="editor-pane">
+    <div class="editor-pane-head"><span>A — Original</span></div>
+    <textarea id="input-a" class="editor-area" spellcheck="false"></textarea>
+  </div>
+  <div class="editor-pane">
+    <div class="editor-pane-head"><span>B — Modified</span></div>
+    <textarea id="input-b" class="editor-area" spellcheck="false"></textarea>
+  </div>
+</div>
+
+<div class="editor-pane" style="margin-top:0.85rem">
+  <div class="editor-pane-head">
+    <span>Result</span>
+    <span class="editor-pane-head-actions"><button type="button" class="btn" data-copy-target="#diff-output">Copy</button></span>
+  </div>
+  <pre id="diff-output" class="editor-area diff-output" style="margin:0"></pre>
+</div>
+
+<div class="tool-status" data-status role="status" aria-live="polite"></div>

@@ -1,0 +1,18 @@
+<div class="tool-controls">
+  <label>Source time
+    <input type="datetime-local" id="opt-source-time">
+  </label>
+  <label>Source zone
+    <select id="opt-source-zone"></select>
+  </label>
+  <label>
+    <input type="checkbox" id="opt-live" checked>
+    Live (current time)
+  </label>
+  <button type="button" class="btn" data-action="add-zone">Add zone…</button>
+  <select id="opt-add-zone" style="display:none"></select>
+</div>
+
+<div id="tz-grid" class="tz-grid"></div>
+
+<div class="tool-status" data-status role="status" aria-live="polite"></div>

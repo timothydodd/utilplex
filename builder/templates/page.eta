@@ -1,0 +1,10 @@
+<div class="container-x">
+  <article class="prose" style="margin-block: 2rem 3rem">
+    <h1><%= it.page.title %></h1>
+    <% if (it.page.description) { %><p style="color: var(--color-ink-soft); font-size: 1.05rem"><%= it.page.description %></p><% } %>
+    <% (it.page.sections || []).forEach(function(s){ %>
+      <h2><%= s.heading %></h2>
+      <p><%= s.body %></p>
+    <% }) %>
+  </article>
+</div>

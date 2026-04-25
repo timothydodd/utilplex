@@ -1,0 +1,19 @@
+{
+  "title": "UtilPlex",
+  "tagline": "Fast, private developer utilities. Everything runs in your browser.",
+  "description": "Free online developer tools for formatting, converting, encoding, generating, diffing, and measuring code and data. Runs entirely in your browser — nothing is uploaded.",
+  "url": "https://utilplex.com",
+  "locale": "en",
+  "twitter": "@utilplex",
+  "author": "UtilPlex",
+  "navigation": [
+    { "label": "Tools", "url": "/#tools" },
+    { "label": "How It Works", "url": "/how-it-works/" },
+    { "label": "Patch Notes", "url": "/patch-notes/" },
+    { "label": "GitHub", "url": "https://github.com/timothydodd/utilplex" }
+  ],
+  "secondaryNavigation": [
+    { "label": "Sitemap", "url": "/sitemap.xml" },
+    { "label": "RSS", "url": "/rss.xml" }
+  ]
+}

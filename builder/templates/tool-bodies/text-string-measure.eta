@@ -1,0 +1,20 @@
+<div class="editor-panes">
+  <div class="editor-pane">
+    <div class="editor-pane-head">
+      <span>Input</span>
+      <span class="editor-pane-head-actions"><button type="button" class="btn" data-clear-target="#input">Clear</button></span>
+    </div>
+    <textarea id="input" class="editor-area" spellcheck="false" placeholder="Type or paste text…"></textarea>
+  </div>
+</div>
+
+<div class="stats-grid" id="stats" style="margin-top:1rem">
+  <div class="stat"><div class="stat-label">Characters</div><div class="stat-value" data-stat="chars">0</div></div>
+  <div class="stat"><div class="stat-label">No spaces</div><div class="stat-value" data-stat="charsNoSpace">0</div></div>
+  <div class="stat"><div class="stat-label">Words</div><div class="stat-value" data-stat="words">0</div></div>
+  <div class="stat"><div class="stat-label">Sentences</div><div class="stat-value" data-stat="sentences">0</div></div>
+  <div class="stat"><div class="stat-label">Paragraphs</div><div class="stat-value" data-stat="paragraphs">0</div></div>
+  <div class="stat"><div class="stat-label">Lines</div><div class="stat-value" data-stat="lines">0</div></div>
+  <div class="stat"><div class="stat-label">Bytes (UTF-8)</div><div class="stat-value" data-stat="bytes">0</div></div>
+  <div class="stat"><div class="stat-label">Reading time</div><div class="stat-value" data-stat="reading">0s</div></div>
+</div>

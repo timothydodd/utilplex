@@ -1,0 +1,24 @@
+{
+  "slug": "how-it-works",
+  "title": "How It Works",
+  "description": "UtilPlex tools run entirely in your browser. Nothing is uploaded, logged, or sent to a server.",
+  "updated_at": "2026-04-25",
+  "sections": [
+    {
+      "heading": "Everything stays on your machine",
+      "body": "UtilPlex is a static site. Every formatter, converter, generator, and diff tool is implemented in JavaScript that runs in your browser tab. Your input never leaves your device — there is no API, no server-side processing, and no telemetry."
+    },
+    {
+      "heading": "Pages load instantly",
+      "body": "Each page is pre-rendered HTML with a single CSS file and a small per-tool JavaScript bundle. We do not ship a framework runtime, so first paint is fast on slow connections and old hardware."
+    },
+    {
+      "heading": "Open and inspectable",
+      "body": "The site is open source. View the page source, read the bundle, or audit the build script. There is no analytics, no third-party tracker, no ad network, and no cookies."
+    },
+    {
+      "heading": "Built with",
+      "body": "Tailwind CSS for styling, Eta for templates, esbuild for tool bundles, and well-known libraries for the actual work — sql-formatter, prettier, js-yaml, js-beautify, and the diff package."
+    }
+  ]
+}

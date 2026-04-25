@@ -1,0 +1,25 @@
+<div class="container-x">
+  <header style="padding-block: 2rem 1rem">
+    <h1 style="margin:0; font-size: clamp(1.7rem, 3vw, 2rem); font-weight: 800; letter-spacing: -0.02em">Patch Notes</h1>
+    <p style="margin:.4rem 0 0; color: var(--color-ink-soft)">Recent changes and improvements to UtilPlex.</p>
+  </header>
+
+  <ol class="patch-list" style="padding-bottom: 3rem">
+    <% it.entries.forEach(function(e){ %>
+      <li class="patch-entry" id="v<%= e.version %>">
+        <div class="patch-meta">
+          <span class="patch-version"><a href="#v<%= e.version %>" style="color:inherit">v<%= e.version %></a></span>
+          <span>·</span>
+          <time datetime="<%= e.date %>"><%= it.formatDate(e.date) %></time>
+        </div>
+        <h2 class="patch-title"><%= e.title %></h2>
+        <% if (e.summary) { %><p class="patch-summary"><%= e.summary %></p><% } %>
+        <% if (e.changes && e.changes.length) { %>
+          <ul class="patch-changes">
+            <% e.changes.forEach(function(c){ %><li><%= c %></li><% }) %>
+          </ul>
+        <% } %>
+      </li>
+    <% }) %>
+  </ol>
+</div>

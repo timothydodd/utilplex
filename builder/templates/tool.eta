@@ -1,0 +1,16 @@
+<div class="container-x">
+  <header class="tool-head">
+    <div class="tool-crumbs">
+      <a href="/">Home</a> · <a href="/#<%= it.category.slug %>"><%= it.category.name %></a>
+    </div>
+    <h1>
+      <span class="tool-icon"><%~ it.icon(it.tool.icon, { size: 22 }) %></span>
+      <span><%= it.tool.title %></span>
+    </h1>
+    <p><%= it.tool.description %></p>
+  </header>
+
+  <div class="tool-body">
+    <%~ it.toolBody %>
+  </div>
+</div>
