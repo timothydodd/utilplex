@@ -100,7 +100,7 @@ That's it — sitemap, RSS, JSON-LD, navigation, and the home tool grid all read
 - Tool pages emit `SoftwareApplication` JSON-LD (see `lib/seo.mjs`).
 - Home emits a `WebSite` + `ItemList` `@graph`.
 - All HTML is whitespace-minified; `<script>`/`<pre>`/`<textarea>`/`<style>` content is preserved.
-- Single CSS file (Tailwind output, minified). No external font requests, no third-party scripts, no analytics.
+- Single CSS file (Tailwind output, minified). No external font requests; the only third-party script is Microsoft Clarity (inlined in `layout.eta`).
 - Icons are inline SVG — no icon-font fetch, no emoji.
 
 ## Theme
@@ -129,5 +129,5 @@ That's it — sitemap, RSS, JSON-LD, navigation, and the home tool grid all read
 - Don't touch `legacy/` unless explicitly asked to back-port something.
 - Don't add a framework (React, Vue, Svelte, Angular). The build is intentionally framework-free.
 - Don't add server-side anything. Tools must run in the browser.
-- Don't add tracking, analytics, or third-party CDN scripts.
+- Don't add tracking, analytics, or third-party CDN scripts beyond the existing Microsoft Clarity tag.
 - Don't bypass `tools.json` — adding a hand-rolled page outside the data flow breaks sitemap, JSON-LD, and the home grid.
