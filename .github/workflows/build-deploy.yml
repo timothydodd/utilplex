@@ -112,51 +112,62 @@ jobs:
             --index-document index.html \
             --404-document 404.html
 
-      # 1. HTML — short cache. Use **/*.html so nested tool pages match.
-      - name: Upload HTML
+      # 1. Upload everything in site/ first with the HTML cache header.
+      #    This guarantees root-level files (index.html, 404.html, favicons,
+      #    manifest, sitemap, rss, robots) ship — `**/*.<ext>` patterns in
+      #    the typed steps below don't match files at the root because `**`
+      #    requires at least one directory component. Subsequent typed steps
+      #    re-upload CSS/JS/images/feeds with their longer cache headers.
+      - name: Upload all site files (default HTML cache)
         run: |
           az storage blob upload-batch \
             --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
             --destination '$web' --source ./site \
-            --pattern "**/*.html" \
             --content-cache-control "public, max-age=300, must-revalidate" \
             --overwrite --no-progress
 
       # 2. CSS + JS — long cache (1 day). Filenames aren't content-hashed
-      #    yet, so we keep this conservative.
+      #    yet, so we keep this conservative. Run both `*.ext` (root) and
+      #    `**/*.ext` (nested) so files at every depth get the right header.
       - name: Upload CSS and JS
         run: |
           for ext in css js; do
-            az storage blob upload-batch \
-              --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
-              --destination '$web' --source ./site \
-              --pattern "**/*.$ext" \
-              --content-cache-control "public, max-age=86400" \
-              --overwrite --no-progress
+            for pat in "*.$ext" "**/*.$ext"; do
+              az storage blob upload-batch \
+                --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+                --destination '$web' --source ./site \
+                --pattern "$pat" \
+                --content-cache-control "public, max-age=86400" \
+                --overwrite --no-progress
+            done
           done
 
       # 3. Images — favicons, logo variants, OG card. Long cache (1 week).
       - name: Upload images
         run: |
           for ext in png webp svg ico jpg jpeg; do
-            az storage blob upload-batch \
-              --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
-              --destination '$web' --source ./site \
-              --pattern "**/*.$ext" \
-              --content-cache-control "public, max-age=604800" \
-              --overwrite --no-progress
+            for pat in "*.$ext" "**/*.$ext"; do
+              az storage blob upload-batch \
+                --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+                --destination '$web' --source ./site \
+                --pattern "$pat" \
+                --content-cache-control "public, max-age=604800" \
+                --overwrite --no-progress
+            done
           done
 
       # 4. Feeds — short cache so search engines and feed readers pick up
       #    new tools and patch notes quickly.
       - name: Upload sitemap + RSS
         run: |
-          az storage blob upload-batch \
-            --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
-            --destination '$web' --source ./site \
-            --pattern "**/*.xml" \
-            --content-cache-control "public, max-age=600" \
-            --overwrite --no-progress
+          for pat in "*.xml" "**/*.xml"; do
+            az storage blob upload-batch \
+              --account-name "$AZURE_ACCOUNT" --account-key "$AZURE_KEY" \
+              --destination '$web' --source ./site \
+              --pattern "$pat" \
+              --content-cache-control "public, max-age=600" \
+              --overwrite --no-progress
+          done
 
       # 5. Manifest — Azure does not auto-detect application/manifest+json,
       #    so set the content-type explicitly.
