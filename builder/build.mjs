@@ -249,7 +249,7 @@ async function main() {
     const body = eta.render("404", { featured, icon });
     const html = renderLayout({
       pageTitle: `404 · ${site.title}`,
-      pageDescription: "The page you're looking for doesn't exist.",
+      pageDescription: "The page you're looking for doesn't exist. Browse the UtilPlex tool catalog for formatters, converters, encoders, generators, diffs, and time-zone tools.",
       canonicalPath: "/404.html",
       bodyClass: "not-found",
       // 404s should never get indexed — they're an error state, not a page.
@@ -267,12 +267,12 @@ async function main() {
     });
     const html = renderLayout({
       pageTitle: `Patch Notes · ${site.title}`,
-      pageDescription: "Recent changes and improvements to UtilPlex.",
+      pageDescription: "Recent changes and improvements to UtilPlex — new tools, bug fixes, performance work, and design updates. Subscribe to the RSS feed to follow updates.",
       canonicalPath: "/patch-notes/",
       bodyClass: "patch",
       jsonLd: webPageJsonLd({
         site,
-        page: { title: "Patch Notes", description: "Recent changes and improvements to UtilPlex." },
+        page: { title: "Patch Notes", description: "Recent changes and improvements to UtilPlex — new tools, bug fixes, performance work, and design updates. Subscribe to the RSS feed to follow updates." },
         canonical: baseUrl + "/patch-notes/",
         baseUrl,
       }),
