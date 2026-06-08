@@ -389,6 +389,16 @@ pre.editor-area {
   line-height: 1.6;
 }
 
+/* Runtime wrap toggle (main.js) for non-CodeMirror output. Keeps the mono
+   font; only the wrapping behavior changes. */
+.editor-area.up-wrap   { white-space: pre-wrap; word-break: break-word; }
+.editor-area.up-nowrap { white-space: pre; word-break: normal; }
+
+/* Focus toggle (main.js) — collapse the input pane so the output spans the
+   full grid width. */
+.editor-panes.is-solo-output { grid-template-columns: 1fr; }
+.editor-panes.is-solo-output > .editor-pane:not(.is-output) { display: none; }
+
 /* CodeMirror host — created by tools/src/_editor.js. The editor's own styles
    handle background, font, and gutters; this rule just makes the host fill
    the editor pane and clip rounded corners cleanly. */

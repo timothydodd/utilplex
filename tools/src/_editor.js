@@ -90,13 +90,15 @@ const COMMON = [
   bracketMatching(),
   highlightSelectionMatches(),
   syntaxHighlighting(upHighlight),
-  EditorView.lineWrapping,
   keymap.of([indentWithTab, ...defaultKeymap, ...searchKeymap, ...historyKeymap, ...foldKeymap]),
   baseTheme,
 ];
 
 export function createEditor({ host, language, readonly = false, initial = "", onChange, indent = "  " }) {
-  const ext = [...COMMON, indentUnit.of(indent)];
+  // Per-editor compartment so the wrap toggle in main.js can flip line
+  // wrapping at runtime without rebuilding the editor. Wrapped by default.
+  const wrap = new Compartment();
+  const ext = [...COMMON, wrap.of(EditorView.lineWrapping), indentUnit.of(indent)];
   if (language) ext.push(language);
   if (readonly) ext.push(EditorState.readOnly.of(true), EditorView.editable.of(false));
   if (onChange) {
@@ -115,6 +117,9 @@ export function createEditor({ host, language, readonly = false, initial = "", o
     getValue: () => view.state.doc.toString(),
     setValue: v => view.dispatch({
       changes: { from: 0, to: view.state.doc.length, insert: v },
+    }),
+    setWrap: on => view.dispatch({
+      effects: wrap.reconfigure(on ? EditorView.lineWrapping : []),
     }),
     focus: () => view.focus(),
   };
