@@ -1,6 +1,17 @@
 {
   "entries": [
     {
+      "version": "3.2.0",
+      "date": "2026-06-08",
+      "title": "Wrap and focus controls for output panes",
+      "summary": "Output panes now carry runtime controls so you can read long results the way you want: toggle word wrapping off to scan wide lines, or focus the output to collapse the input pane and use the full width.",
+      "changes": [
+        "Added a Wrap / No wrap toggle to every output pane to flip word wrapping without reformatting.",
+        "Added a Focus / Split toggle that collapses the input pane so the output fills the width.",
+        "Editor line wrapping is now reconfigurable at runtime instead of fixed at creation."
+      ]
+    },
+    {
       "version": "3.1.0",
       "date": "2026-04-25",
       "title": "Syntax-highlighted editors and auto-format",
